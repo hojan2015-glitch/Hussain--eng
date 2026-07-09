@@ -35,7 +35,6 @@
     background-image:
       radial-gradient(ellipse at 15% 10%, rgba(167,139,250,0.13) 0%, transparent 55%),
       radial-gradient(ellipse at 85% 90%, rgba(251,191,36,0.10) 0%, transparent 55%);
-    overflow-x: hidden;
   }
 
   .app { width: 100%; max-width: 540px; }
@@ -132,6 +131,13 @@
   .menu-card.c5 .icon-box { border-color: #f472b6; box-shadow: 0 0 16px rgba(244,114,182,0.25), 0 6px 18px rgba(0,0,0,0.5); }
   .menu-card.c6 .icon-box { border-color: #60a5fa; box-shadow: 0 0 16px rgba(96,165,250,0.25), 0 6px 18px rgba(0,0,0,0.5); }
 
+  .menu-card.c1:hover { border-color: rgba(45,212,191,0.4); box-shadow: 0 14px 34px rgba(45,212,191,0.12); }
+  .menu-card.c2:hover { border-color: rgba(52,211,153,0.4); box-shadow: 0 14px 34px rgba(52,211,153,0.12); }
+  .menu-card.c3:hover { border-color: rgba(251,191,36,0.4); box-shadow: 0 14px 34px rgba(251,191,36,0.12); }
+  .menu-card.c4:hover { border-color: rgba(167,139,250,0.4); box-shadow: 0 14px 34px rgba(167,139,250,0.12); }
+  .menu-card.c5:hover { border-color: rgba(244,114,182,0.4); box-shadow: 0 14px 34px rgba(244,114,182,0.15); }
+  .menu-card.c6:hover { border-color: rgba(96,165,250,0.4); box-shadow: 0 14px 34px rgba(96,165,250,0.15); }
+
   .menu-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #fff; position: relative; }
   .menu-card p { font-size: 11.5px; color: var(--muted); line-height: 1.5; position: relative; margin-bottom: 8px; }
 
@@ -194,13 +200,14 @@
     background: var(--card);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 16px;
-    padding: 12px 20px;
+    padding: 12px 14px;
     margin-bottom: 14px;
     animation: fadeDown 0.6s ease both;
+    gap: 4px;
   }
-  .stat { text-align: center; }
-  .stat-num { font-size: 20px; font-weight: 900; color: var(--orange); font-family: 'Poppins', sans-serif; }
-  .stat-lbl { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+  .stat { text-align: center; flex: 1; }
+  .stat-num { font-size: 16px; font-weight: 900; color: var(--orange); font-family: 'Poppins', sans-serif; }
+  .stat-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
   .progress-wrap {
     background: rgba(255,255,255,0.07);
@@ -446,42 +453,32 @@
     cursor: pointer;
   }
 
-  /* ميزة غبي البصرية */
-  .ghabi-float {
+  /* ===== FLOATING ERROR INSULT VISUAL SYSTEM ===== */
+  .insult-overlay {
     position: fixed;
-    top: 50%;
-    font-size: 40px;
+    top: 45%;
+    font-size: 44px;
     font-weight: 900;
     color: var(--red);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 14px 28px;
+    border: 3px solid var(--red);
+    border-radius: 24px;
     z-index: 9999;
     pointer-events: none;
-    animation: popLaugh 1s ease-in-out forwards;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  }
-  .ghabi-left { left: 15%; transform: translate(-50%, -50%); }
-  .ghabi-right { right: 15%; transform: translate(50%, -50%); }
-
-  @keyframes popLaugh {
-    0% { opacity: 0; transform: scale(0.5) translateY(0) rotate(0deg); }
-    25% { opacity: 1; transform: scale(1.5) translateY(-20px) rotate(-15deg); }
-    50% { transform: scale(1.2) translateY(0) rotate(15deg); }
-    75% { transform: scale(1.5) translateY(-20px) rotate(-15deg); }
-    100% { opacity: 0; transform: scale(0) translateY(50px) rotate(0deg); }
-  }
-
-  /* أزرار الإدارة للتعديل والحذف */
-  .admin-btn {
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
     font-family: 'Tajawal', sans-serif;
+    box-shadow: 0 0 35px rgba(251, 113, 133, 0.6);
+    animation: flashInsult 1.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   }
-  .admin-btn-edit { background: var(--orange); color: var(--dark); }
-  .admin-btn-delete { background: var(--red); color: #fff; }
-
+  .insult-left { left: 25px; }
+  .insult-right { right: 25px; }
+  
+  @keyframes flashInsult {
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    15% { transform: scale(1.2) rotate(15deg); opacity: 1; }
+    85% { transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: scale(0.7) translateY(-20px); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -501,8 +498,9 @@
   <div id="loginScreen">
     <div class="card" style="text-align:center;">
       <div class="q-badge">👋 مرحباً بك</div>
-      <div style="font-size:15px; color:var(--text); margin-bottom:18px; line-height:1.6;">أدخل اسمك للبدء وحفظ تقدمك على هذا الجهاز</div>
-      <input id="usernameInput" class="login-input" type="text" placeholder="اكتب اسمك هنا..." onkeydown="if(event.key==='Enter') loginUser()">
+      <div style="font-size:15px; color:var(--text); margin-bottom:18px; line-height:1.6;">أدخل يوزر ونظام الرمز الخاص بك لحفظ تقدمك بشكل دائم</div>
+      <input id="usernameInput" class="login-input" type="text" placeholder="اسم المستخدم (اليوزر)...">
+      <input id="passwordInput" class="login-input" type="password" placeholder="الرمز السري (الباسورد)..." onkeydown="if(event.key==='Enter') loginUser()">
       <button class="check-btn" style="margin-top:0;" onclick="loginUser()">دخول 🚀</button>
       <div id="loginError" style="color:var(--red); font-size:13px; margin-top:10px; min-height:18px;"></div>
     </div>
@@ -518,8 +516,8 @@
 
     <!-- LOCAL LEADERBOARD CARD -->
     <div class="card" style="margin-bottom:14px; padding:16px 18px;">
-      <div class="q-badge" style="margin-bottom:10px; background: rgba(52,211,153,0.15); color: var(--green);">🏆 لوحة الصدارة المحلية (بالإكس بي)</div>
-      <div id="adminEditHint" style="font-size:11px; color:var(--accent); text-align:center; margin-bottom:6px; display:none;">🔐 نمط الأدمن: يمكنك تعديل أو حذف المستخدمين من القائمة أدناه</div>
+      <div class="q-badge" style="margin-bottom:10px; background: rgba(52,211,153,0.15); color: var(--green);">🏆 لوحة الصدارة والتنافس</div>
+      <div id="adminEditHint" style="font-size:11px; color:var(--accent); text-align:center; margin-bottom:6px; display:none;">🔐 نمط الأدمن مفعل: اضغط على أي مستخدم لتعديل الـ XP الخاص به أو حذفه</div>
       <div id="leaderboardList" style="display:flex; flex-direction:column; gap:6px; font-size:13px;"></div>
     </div>
     
@@ -598,14 +596,18 @@
   <!-- QUIZ SECTION -->
   <div id="quizSection" class="hidden">
     <div class="quiz-header">
-      <button class="back-btn" onclick="goHome()">→ القوائم</button>
+      <button class="back-btn" onclick="handleExitQuiz()">→ القوائم</button>
       <div class="mode-title" id="modeTitle"></div>
     </div>
 
     <div class="scorebar">
       <div class="stat">
         <div class="stat-num" id="scoreNum">0</div>
-        <div class="stat-lbl">XP 🌟</div>
+        <div class="stat-lbl">الـ XP</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="timerNum" style="color:var(--red);">30</div>
+        <div class="stat-lbl">⏱️ الوقت</div>
       </div>
       <div class="stat">
         <div class="stat-num" id="qNum">1</div>
@@ -663,20 +665,359 @@
 
 <script>
 /* ================= DATA ================= */
-const vocabBank = {
-  1: [ { word: 'Apple', correct: 'تفاحة', choices: ['تفاحة','برتقالة','موز','عنب'] }, { word: 'Sun', correct: 'شمس', choices: ['قمر','شمس','نجمة','سحاب'] } ],
-  2: [ { word: 'Improve', correct: 'يُحسّن / يطوّر', choices: ['يُحسّن / يطوّر','يدمّر','يتجاهل','يكرر'] }, { word: 'Borrow', correct: 'يستعير / يقترض', choices: ['يعطي','يستعير / يقترض','يبيع','يفقد'] } ],
-  3: [ { word: 'Inevitable', correct: 'لا مفر منه / محتوم', choices: ['نادر الحدوث','لا مفر منه / محتوم','اختياري','مستحيل'] }, { word: 'Ambiguous', correct: 'غامض / غير واضح', choices: ['واضح جداً','غامض / غير واضح','مؤكد','صحيح'] } ]
-};
-const orderBank = [ { words: ['I', 'go', 'to', 'school', 'every', 'day'], meaning: 'أذهب إلى المدرسة كل يوم' }, { words: ['She', 'is', 'reading', 'a', 'book'], meaning: 'هي تقرأ كتاباً' } ];
-const sentenceBank = [ { sentence: "I'm sorry, I can't make it tonight.", correct: 'أنا آسف، لا يمكنني الحضور الليلة.', choices: ['أنا آسف، لا يمكنني الحضور الليلة.','أنا سعيد بقدومك الليلة.','أنا متأكد أنني سأحضر.','أنا في طريقي إليك الآن.'] } ];
-const techBank = [ { word: 'Server', correct: 'خادم / سيرفر', choices: ['خادم / سيرفر','متصفح','ملف','شاشة'] } ];
-const techDefBank = [ { definition: 'A remote computer that provides resources, data, or services to other computers over a network.', correct: 'Server', choices: ['Server','Client','Terminal','Router'] } ];
-const scenarioBank = [ { scenario: "A user reports that the app crashes every time they try to upload a photo. The support team logs the issue and assigns it to a developer to investigate.", correct: 'Bug', choices: ['Bug','Feature','Update','Backup'] } ];
 
+const vocabBank = {
+  1: [
+    { word: 'Apple', correct: 'تفاحة', choices: ['تفاحة','برتقالة','موز','عنب'] },
+    { word: 'Book', correct: 'كتاب', choices: ['كتاب','قلم','مفتاح','كرسي'] },
+    { word: 'Sun', correct: 'شمس', choices: ['قمر','شمس','نجمة','سحاب'] },
+    { word: 'Water', correct: 'ماء', choices: ['حليب','عصير','ماء','قهوة'] },
+    { word: 'House', correct: 'منزل', choices: ['سيارة','منزل','مدرسة','مسجد'] },
+    { word: 'Cat', correct: 'قطة', choices: ['كلب','قطة','حصان','أسد'] },
+    { word: 'Happy', correct: 'سعيد', choices: ['حزين','غاضب','سعيد','خائف'] },
+    { word: 'Big', correct: 'كبير', choices: ['صغير','كبير','طويل','قصير'] },
+    { word: 'Friend', correct: 'صديق', choices: ['صديق','عدو','أخ','أب'] },
+    { word: 'Red', correct: 'أحمر', choices: ['أزرق','أخضر','أحمر','أصفر'] },
+    { word: 'Eat', correct: 'يأكل', choices: ['ينام','يأكل','يجري','يقرأ'] },
+    { word: 'Door', correct: 'باب', choices: ['نافذة','باب','جدار','سقف'] },
+    { word: 'Dog', correct: 'كلب', choices: ['كلب','قطة','حصان','أرنب'] },
+    { word: 'Bird', correct: 'طائر', choices: ['طائر','سمكة','فراشة','نحلة'] },
+    { word: 'Fish', correct: 'سمكة', choices: ['سمكة','طائر','حشرة','ثعبان'] },
+    { word: 'Tree', correct: 'شجرة', choices: ['شجرة','زهرة','عشب','ورقة'] },
+    { word: 'Flower', correct: 'زهرة', choices: ['زهرة','شجرة','ثمرة','جذر'] },
+    { word: 'Table', correct: 'طاولة', choices: ['طاولة','كرسي','سرير','خزانة'] },
+    { word: 'Chair', correct: 'كرسي', choices: ['كرسي','طاولة','سرير','باب'] },
+    { word: 'Milk', correct: 'حليب', choices: ['حليب','ماء','عصير','شاي'] },
+    { word: 'Bread', correct: 'خبز', choices: ['خبز','أرز','لحم','جبن'] },
+    { word: 'Egg', correct: 'بيضة', choices: ['بيضة','تفاحة','طماطم','بطاطا'] },
+    { word: 'Rain', correct: 'مطر', choices: ['مطر','ثلج','رياح','غيمة'] },
+    { word: 'Snow', correct: 'ثلج', choices: ['ثلج','مطر','ضباب','رياح'] },
+    { word: 'Cold', correct: 'بارد', choices: ['بارد','حار','دافئ','رطب'] },
+    { word: 'Hot', correct: 'حار', choices: ['حار','بارد','معتدل','جاف'] },
+    { word: 'Small', correct: 'صغير', choices: ['صغير','كبير','طويل','قصير'] },
+    { word: 'Fast', correct: 'سريع', choices: ['سريع','بطيء','ثقيل','خفيف'] },
+    { word: 'Slow', correct: 'بطيء', choices: ['بطيء','سريع','قوي','ضعيف'] },
+    { word: 'Old', correct: 'قديم / كبير بالسن', choices: ['قديم / كبير بالسن','جديد','شاب','صغير'] },
+    { word: 'New', correct: 'جديد', choices: ['جديد','قديم','مستعمل','قادم'] },
+    { word: 'Boy', correct: 'ولد', choices: ['ولد','بنت','رجل','امرأة'] },
+    { word: 'Girl', correct: 'بنت', choices: ['بنت','ولد','سيدة','طفل'] },
+    { word: 'Night', correct: 'ليل', choices: ['ليل','نهار','صباح','مساء'] },
+    { word: 'Morning', correct: 'صباح', choices: ['صباح','مساء','ليل','ظهر'] },
+    { word: 'Blue', correct: 'أزرق', choices: ['أزرق','أحمر','أخضر','أصفر'] },
+  ],
+  2: [
+    { word: 'Improve', correct: 'يُحسّن / يطوّر', choices: ['يُحسّن / يطوّر','يدمّر','يتجاهل','يكرر'] },
+    { word: 'Borrow', correct: 'يستعير / يقترض', choices: ['يعطي','يستعير / يقترض','يبيع','يفقد'] },
+    { word: 'Crowded', correct: 'مزدحم', choices: ['فارغ','هادئ','مزدحم','نظيف'] },
+    { word: 'Decision', correct: 'قرار', choices: ['قرار','سؤال','مشكلة','فكرة'] },
+    { word: 'Suddenly', correct: 'بشكل مفاجئ', choices: ['ببطء','بشكل مفاجئ','أحياناً','دائماً'] },
+    { word: 'Generous', correct: 'كريم / سخي', choices: ['بخيل','كريم / سخي','غاضب','خجول'] },
+    { word: 'Exhausted', correct: 'مُتعَب جداً', choices: ['نشيط','سعيد','مُتعَب جداً','جائع'] },
+    { word: 'Achieve', correct: 'يحقق / ينجز', choices: ['يحقق / ينجز','يفشل','يبدأ','يؤجل'] },
+    { word: 'Opportunity', correct: 'فرصة', choices: ['مشكلة','فرصة','خطأ','عادة'] },
+    { word: 'Reliable', correct: 'يُعتمد عليه / موثوق', choices: ['يُعتمد عليه / موثوق','مشكوك فيه','غريب','جديد'] },
+    { word: 'Postpone', correct: 'يؤجل', choices: ['ينهي','يؤجل','يبدأ','يسرّع'] },
+    { word: 'Brilliant', correct: 'رائع / ذكي جداً', choices: ['عادي','مزعج','رائع / ذكي جداً','بسيط'] },
+    { word: 'Encourage', correct: 'يشجّع', choices: ['يشجّع','يثبط','يتجاهل','يعاقب'] },
+    { word: 'Convince', correct: 'يقنع', choices: ['يقنع','يرفض','يشك','يتردد'] },
+    { word: 'Ignore', correct: 'يتجاهل', choices: ['يتجاهل','يلاحظ','يهتم','يراقب'] },
+    { word: 'Complain', correct: 'يشتكي', choices: ['يشتكي','يمدح','يشكر','يوافق'] },
+    { word: 'Apologize', correct: 'يعتذر', choices: ['يعتذر','يرفض','يفتخر','يهدد'] },
+    { word: 'Struggle', correct: 'يكافح / يعاني', choices: ['يكافح / يعاني','يرتاح','ينجح بسهولة','يستسلم فوراً'] },
+    { word: 'Announce', correct: 'يعلن', choices: ['يعلن','يخفي','ينكر','يتجاهل'] },
+    { word: 'Recommend', correct: 'يوصي / ينصح', choices: ['يوصي / ينصح','يمنع','يرفض','يحذر'] },
+    { word: 'Complicated', correct: 'معقد', choices: ['معقد','بسيط','سهل','واضح'] },
+    { word: 'Confident', correct: 'واثق', choices: ['واثق','خجول','متردد','خائف'] },
+    { word: 'Curious', correct: 'فضولي', choices: ['فضولي','لامبالٍ','خجول','غاضب'] },
+    { word: 'Jealous', correct: 'غيور', choices: ['غيور','سعيد','راضٍ','فخور'] },
+    { word: 'Nervous', correct: 'متوتر', choices: ['متوتر','هادئ','مرتاح','سعيد'] },
+    { word: 'Ashamed', correct: 'خجلان / يشعر بالعار', choices: ['خجلان / يشعر بالعار','فخور','سعيد','هادئ'] },
+    { word: 'Grateful', correct: 'ممتن', choices: ['ممتن','غاضب','حاسد','لامبالٍ'] },
+    { word: 'Frustrated', correct: 'محبط', choices: ['محبط','سعيد','متحمس','مرتاح'] },
+    { word: 'Available', correct: 'متاح / متوفر', choices: ['متاح / متوفر','مشغول','ممنوع','مفقود'] },
+    { word: 'Convenient', correct: 'مناسب / مريح', choices: ['مناسب / مريح','صعب','معقد','مزعج'] },
+    { word: 'Efficient', correct: 'فعّال / كفؤ', choices: ['فعّال / كفؤ','بطيء','ضعيف','عشوائي'] },
+    { word: 'Flexible', correct: 'مرن', choices: ['مرن','صارم','ثابت','جامد'] },
+    { word: 'Independent', correct: 'مستقل', choices: ['مستقل','معتمد على غيره','ضعيف','متردد'] },
+    { word: 'Responsible', correct: 'مسؤول', choices: ['مسؤول','لا مبالٍ','مهمل','كسول'] },
+    { word: 'Punctual', correct: 'ملتزم بالوقت', choices: ['ملتزم بالوقت','متأخر دائماً','عشوائي','بطيء'] },
+    { word: 'Cautious', correct: 'حذر', choices: ['حذر','متهور','لا مبالٍ','متسرع'] },
+  ],
+  3: [
+    { word: 'Inevitable', correct: 'لا مفر منه / محتوم', choices: ['نادر الحدوث','لا مفر منه / محتوم','اختياري','مستحيل'] },
+    { word: 'Ambiguous', correct: 'غامض / غير واضح', choices: ['واضح جداً','غامض / غير واضح','مؤكد','صحيح'] },
+    { word: 'Persevere', correct: 'يثابر / يستمر بالرغم من الصعوبات', choices: ['يستسلم','يثابر / يستمر بالرغم من الصعوبات','يتراجع','يتجاهل'] },
+    { word: 'Meticulous', correct: 'دقيق جداً / يهتم بالتفاصيل', choices: ['متهاون','دقيق جداً / يهتم بالتفاصيل','سريع','عشوائي'] },
+    { word: 'Reluctant', correct: 'متردد / غير راغب', choices: ['حماسي','متردد / غير راغب','متأكد','سعيد'] },
+    { word: 'Phenomenon', correct: 'ظاهرة', choices: ['مشكلة بسيطة','ظاهرة','رأي','اقتراح'] },
+    { word: 'Versatile', correct: 'متعدد المهارات / مرن', choices: ['محدود','متعدد المهارات / مرن','ضعيف','بطيء'] },
+    { word: 'Deteriorate', correct: 'يتدهور / يزداد سوءاً', choices: ['يتحسن','يتدهور / يزداد سوءاً','يستقر','يتوقف'] },
+    { word: 'Skeptical', correct: 'متشكك', choices: ['متشكك','واثق تماماً','مرتاح','فضولي'] },
+    { word: 'Comprehensive', correct: 'شامل', choices: ['جزئي','شامل','مختصر','بسيط'] },
+    { word: 'Subsequent', correct: 'لاحق / تالي', choices: ['سابق','لاحق / تالي','حالي','أول'] },
+    { word: 'Anticipate', correct: 'يتوقع / يتنبأ', choices: ['يتجاهل','يتوقع / يتنبأ','يرفض','ينكر'] },
+    { word: 'Pragmatic', correct: 'عملي / واقعي', choices: ['عملي / واقعي','خيالي','عاطفي','متطرف'] },
+    { word: 'Resilient', correct: 'مرن وقادر على التعافي', choices: ['مرن وقادر على التعافي','هش','ضعيف','عنيد'] },
+    { word: 'Eloquent', correct: 'فصيح / بليغ', choices: ['فصيح / بليغ','متلعثم','صامت','مبهم'] },
+    { word: 'Ubiquitous', correct: 'منتشر في كل مكان', choices: ['منتشر في كل مكان','نادر','مخفي','محلي فقط'] },
+    { word: 'Redundant', correct: 'زائد عن الحاجة', choices: ['زائد عن الحاجة','ضروري','نادر','مفيد جداً'] },
+    { word: 'Plausible', correct: 'معقول / مقبول منطقياً', choices: ['معقول / مقبول منطقياً','مستحيل','مؤكد','خيالي'] },
+    { word: 'Feasible', correct: 'قابل للتنفيذ / ممكن', choices: ['قابل للتنفيذ / ممكن','مستحيل','معقد جداً','خطير'] },
+    { word: 'Coherent', correct: 'متماسك / منطقي', choices: ['متماسك / منطقي','مبعثر','غامض','متناقض'] },
+    { word: 'Prevalent', correct: 'شائع / منتشر', choices: ['شائع / منتشر','نادر','ممنوع','قديم'] },
+    { word: 'Tedious', correct: 'ممل ومرهق', choices: ['ممل ومرهق','ممتع','سريع','بسيط'] },
+    { word: 'Arbitrary', correct: 'عشوائي / تعسفي', choices: ['عشوائي / تعسفي','منظم','مدروس','عادل'] },
+    { word: 'Innate', correct: 'فطري / غريزي', choices: ['فطري / غريزي','مكتسب','نادر','مصطنع'] },
+    { word: 'Genuine', correct: 'أصيل / حقيقي', choices: ['أصيل / حقيقي','مزيف','مشكوك فيه','غامض'] },
+    { word: 'Elaborate', correct: 'مفصّل / معقد', choices: ['مفصّل / معقد','مختصر','بسيط','غامض'] },
+    { word: 'Candid', correct: 'صريح', choices: ['صريح','مخادع','غامض','متردد'] },
+    { word: 'Diligent', correct: 'مجتهد', choices: ['مجتهد','كسول','مهمل','متردد'] },
+    { word: 'Pertinent', correct: 'ذو صلة / مناسب', choices: ['ذو صلة / مناسب','غير مرتبط','عشوائي','قديم'] },
+    { word: 'Superficial', correct: 'سطحي', choices: ['سطحي','عميق','دقيق','شامل'] },
+    { word: 'Tangible', correct: 'ملموس', choices: ['ملموس','خيالي','مجرد','غامض'] },
+    { word: 'Volatile', correct: 'متقلب', choices: ['متقلب','ثابت','هادئ','مستقر'] },
+    { word: 'Ambivalent', correct: 'متردد / مشاعر متناقضة', choices: ['متردد / مشاعر متناقضة','متأكد تماماً','سعيد جداً','غاضب جداً'] },
+    { word: 'Empirical', correct: 'تجريبي / قائم على الملاحظة', choices: ['تجريبي / قائم على الملاحظة','نظري بحت','خيالي','عشوائي'] },
+    { word: 'Conducive', correct: 'مساعد / يهيئ الظروف', choices: ['مساعد / يهيئ الظروف','معيق','ضار','محايد'] },
+  ]
+};
+
+const orderBank = [
+  { words: ['I', 'go', 'to', 'school', 'every', 'day'], meaning: 'أذهب إلى المدرسة كل يوم' },
+  { words: ['She', 'is', 'reading', 'a', 'book'], meaning: 'هي تقرأ كتاباً' },
+  { words: ['They', 'play', 'football', 'on', 'weekends'], meaning: 'هم يلعبون كرة القدم في عطلة نهاية الأسبوع' },
+  { words: ['He', 'did', 'not', 'finish', 'his', 'homework'], meaning: 'هو لم ينهِ واجبه' },
+  { words: ['What', 'time', 'is', 'it', 'now'], meaning: 'كم الساعة الآن؟' },
+  { words: ['We', 'have', 'been', 'waiting', 'for', 'an', 'hour'], meaning: 'لقد كنا ننتظر لمدة ساعة' },
+  { words: ['Can', 'you', 'help', 'me', 'with', 'this'], meaning: 'هل يمكنك مساعدتي في هذا؟' },
+  { words: ['The', 'weather', 'is', 'really', 'nice', 'today'], meaning: 'الجو جميل جداً اليوم' },
+  { words: ['I', 'would', 'like', 'a', 'cup', 'of', 'coffee'], meaning: 'أرغب بكوب من القهوة' },
+  { words: ['My', 'brother', 'works', 'at', 'a', 'hospital'], meaning: 'أخي يعمل في مستشفى' },
+  { words: ['She', 'has', 'never', 'been', 'to', 'Japan'], meaning: 'هي لم تذهب إلى اليابان من قبل' },
+  { words: ['If', 'it', 'rains', 'we', 'will', 'stay', 'home'], meaning: 'إذا أمطرت سنبقى في المنزل' },
+];
+
+const sentenceBank = [
+  { sentence: "I'm sorry, I can't make it tonight.", correct: 'أنا آسف، لا يمكنني الحضور الليلة.', choices: ['أنا آسف، لا يمكنني الحضور الليلة.','أنا سعيد بقدومك الليلة.','أنا متأكد أنني سأحضر.','أنا في طريقي إليك الآن.'] },
+  { sentence: "It's none of your business.", correct: 'هذا ليس من شأنك.', choices: ['هذا عملك المفضل.','هذا ليس من شأنك.','هذا مهم لك جداً.','هذا قرارك أنت.'] },
+  { sentence: "She used to live in Cairo.", correct: 'كانت تعيش في القاهرة سابقاً.', choices: ['تعيش في القاهرة الآن.','ستعيش في القاهرة قريباً.','كانت تعيش في القاهرة سابقاً.','تحب زيارة القاهرة.'] },
+  { sentence: "I have to leave early tomorrow.", correct: 'يجب أن أغادر مبكراً غداً.', choices: ['غادرت مبكراً اليوم.','يجب أن أغادر مبكراً غداً.','أحب الاستيقاظ مبكراً.','لن أغادر أبداً.'] },
+  { sentence: "He's been working here for five years.", correct: 'يعمل هنا منذ خمس سنوات.', choices: ['عمل هنا لمدة خمس سنوات وتوقف.','سيعمل هنا خمس سنوات.','يعمل هنا منذ خمس سنوات.','عمره خمس وعشرون سنة.'] },
+  { sentence: "Could you turn down the volume, please?", correct: 'هل يمكنك خفض الصوت من فضلك؟', choices: ['هل يمكنك خفض الصوت من فضلك？','هل يمكنك رفع الصوت من فضلك？','هل يمكنك إغلاق التلفاز؟','هل يمكنك تشغيل الموسيقى？'] },
+  { sentence: "We're running out of time.", correct: 'الوقت ينفد منا.', choices: ['لدينا متسع كبير من الوقت.','الوقت ينفد منا.','نحن نركض بسرعة.','الوقت توقف عن الحركة.'] },
+  { sentence: "I'm looking forward to seeing you.", correct: 'أتطلع لرؤيتك.', choices: ['لا أريد رؤيتك مجدداً.','أتطلع لرؤيتك.','رأيتك بالأمس.','أنا أبحث عنك في كل مكان.'] },
+  { sentence: "This dish doesn't taste right.", correct: 'طعم هذا الطبق غير صحيح / غريب.', choices: ['هذا الطبق لذيذ جداً.','طعم هذا الطبق غير صحيح / غريب.','هذا الطبق جاهز للتقديم.','هذا الطبق رخيص الثمن.'] },
+  { sentence: "He apologized for being late.", correct: 'اعتذر عن تأخره.', choices: ['اعتذر عن تأخره.','شكره على الحضور بالوقت.','رفض الاعتذار.','أخبره أنه سيتأخر غداً أيضاً.'] },
+  { sentence: "She is fluent in three languages.", correct: 'هي تتحدث ثلاث لغات بطلاقة.', choices: ['هي تتعلم لغة واحدة فقط.','هي تتحدث ثلاث لغات بطلاقة.','هي تترجم الكتب فقط.','هي تدرس اللغة الإنجليزية حالياً.'] },
+  { sentence: "Don't worry, everything will be fine.", correct: 'لا تقلق، كل شيء سيكون على ما يرام.', choices: ['لا تقلق، كل شيء سيكون على ما يرام.','قلق دائماً مفيد.','كل شيء سيصبح أسوأ.','لا داعي للمحاولة.'] },
+];
+
+const techBank = [
+  { word: 'Server', correct: 'خادم / سيرفر', choices: ['خادم / سيرفر','متصفح','ملف','شاشة'] },
+  { word: 'Database', correct: 'قاعدة بيانات', choices: ['قاعدة بيانات','شاشة','ذاكرة','معالج'] },
+  { word: 'System', correct: 'نظام', choices: ['نظام','تطبيق','ملف','شبكة'] },
+  { word: 'Software', correct: 'برمجيات / برنامج', choices: ['برمجيات / برنامج','جهاز','شبكة','كابل'] },
+  { word: 'Hardware', correct: 'مكونات الحاسوب المادية', choices: ['مكونات الحاسوب المادية','نظام تشغيل','برنامج','تطبيق'] },
+  { word: 'Application', correct: 'تطبيق', choices: ['تطبيق','خادم','شبكة','ملف'] },
+  { word: 'Program', correct: 'برنامج', choices: ['برنامج','جهاز','كابل','شاشة'] },
+  { word: 'Platform', correct: 'منصة', choices: ['منصة','خادم','ملف','برنامج'] },
+  { word: 'Tool', correct: 'أداة', choices: ['أداة','نظام','خادم','تطبيق'] },
+  { word: 'Cloud', correct: 'السحابة / الحوسبة السحابية', choices: ['السحابة / الحوسبة السحابية','الخادم المحلي','قاعدة البيانات','الشبكة الداخلية'] },
+  { word: 'Hosting', correct: 'استضافة', choices: ['استضافة','تشفير','نسخ احتياطي','تحديث'] },
+  { word: 'Storage', correct: 'تخزين', choices: ['تخزين','معالجة','إرسال','تشفير'] },
+  { word: 'Terminal', correct: 'محطة أوامر / طرفية', choices: ['محطة أوامر / طرفية','شاشة عرض','لوحة تحكم','واجهة رسومية'] },
+  { word: 'Connection', correct: 'اتصال', choices: ['اتصال','برنامج','ملف','خادم'] },
+  { word: 'Environment', correct: 'بيئة (تطوير/تشغيل)', choices: ['بيئة (تطوير/تشغيل)','نظام تشغيل','واجهة مستخدم','قاعدة بيانات'] },
+  { word: 'Production', correct: 'بيئة الإنتاج / النظام الفعلي', choices: ['بيئة الإنتاج / النظام الفعلي','بيئة الاختبار','مرحلة التطوير','النسخة التجريبية'] },
+  { word: 'Architecture', correct: 'بنية النظام / معمارية', choices: ['بنية النظام / معمارية','واجهة المستخدم','قاعدة البيانات','كود المصدر'] },
+  { word: 'User', correct: 'مستخدم', choices: ['مستخدم','خادم','تطبيق','ملف'] },
+  { word: 'Account', correct: 'حساب', choices: ['حساب','ملف','نظام','خادم'] },
+  { word: 'Login', correct: 'تسجيل دخول', choices: ['تسجيل دخول','تسجيل خروج','إنشاء حساب','حذف حساب'] },
+  { word: 'Access', correct: 'وصول / صلاحية الدخول', choices: ['وصول / صلاحية الدخول','تنزيل','رفع','حذف'] },
+  { word: 'Permission', correct: 'إذن / صلاحية', choices: ['إذن / صلاحية','كلمة مرور','اسم مستخدم','بريد إلكتروني'] },
+  { word: 'Role', correct: 'دور / صلاحية المستخدم', choices: ['دور / صلاحية المستخدم','اسم المستخدم','رمز تعريفي','كلمة مرور'] },
+  { word: 'Authentication', correct: 'التحقق من الهوية', choices: ['التحقق من الهوية','تثبيت التطبيق','حذف الحساب','تحديث النظام'] },
+  { word: 'Authorization', correct: 'تفويض / منح الصلاحيات', choices: ['تفويض / منح الصلاحيات','تسجيل الدخول','التحقق من الهوية','حذف المستخدم'] },
+  { word: 'API', correct: 'واجهة برمجة التطبيقات', choices: ['واجهة برمجة التطبيقات','نظام تشغيل','بروتوكول أمان','نوع ملف'] },
+  { word: 'Code', correct: 'كود / شيفرة برمجية', choices: ['كود / شيفرة برمجية','ملف نصي','صورة','قاعدة بيانات'] },
+  { word: 'Script', correct: 'سكريبت / ملف أوامر', choices: ['سكريبت / ملف أوامر','صورة','جدول بيانات','خادم'] },
+  { word: 'Framework', correct: 'إطار عمل برمجي', choices: ['إطار عمل برمجي','قاعدة بيانات','خادم','واجهة مستخدم'] },
+  { word: 'Library', correct: 'مكتبة برمجية', choices: ['مكتبة برمجية','قاعدة بيانات','ملف نصي','خادم'] },
+  { word: 'Repository', correct: 'مستودع الكود (ريبو)', choices: ['مستودع الكود (ريبو)','خادم الملفات','قاعدة البيانات','نظام التشغيل'] },
+  { word: 'Commit', correct: 'حفظ التغييرات في المستودع', choices: ['حفظ التغييرات في المستودع','حذف الكود','نشر التطبيق','اختبار البرنامج'] },
+  { word: 'Deployment', correct: 'نشر التطبيق / الإطلاق', choices: ['نشر التطبيق / الإطلاق','تطوير الكود','اختبار النظام','تصميم الواجهة'] },
+  { word: 'Integration', correct: 'تكامل / ربط الأنظمة', choices: ['تكامل / ربط الأنظمة','تطوير مستقل','حذف النظام','نسخ البيانات'] },
+  { word: 'Version', correct: 'إصدار / نسخة', choices: ['إصدار / نسخة','تحديث','خادم','قاعدة بيانات'] },
+  { word: 'Update', correct: 'تحديث', choices: ['تحديث','حذف','تثبيت','نسخ'] },
+  { word: 'Installation', correct: 'تثبيت', choices: ['تثبيت','حذف','تشغيل','إيقاف'] },
+  { word: 'Setup', correct: 'إعداد / ضبط', choices: ['إعداد / ضبط','تثبيت','حذف','تشغيل'] },
+  { word: 'Configuration', correct: 'إعدادات / تهيئة النظام', choices: ['إعدادات / تهيئة النظام','واجهة المستخدم','قاعدة البيانات','كود المصدر'] },
+  { word: 'Install', correct: 'يثبّت (برنامجاً)', choices: ['يثبّت (برنامجاً)','يحذف','يشغّل','يوقف'] },
+  { word: 'Testing', correct: 'اختبار / جودة', choices: ['اختبار / جودة','تطوير','نشر','تصميم'] },
+  { word: 'Debug', correct: 'تصحيح الأخطاء', choices: ['تصحيح الأخطاء','إضافة ميزة','نشر التطبيق','تحديث النظام'] },
+  { word: 'Error', correct: 'خطأ / رسالة خطأ', choices: ['خطأ / رسالة خطأ','نجاح','تحديث','إشعار'] },
+  { word: 'Bug', correct: 'خلل برمجي', choices: ['خلل برمجي','تحديث ناجح','ميزة جديدة','إصدار نهائي'] },
+  { word: 'Fix', correct: 'إصلاح / حل مشكلة', choices: ['إصلاح / حل مشكلة','إضافة ميزة','حذف الكود','نشر التطبيق'] },
+  { word: 'Technical Issue', correct: 'مشكلة تقنية', choices: ['مشكلة تقنية','طلب ميزة','تحديث النظام','اجتماع فريق'] },
+  { word: 'Incident', correct: 'حادثة / عطل مفاجئ', choices: ['حادثة / عطل مفاجئ','اجتماع','تحديث','ميزة'] },
+  { word: 'Diagnose', correct: 'يشخّص المشكلة', choices: ['يشخّص المشكلة','يصلح الخطأ','ينشر التحديث','يكتب الكود'] },
+  { word: 'Resolve', correct: 'يحل / يُغلق المشكلة', choices: ['يحل / يُغلق المشكلة','يفتح طلباً','يؤجل المهمة','يرفع التقرير'] },
+  { word: 'Escalate', correct: 'يُصعّد / يرفع لجهة أعلى', choices: ['يُصعّد / يرفع لجهة أعلى','يُغلق التذكرة','يكتب الكود','يختبر النظام'] },
+  { word: 'Verify', correct: 'يتحقق / يُؤكد', choices: ['يتحقق / يُؤكد','يحذف','يُعدّل','ينشر'] },
+  { word: 'Dashboard', correct: 'لوحة التحكم', choices: ['لوحة التحكم','قاعدة بيانات','واجهة برمجة','خادم'] },
+  { word: 'Support', correct: 'دعم فني', choices: ['دعم فني','تطوير','تصميم','اختبار'] },
+  { word: 'Ticket', correct: 'تذكرة دعم / طلب', choices: ['تذكرة دعم / طلب','رسالة','ملف','تقرير'] },
+  { word: 'Support Ticket', correct: 'تذكرة الدعم الفني', choices: ['تذكرة الدعم الفني','تقرير الأداء','طلب الميزة','بريد إلكتروني'] },
+  { word: 'Customer Request', correct: 'طلب العميل', choices: ['طلب العميل','تقرير داخلي','خطأ برمجي','تحديث النظام'] },
+  { word: 'Change Request', correct: 'طلب تغيير / تعديل', choices: ['طلب تغيير / تعديل','تقرير خطأ','اجتماع فريق','نشر تحديث'] },
+  { word: 'Client', correct: 'عميل / طرف منتفع', choices: ['عميل / طرف منتفع','خادم','قاعدة بيانات','واجهة'] },
+  { word: 'Customer', correct: 'زبون / عميل', choices: ['زبون / عميل','موظف','مطور','مدير'] },
+  { word: 'Vendor', correct: 'مورّد / شركة توريد', choices: ['مورّد / شركة توريد','عميل','مستخدم','مطور'] },
+  { word: 'Stakeholder', correct: 'صاحب مصلحة / أصحاب العلاقة', choices: ['صاحب مصلحة / أصحاب العلاقة','مطور','مختبر','مصمم'] },
+  { word: 'Meeting', correct: 'اجتماع', choices: ['اجتماع','تقرير','مهمة','نشر'] },
+  { word: 'Presentation', correct: 'عرض تقديمي', choices: ['عرض تقديمي','تقرير مكتوب','اجتماع','ورشة عمل'] },
+  { word: 'Feature', correct: 'ميزة / خاصية', choices: ['ميزة / خاصية','خطأ','تحديث','إعداد'] },
+  { word: 'Function', correct: 'وظيفة / دالة برمجية', choices: ['وظيفة / دالة برمجية','متغير','قاعدة بيانات','واجهة'] },
+  { word: 'Service', correct: 'خدمة', choices: ['خدمة','منتج','ميزة','برنامج'] },
+  { word: 'Product', correct: 'منتج', choices: ['منتج','خدمة','ميزة','تطبيق'] },
+  { word: 'Encryption', correct: 'تشفير', choices: ['تشفير','نسخ احتياطي','تحديث','تنزيل'] },
+  { word: 'Backup', correct: 'نسخة احتياطية', choices: ['نسخة احتياطية','رابط معطل','رسالة خطأ','ملف مضغوط'] },
+  { word: 'Restore', correct: 'استعادة البيانات', choices: ['استعادة البيانات','حذف البيانات','تشفير الملفات','ضغط الملفات'] },
+  { word: 'Firewall', correct: 'جدار حماية', choices: ['جدار حماية','متصفح','مزود خدمة','محرك بحث'] },
+  { word: 'Monitoring', correct: 'مراقبة النظام', choices: ['مراقبة النظام','تطوير الكود','تصميم الواجهة','اختبار الوحدات'] },
+  { word: 'Log', correct: 'سجل النظام / اللوق', choices: ['سجل النظام / اللوق','ملف البيانات','قاعدة البيانات','رسالة الخطأ'] },
+  { word: 'Performance', correct: 'أداء النظام', choices: ['أداء النظام','تصميم الواجهة','كود المصدر','قاعدة البيانات'] },
+  { word: 'Dataset', correct: 'مجموعة بيانات', choices: ['مجموعة بيانات','برنامج','خادم','واجهة'] },
+  { word: 'Analytics', correct: 'تحليلات / إحصاءات', choices: ['تحليلات / إحصاءات','برمجة','تصميم','نشر'] },
+  { word: 'Analysis', correct: 'تحليل', choices: ['تحليل','تصميم','تطوير','نشر'] },
+  { word: 'Export', correct: 'تصدير البيانات', choices: ['تصدير البيانات','استيراد البيانات','حذف البيانات','تشفير البيانات'] },
+  { word: 'Import', correct: 'استيراد البيانات', choices: ['استيراد البيانات','تصدير البيانات','حذف البيانات','نسخ البيانات'] },
+  { word: 'Process', correct: 'عملية / إجراء', choices: ['عملية / إجراء','ملف','خادم','تطبيق'] },
+  { word: 'Workflow', correct: 'سير العمل / تدفق المهام', choices: ['سير العمل / تدفق المهام','قاعدة بيانات','كود مصدر','واجهة مستخدم'] },
+  { word: 'Task', correct: 'مهمة', choices: ['مهمة','اجتماع','تقرير','ملف'] },
+  { word: 'Timeline', correct: 'جدول زمني', choices: ['جدول زمني','خطة ميزانية','قائمة مهام','تقرير أداء'] },
+  { word: 'Milestone', correct: 'معلم / إنجاز رئيسي', choices: ['معلم / إنجاز رئيسي','مهمة يومية','تقرير أسبوعي','اجتماع دوري'] },
+  { word: 'Approval', correct: 'موافقة / اعتماد', choices: ['موافقة / اعتماد','رفض','تأجيل','مراجعة'] },
+  { word: 'Request', correct: 'طلب', choices: ['طلب','تقرير','اجتماع','ملاحظة'] },
+  { word: 'Scope', correct: 'نطاق العمل / الحجم', choices: ['نطاق العمل / الحجم','جدول زمني','ميزانية','فريق العمل'] },
+  { word: 'Specification', correct: 'مواصفات / متطلبات تفصيلية', choices: ['مواصفات / متطلبات تفصيلية','تقرير الأداء','سجل الأخطاء','خطة المشروع'] },
+  { word: 'Requirement Analysis', correct: 'تحليل المتطلبات', choices: ['تحليل المتطلبات','اختبار النظام','نشر التطبيق','تصميم الواجهة'] },
+  { word: 'User Story', correct: 'قصة المستخدم (وصف الاحتياج)', choices: ['قصة المستخدم (وصف الاحتياج)','تقرير الأخطاء','وثيقة المواصفات','خطة الاختبار'] },
+  { word: 'Use Case', correct: 'حالة استخدام', choices: ['حالة استخدام','قصة المستخدم','خطة المشروع','تقرير الأداء'] },
+  { word: 'Acceptance Criteria', correct: 'معايير القبول', choices: ['معايير القبول','خطة الاختبار','مواصفات التصميم','تقرير الخطأ'] },
+  { word: 'Functional Requirement', correct: 'متطلب وظيفي', choices: ['متطلب وظيفي','متطلب غير وظيفي','تقرير أداء','حالة استخدام'] },
+  { word: 'Non-Functional Requirement', correct: 'متطلب غير وظيفي', choices: ['متطلب غير وظيفي','متطلب وظيفي','معيار القبول','قصة المستخدم'] },
+  { word: 'Requirements Gathering', correct: 'جمع المتطلبات', choices: ['جمع المتطلبات','اختبار النظام','نشر التطبيق','تصميم قاعدة البيانات'] },
+  { word: 'Requirement Traceability Matrix', correct: 'مصفوفة تتبع المتطلبات', choices: ['مصفوفة تتبع المتطلبات','خطة المشروع','تقرير الأداء','وثيقة التصميم'] },
+  { word: 'Business Rule', correct: 'قاعدة عمل / قاعدة أعمال', choices: ['قاعدة عمل / قاعدة أعمال','قانون برمجي','متطلب تقني','إجراء نظامي'] },
+  { word: 'Business Process', correct: 'عملية تجارية / إجراء عمل', choices: ['عملية تجارية / إجراء عمل','كود مصدر','نظام تشغيل','واجهة مستخدم'] },
+  { word: 'Process Flow', correct: 'تدفق العمليات / مخطط الإجراءات', choices: ['تدفق العمليات / مخطط الإجراءات','قائمة المهام','جدول زمني','تقرير شهري'] },
+  { word: 'Current State', correct: 'الوضع الحالي / الحالة الراهنة', choices: ['الوضع الحالي / الحالة الراهنة','الحالة المستقبلية','الحالة المثالية','النموذج المقترح'] },
+  { word: 'Future State', correct: 'الحالة المستقبلية / الوضع المأمول', choices: ['الحالة المستقبلية / الوضع المأمول','الوضع الحالي','الحالة السابقة','نموذج الاختبار'] },
+  { word: 'Workshop', correct: 'ورشة عمل', choices: ['ورشة عمل','اجتماع عادي','عرض تقديمي','تقرير'] },
+  { word: 'Interview', correct: 'مقابلة / لقاء استكشافي', choices: ['مقابلة / لقاء استكشافي','اختبار','ورشة عمل','تقرير'] },
+  { word: 'Questionnaire', correct: 'استبيان / استمارة أسئلة', choices: ['استبيان / استمارة أسئلة','تقرير','محضر اجتماع','وثيقة مواصفات'] },
+  { word: 'Algorithm', correct: 'خوارزمية', choices: ['خوارزمية','برنامج تشغيل','واجهة','رمز'] },
+  { word: 'Bandwidth', correct: 'عرض النطاق الترددي', choices: ['عرض النطاق الترددي','سرعة المعالج','حجم الذاكرة','نوع الشبكة'] },
+  { word: 'Open Source', correct: 'مفتوح المصدر', choices: ['مفتوح المصدر','مدفوع فقط','مغلق تماماً','تجريبي'] },
+  { word: 'Latency', correct: 'زمن الاستجابة / التأخير', choices: ['زمن الاستجابة / التأخير','سرعة التحميل القصوى','حجم الملف','عدد المستخدمين'] },
+  { word: 'Upload', correct: 'رفع / تحميل إلى السيرفر', choices: ['رفع / تحميل إلى السيرفر','تنزيل من الإنترنت','حذف نهائي','تثبيت برنامج'] },
+  { word: 'Cybersecurity', correct: 'الأمن السيبراني', choices: ['الأمن السيبراني','تصميم الجرافيك','برمجة التطبيقات','إدارة الشبكات فقط'] },
+  { word: 'Interface', correct: 'واجهة المستخدم', choices: ['واجهة المستخدم','كابل توصيل','نظام تبريد','بطارية'] },
+  { word: 'Cloud Computing', correct: 'الحوسبة السحابية', choices: ['الحوسبة السحابية','الذكاء الاصطناعي','أمن المعلومات','تطوير الويب'] },
+  { word: 'Bandwidth Throttling', correct: 'تقييد سرعة الإنترنت', choices: ['تقييد سرعة الإنترنت','زيادة سرعة المعالج','حذف الكوكيز','تشغيل البرنامج'] },
+  { word: 'Debugging', correct: 'تصحيح الأخطاء البرمجية', choices: ['تصحيح الأخطاء البرمجية','حذف الملفات','تثبيت البرنامج','تشغيل الجهاز'] },
+];
+
+const techDefBank = [
+  { definition: 'A computer program that manages and organizes data so it can be easily accessed, updated, and retrieved.', correct: 'Database', choices: ['Database','Server','API','Repository'] },
+  { definition: 'A remote computer that provides resources, data, or services to other computers over a network.', correct: 'Server', choices: ['Server','Client','Terminal','Router'] },
+  { definition: 'A set of rules and protocols that allows different software applications to communicate with each other.', correct: 'API', choices: ['API','SDK','Framework','Library'] },
+  { definition: 'The process of finding and fixing errors or defects in software code.', correct: 'Debugging', choices: ['Debugging','Testing','Deploying','Compiling'] },
+  { definition: 'A flaw or mistake in a software program that causes it to produce incorrect or unexpected results.', correct: 'Bug', choices: ['Bug','Error','Warning','Exception'] },
+  { definition: 'The process of making a software application available and operational in a live environment.', correct: 'Deployment', choices: ['Deployment','Installation','Compilation','Integration'] },
+  { definition: 'The method of scrambling data so that only authorized users with the correct key can read it.', correct: 'Encryption', choices: ['Encryption','Compression','Authentication','Backup'] },
+  { definition: 'A security system that monitors and controls incoming and outgoing network traffic based on security rules.', correct: 'Firewall', choices: ['Firewall','VPN','Antivirus','Proxy'] },
+  { definition: 'A copy of data or software created to restore the original in case of data loss or system failure.', correct: 'Backup', choices: ['Backup','Archive','Log','Snapshot'] },
+  { definition: 'The process of verifying the identity of a user or system before granting access.', correct: 'Authentication', choices: ['Authentication','Authorization','Validation','Verification'] },
+  { definition: 'The process of granting or denying specific permissions to a verified user or system.', correct: 'Authorization', choices: ['Authorization','Authentication','Access Control','Permission'] },
+  { definition: 'The speed and efficiency with which a system or application processes tasks and responds to requests.', correct: 'Performance', choices: ['Performance','Latency','Throughput','Bandwidth'] },
+  { definition: 'A centralized visual display that shows key metrics, data, and system status at a glance.', correct: 'Dashboard', choices: ['Dashboard','Interface','Monitor','Panel'] },
+  { definition: 'A pre-built collection of code and tools that provides a foundation for developing applications.', correct: 'Framework', choices: ['Framework','Library','SDK','Plugin'] },
+  { definition: 'A collection of pre-written code that developers can use to perform common tasks without writing code from scratch.', correct: 'Library', choices: ['Library','Framework','Module','Package'] },
+  { definition: 'A storage location where code is kept, tracked, and managed, usually with version history.', correct: 'Repository', choices: ['Repository','Database','Archive','Directory'] },
+  { definition: 'A record of events, errors, or actions that occurred in a system, used for monitoring and troubleshooting.', correct: 'Log', choices: ['Log','Report','Audit','Trace'] },
+  { definition: 'The structure and design of a system, defining how its components are organized and interact.', correct: 'Architecture', choices: ['Architecture','Design','Blueprint','Schema'] },
+  { definition: 'The process of combining different systems, services, or APIs so they work together seamlessly.', correct: 'Integration', choices: ['Integration','Deployment','Synchronization','Migration'] },
+  { definition: 'The practice of protecting systems, networks, and programs from digital attacks or unauthorized access.', correct: 'Cybersecurity', choices: ['Cybersecurity','Firewall','Antivirus','Encryption'] },
+  { definition: 'The delivery of computing services — including servers, storage, and software — over the internet.', correct: 'Cloud Computing', choices: ['Cloud Computing','Virtualization','Hosting','Networking'] },
+  { definition: 'The time delay between a request being sent and the response being received in a network.', correct: 'Latency', choices: ['Latency','Bandwidth','Throughput','Ping'] },
+  { definition: 'The process of restoring data or a system back to a previous working state after failure or data loss.', correct: 'Restore', choices: ['Restore','Recover','Reload','Reset'] },
+  { definition: 'The continuous tracking and observation of a system or application to detect issues and ensure normal operation.', correct: 'Monitoring', choices: ['Monitoring','Logging','Auditing','Reporting'] },
+  { definition: 'A description of what a system should do from the perspective of an end user, usually written as a short narrative.', correct: 'User Story', choices: ['User Story','Use Case','Requirement','Feature'] },
+  { definition: 'A description of a specific interaction between a user and a system to achieve a particular goal.', correct: 'Use Case', choices: ['Use Case','Workflow','Process Flow','Sequence Diagram'] },
+  { definition: 'The conditions that must be met for a feature or requirement to be considered complete and accepted.', correct: 'Acceptance Criteria', choices: ['Acceptance Criteria','Definition of Done','Test Case','Quality Gate'] },
+  { definition: 'The boundaries that define what is included and excluded in a project or system.', correct: 'Scope', choices: ['Scope','Requirement','Objective','Milestone'] },
+  { definition: 'A significant achievement or checkpoint in a project that marks the completion of a key phase.', correct: 'Milestone', choices: ['Milestone','Task','Deadline','Sprint'] },
+  { definition: 'The sequence of steps or tasks that must be completed to accomplish a business process or goal.', correct: 'Workflow', choices: ['Workflow','Process','Pipeline','Procedure'] },
+  { definition: 'A specific version or release of software that is live and being used by real users in the real environment.', correct: 'Production', choices: ['Production','Staging','Testing','Development'] },
+  { definition: 'An unexpected interruption or degradation of a service that affects users or business operations.', correct: 'Incident', choices: ['Incident','Bug','Error','Issue'] },
+  { definition: 'The process of transferring an issue or problem to a higher level of support or management when it cannot be resolved at the current level.', correct: 'Escalate', choices: ['Escalate','Delegate','Assign','Transfer'] },
+  { definition: 'A formal request to make a specific change to a system, process, or document.', correct: 'Change Request', choices: ['Change Request','Bug Report','Feature Request','Support Ticket'] },
+  { definition: 'A set of rules that governs how a business operates or makes decisions.', correct: 'Business Rule', choices: ['Business Rule','Policy','Regulation','Constraint'] },
+  { definition: 'The current way a business or system operates before any changes or improvements are made.', correct: 'Current State', choices: ['Current State','Baseline','As-Is','Status Quo'] },
+  { definition: 'The desired or planned way a business or system will operate after improvements are implemented.', correct: 'Future State', choices: ['Future State','Target State','To-Be','Goal State'] },
+  { definition: 'The process of collecting information about what stakeholders need a system to do.', correct: 'Requirements Gathering', choices: ['Requirements Gathering','Needs Analysis','Discovery','Research'] },
+  { definition: 'A document that links each requirement to its source, design, test, and implementation to ensure nothing is missed.', correct: 'Requirement Traceability Matrix', choices: ['Requirement Traceability Matrix','Test Plan','Specification Document','Project Charter'] },
+  { definition: 'A structured meeting or session where participants collaborate to solve problems or learn new skills together.', correct: 'Workshop', choices: ['Workshop','Meeting','Training','Seminar'] },
+  { definition: 'The visual representation of how data or tasks move through a system from start to finish.', correct: 'Process Flow', choices: ['Process Flow','Workflow','Data Flow','Sequence Diagram'] },
+  { definition: 'Software or code that can be freely used, modified, and distributed by anyone.', correct: 'Open Source', choices: ['Open Source','Freeware','Shareware','Public Domain'] },
+  { definition: 'The act of saving a set of changes to a version control repository with a descriptive message.', correct: 'Commit', choices: ['Commit','Push','Merge','Pull'] },
+  { definition: 'The process of identifying the root cause of a technical problem or system failure.', correct: 'Diagnose', choices: ['Diagnose','Troubleshoot','Analyze','Investigate'] },
+  { definition: 'A structured form used to collect information or feedback from a group of people.', correct: 'Questionnaire', choices: ['Questionnaire','Survey','Interview','Form'] },
+];
+
+const scenarioBank = [
+  { scenario: "A user reports that the app crashes every time they try to upload a photo. The support team logs the issue and assigns it to a developer to investigate.", correct: 'Bug', choices: ['Bug','Feature','Update','Backup'] },
+  { scenario: "The development team finished building the new payment feature and is now making it live for all customers to use.", correct: 'Deployment', choices: ['Deployment','Testing','Debugging','Installation'] },
+  { scenario: "Before customers can log in to their accounts, the system checks their username and password to confirm they are who they claim to be.", correct: 'Authentication', choices: ['Authentication','Authorization','Encryption','Verification'] },
+  { scenario: "After confirming who the user is, the system checks what actions they are allowed to perform — for example, only managers can delete records.", correct: 'Authorization', choices: ['Authorization','Authentication','Permission Request','Login'] },
+  { scenario: "The company's main website suddenly went offline for two hours, affecting thousands of customers. The IT team had to act immediately to bring it back.", correct: 'Incident', choices: ['Incident','Bug','Maintenance','Update'] },
+  { scenario: "A support agent could not solve a customer's complex technical problem, so they passed the case to a senior engineer for further help.", correct: 'Escalate', choices: ['Escalate','Resolve','Diagnose','Close'] },
+  { scenario: "Before launching the new app, the QA team spends two weeks checking every feature to make sure nothing is broken.", correct: 'Testing', choices: ['Testing','Deployment','Debugging','Monitoring'] },
+  { scenario: "A company stores a daily copy of all its important data on a separate server, so if anything is lost or corrupted, they can recover it.", correct: 'Backup', choices: ['Backup','Restore','Archive','Snapshot'] },
+  { scenario: "A hacker tried to access the company's internal network, but the security system blocked the unauthorized traffic automatically.", correct: 'Firewall', choices: ['Firewall','Antivirus','VPN','Encryption'] },
+  { scenario: "The marketing team wants to connect their email system directly with the company's customer database so information updates automatically in both places.", correct: 'Integration', choices: ['Integration','Migration','Synchronization','Deployment'] },
+  { scenario: "A project manager creates a document describing exactly what a new feature should do, who will use it, and what problem it solves, before development starts.", correct: 'Specification', choices: ['Specification','User Story','Use Case','Business Rule'] },
+  { scenario: "During a meeting, the business analyst asks several employees questions to understand what they need from the new system.", correct: 'Requirements Gathering', choices: ['Requirements Gathering','Interview','Workshop','Analysis'] },
+  { scenario: "The team reaches an important point in the project — the first version of the app is ready for internal testing — and everyone celebrates this achievement.", correct: 'Milestone', choices: ['Milestone','Deadline','Sprint','Deliverable'] },
+  { scenario: "A customer asks the company to add a new payment option that wasn't part of the original plan, so the project manager has to formally document and approve this change.", correct: 'Change Request', choices: ['Change Request','Bug Report','Feature Request','Support Ticket'] },
+  { scenario: "An online store experiences a huge increase in visitors during a sale, and the website becomes very slow because it can't handle so many users at once.", correct: 'Performance', choices: ['Performance','Bandwidth','Latency','Throughput'] },
+  { scenario: "A developer writes a small piece of code that automatically checks server health every five minutes and sends an alert if something goes wrong.", correct: 'Monitoring', choices: ['Monitoring','Logging','Testing','Debugging'] },
+  { scenario: "The IT team wants to know exactly which files changed and who changed them, so they check the system's recorded history of all activity.", correct: 'Log', choices: ['Log','Backup','Report','Audit'] },
+  { scenario: "A software engineer downloads a free, publicly available code library that anyone can use, modify, and share without paying.", correct: 'Open Source', choices: ['Open Source','Freeware','License','Subscription'] },
+  { scenario: "The team draws a diagram showing each step a customer order goes through, from placing the order to receiving the product.", correct: 'Process Flow', choices: ['Process Flow','Workflow','User Story','Use Case'] },
+  { scenario: "A business analyst writes: 'As a customer, I want to reset my password by email so that I can regain access to my account quickly.'", correct: 'User Story', choices: ['User Story','Use Case','Requirement','Acceptance Criteria'] },
+  { scenario: "Before the new feature is marked complete, the team checks a list of specific conditions it must meet — such as loading in under 2 seconds and working on mobile devices.", correct: 'Acceptance Criteria', choices: ['Acceptance Criteria','Specification','Definition of Done','Test Case'] },
+  { scenario: "A company is currently doing all of its invoicing manually on paper. A consultant documents this process before suggesting any improvements.", correct: 'Current State', choices: ['Current State','Future State','Baseline','Workflow'] },
+  { scenario: "After analyzing the company's manual invoicing process, the consultant designs a new automated system showing how things should work after the improvements.", correct: 'Future State', choices: ['Future State','Current State','Process Flow','Specification'] },
+  { scenario: "The company sets a clear rule: 'Any order above $1000 must be approved by a manager before it is processed.'", correct: 'Business Rule', choices: ['Business Rule','Policy','Workflow','Acceptance Criteria'] },
+  { scenario: "An employee saves their latest code changes to the shared project repository with a short message describing what was changed.", correct: 'Commit', choices: ['Commit','Push','Deploy','Merge'] },
+  { scenario: "A new employee needs special software installed on their laptop before they can start working, so the IT department sets everything up for them.", correct: 'Setup', choices: ['Setup','Configuration','Installation','Onboarding'] },
+  { scenario: "After noticing the app keeps crashing, the developer investigates step by step to find the exact part of the code that's causing the problem.", correct: 'Diagnose', choices: ['Diagnose','Resolve','Escalate','Verify'] },
+  { scenario: "Once the technical problem is found, the developer applies a solution so the application works correctly again.", correct: 'Resolve', choices: ['Resolve','Diagnose','Escalate','Report'] },
+  { scenario: "A manager needs to present project progress to senior leadership, so they prepare slides summarizing key achievements and next steps.", correct: 'Presentation', choices: ['Presentation','Meeting','Report','Workshop'] },
+  { scenario: "The development team uses a separate version of the system, identical to the live one, to test new features safely before releasing them to real users.", correct: 'Production', choices: ['Production','Staging','Development','Sandbox'] },
+];
+
+/* ================= DIFFICULTY TIERS ================= */
 function splitTiers(bank) {
-  const size = Math.ceil(bank.length / 3) || 1;
-  return { 1: bank.slice(0, size), 2: bank.slice(size, size * 2), 3: bank.slice(size * 2) };
+  const size = Math.ceil(bank.length / 3);
+  return {
+    1: bank.slice(0, size),
+    2: bank.slice(size, size * 2),
+    3: bank.slice(size * 2)
+  };
 }
 
 const orderBankTiers = splitTiers(orderBank);
@@ -686,289 +1027,126 @@ const techDefBankTiers = splitTiers(techDefBank);
 const scenarioBankTiers = splitTiers(scenarioBank);
 
 const tieredBanks = {
-  vocab: vocabBank, order: orderBankTiers, sentence: sentenceBankTiers,
-  tech: techBankTiers, techdef: techDefBankTiers, scenario: scenarioBankTiers
+  vocab: vocabBank,
+  order: orderBankTiers,
+  sentence: sentenceBankTiers,
+  tech: techBankTiers,
+  techdef: techDefBankTiers,
+  scenario: scenarioBankTiers
 };
+
 const modeTotals = { vocab: 10, order: 8, sentence: 10, tech: 10, techdef: 10, scenario: 10 };
 
-/* ================= STATE & USER SYSTEM ================= */
-let currentUser = localStorage.getItem('husseinEngUser') || '';
-let adminFailedAttempts = 0; // نظام حماية الأدمن المتغير الجديد
+/* ================= STATE ================= */
 let mode = '';
 let current = 0;
-let score = 0; 
+let score = 0;
 let correctCount = 0;
 let answered = false;
-let totalMistakesInMode = 0; 
+let consecutiveMistakesInRound = 0; 
+let timerInterval = null;
+let timeLeft = 30;
 
 let streak = { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
 let bestStreak = { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
+
 let roundMistakes = [];
-let current_q = null;
+
+function diffFromStreak(s) {
+  if (s >= 6) return 3;
+  if (s >= 3) return 2;
+  return 1;
+}
+
 let orderTargetWords = [];
 let orderPlaced = [];
 
-function getUsersData() {
-    return JSON.parse(localStorage.getItem('husseinEngUsersData')) || {};
-}
-function saveUsersData(data) {
-    localStorage.setItem('husseinEngUsersData', JSON.stringify(data));
-}
+const usedIdKeys = [
+  'vocab1', 'vocab2', 'vocab3',
+  'order1', 'order2', 'order3',
+  'sentence1', 'sentence2', 'sentence3',
+  'tech1', 'tech2', 'tech3',
+  'techdef1', 'techdef2', 'techdef3',
+  'scenario1', 'scenario2', 'scenario3'
+];
 
-// دالة الكتابة البطيئة للمتطفلين
-function typeSlowly(text, element, callback) {
-    element.textContent = "";
-    let i = 0;
-    let timer = setInterval(() => {
-        element.textContent += text.charAt(i);
-        i++;
-        if (i >= text.length) {
-            clearInterval(timer);
-            if (callback) callback();
-        }
-    }, 80);
+function freshUsedIds() {
+  const obj = {};
+  usedIdKeys.forEach(k => obj[k] = new Set());
+  return obj;
 }
 
-function loginUser() {
-    const input = document.getElementById('usernameInput').value.trim();
-    const errorDiv = document.getElementById('loginError');
-    if(!input) {
-        errorDiv.textContent = 'الرجاء إدخال اسمك!';
-        return;
-    }
+// usedIds يبدأ فارغ، ويتم تحميله من بيانات المستخدم الحالي عند تسجيل الدخول (loadUsedIdsForUser)
+let usedIds = freshUsedIds();
 
-    // التحقق من الأدمن
-    if (input === 'HSZO') {
-        checkAdminPassword(input);
-        return;
-    }
-    
-    proceedLogin(input);
-}
-
-function checkAdminPassword(username) {
-    let pass = prompt("أدخل رمز الأدمن (Hs):");
-    const errorDiv = document.getElementById('loginError');
-    const inputField = document.getElementById('usernameInput');
-    const loginBtn = document.querySelector('#loginScreen .check-btn');
-
-    if (pass === 'Hs') {
-        adminFailedAttempts = 0;
-        proceedLogin(username);
-    } else {
-        adminFailedAttempts++;
-        if (adminFailedAttempts === 2) {
-            speakArabic("يا دلخ");
-            alert("يا دلخ!");
-            checkAdminPassword(username); // محاولة جديدة
-        } else if (adminFailedAttempts >= 3) {
-            speakArabic("أنت كمخه عشان كذا راح تتقفل عليك القائمة");
-            errorDiv.style.color = "var(--red)";
-            inputField.disabled = true;
-            if(loginBtn) loginBtn.disabled = true;
-            
-            typeSlowly("أنت كمخه عشان كذا راح تتقفل عليك القائمة...", errorDiv, () => {
-                setTimeout(() => {
-                    location.reload(); // طرد وتحديث الصفحة
-                }, 1500);
-            });
-        } else {
-            checkAdminPassword(username); // خطأ أول
-        }
-    }
-}
-
-function proceedLogin(username) {
-    currentUser = username;
-    localStorage.setItem('husseinEngUser', currentUser);
-    
-    let data = getUsersData();
-    // تهيئة سجل الأسئلة (usedQs) لكل مستخدم لضمان عدم تكرار الأسئلة
-    if(!data[currentUser]) {
-        data[currentUser] = { xp: 0, lockedModes: {}, usedQs: {} };
-        saveUsersData(data);
-    } else if (!data[currentUser].usedQs) {
-        data[currentUser].usedQs = {};
-        saveUsersData(data);
-    }
-    
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('userBar').classList.remove('hidden');
-    document.getElementById('userGreeting').textContent = 'مرحباً، ' + currentUser;
-    
-    if(currentUser === 'HSZO' || currentUser === 'HSOZ') {
-        document.getElementById('adminLogCard').classList.remove('hidden');
-        document.getElementById('adminEditHint').style.display = 'block';
-    }
-    
-    goHome();
-}
-
-function logoutUser() {
-    currentUser = '';
-    localStorage.removeItem('husseinEngUser');
-    location.reload();
-}
-
-window.onload = () => {
-    if (currentUser) {
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('userBar').classList.remove('hidden');
-        document.getElementById('userGreeting').textContent = 'مرحباً، ' + currentUser;
-        if(currentUser === 'HSZO' || currentUser === 'HSOZ') {
-            document.getElementById('adminLogCard').classList.remove('hidden');
-            document.getElementById('adminEditHint').style.display = 'block';
-        }
-        goHome();
-    }
-};
-
-function renderLeaderboard() {
-    const list = document.getElementById('leaderboardList');
-    if(!list) return;
-    const data = getUsersData();
-    
-    // استبعاد حسابات الأدمن من لوحة الصدارة
-    let users = Object.keys(data)
-        .filter(u => u !== 'HSZO' && u !== 'HSOZ')
-        .map(u => ({ name: u, xp: data[u].xp || 0 }))
-        .sort((a, b) => b.xp - a.xp);
-    
-    let html = '';
-    users.slice(0, currentUser === 'HSZO' ? 50 : 5).forEach((u, i) => {
-        let adminActions = '';
-        if (currentUser === 'HSZO' || currentUser === 'HSOZ') {
-            adminActions = `
-                <button class="admin-btn admin-btn-edit" onclick="editUser('${u.name}')">تعديل</button>
-                <button class="admin-btn admin-btn-delete" onclick="deleteUser('${u.name}')">حذف</button>
-            `;
-        }
-        html += `<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; border-radius:8px;">
-            <div><b>${i+1}. ${u.name}</b></div>
-            <div style="display:flex; gap: 8px; align-items:center;">
-                <span style="color:var(--orange); font-weight:bold;">${u.xp} XP</span>
-                ${adminActions}
-            </div>
-        </div>`;
+// تحميل قائمة الأسئلة المستخدمة سابقاً لهذا المستخدم تحديداً (خاص بكل يوزر، محفوظ بشكل دائم)
+function loadUsedIdsForUser() {
+  usedIds = freshUsedIds();
+  if (!currentUser) return;
+  const data = getUsersData();
+  const saved = data[currentUser] && data[currentUser].usedIds;
+  if (saved) {
+    usedIdKeys.forEach(k => {
+      if (Array.isArray(saved[k])) usedIds[k] = new Set(saved[k]);
     });
-    list.innerHTML = html;
+  }
 }
 
-function editUser(name) {
-    let newXP = prompt(`أدخل نقاط XP الجديدة للمستخدم ${name}:`);
-    if(newXP !== null && !isNaN(newXP)) {
-        let data = getUsersData();
-        data[name].xp = parseInt(newXP);
-        saveUsersData(data);
-        renderLeaderboard();
-    }
+// حفظ قائمة الأسئلة المستخدمة لهذا اليوزر بشكل دائم في التخزين
+function saveUsedIdsForUser() {
+  if (!currentUser) return;
+  const data = getUsersData();
+  if (!data[currentUser]) return;
+  const plain = {};
+  usedIdKeys.forEach(k => plain[k] = Array.from(usedIds[k]));
+  data[currentUser].usedIds = plain;
+  saveUsersData(data);
 }
 
-function deleteUser(name) {
-    if(confirm(`هل أنت متأكد من حذف ${name} بالكامل؟`)) {
-        let data = getUsersData();
-        delete data[name];
-        saveUsersData(data);
-        renderLeaderboard();
-    }
-}
-
-function renderStreakBoard() {
-    const list = document.getElementById('streakList');
-    list.innerHTML = Object.keys(streak).map(m => `
-      <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:8px; text-align:center;">
-         <div style="color:var(--muted); font-size:10px;">${m}</div>
-         <div style="color:var(--orange); font-weight:bold;">${streak[m]} 🔥</div>
-      </div>
-    `).join('');
-}
-
-function applyCategoryVisibility() {
-    if (currentUser === 'HSZO' || currentUser === 'HSOZ') return;
-    const data = getUsersData();
-    const locked = (data[currentUser] && data[currentUser].lockedModes) || {};
-    ['vocab', 'order', 'sentence', 'tech', 'techdef', 'scenario'].forEach(m => {
-        const card = document.getElementById('card_' + m);
-        if(card) {
-            if(locked[m]) {
-                card.style.opacity = '0.4';
-                card.style.pointerEvents = 'none';
-                card.style.filter = 'grayscale(100%)';
-            } else {
-                card.style.opacity = '1';
-                card.style.pointerEvents = 'auto';
-                card.style.filter = 'none';
-            }
-        }
-    });
-}
-
-function saveStreakForUser() { renderStreakBoard(); }
-function diffFromStreak(s) { if (s >= 6) return 3; if (s >= 3) return 2; return 1; }
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
-// نظام الأسئلة الذكي والمستقل لكل مستخدم
-function pickUnused(bank, modeKey) {
-  if(!bank || bank.length === 0) return { word: 'End', correct: 'End', choices: ['End'] }; // Fallback
-  
-  let data = getUsersData();
-  let userQs = data[currentUser].usedQs || {};
-  let usedSetArray = userQs[modeKey] || [];
-  
-  // جلب الأسئلة المتاحة التي لم يحلها هذا المستخدم بالتحديد
-  let available = bank.map((_, i) => i).filter(i => !usedSetArray.includes(i));
-  
-  // إذا أنهى جميع الأسئلة، نقوم بتصفيرها لتبدأ من جديد
+// Anti-Duplication Picker Logic — لا يكرر نفس السؤال لنفس المستخدم حتى تنتهي كل الأسئلة بذاك المستوى
+function pickUnused(bank, usedSet) {
+  let available = bank.map((_, i) => i).filter(i => !usedSet.has(i));
   if (available.length === 0) {
-    usedSetArray = [];
+    usedSet.clear();
     available = bank.map((_, i) => i);
   }
-  
-  // اختيار عشوائي ذكي يضمن بداية فريدة لكل مستخدم في نفس القائمة
   const idx = available[Math.floor(Math.random() * available.length)];
-  usedSetArray.push(idx);
-  
-  userQs[modeKey] = usedSetArray;
-  data[currentUser].usedQs = userQs;
-  saveUsersData(data);
-  
+  usedSet.add(idx);
+  saveUsedIdsForUser();
   return bank[idx];
 }
 
 function pickForMode(m) {
   const level = diffFromStreak(streak[m]);
   const pool = tieredBanks[m][level];
-  const modeKey = m + level; // مفتاح مميز للمستوى (مثل: vocab1)
-  return pickUnused(pool, modeKey);
+  const usedSet = usedIds[m + level];
+  return pickUnused(pool, usedSet);
 }
 
 function diffBadgeHtml(level) {
-  const map = { 1: ['🟢 سهل (100XP)', 'diff-1'], 2: ['🟠 متوسط (500XP)', 'diff-2'], 3: ['🔴 صعب (1000XP)', 'diff-3'] };
+  const map = { 1: ['🟢 سهل', 'diff-1'], 2: ['🟠 متوسط', 'diff-2'], 3: ['🔴 صعب', 'diff-3'] };
   const [label, cls] = map[level];
   return `<span class="diff-badge ${cls}">${label}</span>`;
 }
 
 function registerAnswer(m, wasCorrect) {
   if (wasCorrect) {
-    let level = diffFromStreak(streak[m]);
-    let earnedXP = (level === 1 ? 100 : level === 2 ? 500 : 1000) + (streak[m] * 5000);
-    score += earnedXP; 
-    
-    if(currentUser) {
-        let data = getUsersData();
-        data[currentUser].xp = (data[currentUser].xp || 0) + earnedXP;
-        saveUsersData(data);
-    }
-
     streak[m]++;
+    consecutiveMistakesInRound = 0; 
     if (streak[m] > bestStreak[m]) bestStreak[m] = streak[m];
     
+    // Check if the user achieved 10 streak to completely open all locked categories
     if (streak[m] >= 10 && currentUser) {
       const data = getUsersData();
       if (data[currentUser] && data[currentUser].lockedModes) {
-        data[currentUser].lockedModes = {};
+        data[currentUser].lockedModes = {}; // Unlock all
         saveUsersData(data);
-        setTimeout(() => { alert("🎉 كفو! حققت ستريك 10 أجوبة صحيحة وتم إلغاء قفل جميع القوائم المغلقة لك!"); applyCategoryVisibility(); }, 600);
+        setTimeout(() => {
+          alert("🎉 كفو! حققت ستريك 10 أجوبة صحيحة وتم إلغاء قفل جميع القوائم المغلقة لك!");
+          applyCategoryVisibility();
+        }, 600);
       }
     }
   } else {
@@ -978,7 +1156,67 @@ function registerAnswer(m, wasCorrect) {
   saveStreakForUser();
 }
 
-/* ================= NEW FEATURE: TEXT-TO-SPEECH (TTS) & AI Voice ================= */
+/* ================= XP SYSTEM (LIVE COMMIT: +1000 صح / -500 خطأ) ================= */
+function commitXP(delta) {
+  score += delta;
+  if (currentUser) {
+    const data = getUsersData();
+    if (data[currentUser]) {
+      data[currentUser].score = (data[currentUser].score || 0) + delta;
+      saveUsersData(data);
+    }
+  }
+  const scoreEl = document.getElementById('scoreNum');
+  if (scoreEl) scoreEl.textContent = score;
+}
+
+/* ================= LOG EXTRA FEATURE FUNCTIONS ================= */
+function getLogs() {
+  try { return JSON.parse(localStorage.getItem('husseinEngLogs')) || []; }
+  catch(e) { return []; }
+}
+
+function logAction(actionText) {
+  if (!currentUser) return;
+  const logs = getLogs();
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' @ ' + now.toLocaleDateString('ar-SA');
+  logs.unshift({ user: currentUser, action: actionText, time: timeStr });
+  if (logs.length > 800) logs.pop();
+  localStorage.setItem('husseinEngLogs', JSON.stringify(logs));
+}
+
+function viewLogs() {
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('logSection').classList.remove('hidden');
+  
+  const logList = document.getElementById('logList');
+  const logs = getLogs();
+  
+  if (logs.length === 0) {
+    logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">لا توجد تفاعلات مسجلة بعد.</div>`;
+    return;
+  }
+  
+  logList.innerHTML = logs.map(l => `
+    <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${l.user === 'HSZO' ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px; color:var(--muted);">
+        <span>👤 يوزر: <b style="color:#fff; font-size:12px;">${l.user}</b></span>
+        <span>🕒 ${l.time}</span>
+      </div>
+      <div style="color:var(--text); font-size:13px; line-height:1.5;">${l.action}</div>
+    </div>
+  `).join('');
+}
+
+function clearAllLogs() {
+  if(confirm("هل أنت متأكد من حذف جميع السجلات؟")) {
+    localStorage.setItem('husseinEngLogs', JSON.stringify([]));
+    viewLogs();
+  }
+}
+
+/* ================= NEW FEATURE: TEXT-TO-SPEECH (TTS) ================= */
 function speakText(text) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -989,6 +1227,7 @@ function speakText(text) {
   }
 }
 
+// ARABIC TTS VOICE FOR MISTAKES
 function speakArabic(text) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -1006,88 +1245,124 @@ function triggerTTS() {
   else if (mode === 'sentence') text = current_q.sentence;
   else if (mode === 'techdef') text = current_q.definition;
   else if (mode === 'scenario') text = current_q.scenario;
+  
   if (text) speakText(text);
 }
 
-function showGhabiText() {
-  const left = document.createElement('div');
-  left.className = 'ghabi-float ghabi-left';
-  left.innerText = 'غبي 🤣';
-  
-  const right = document.createElement('div');
-  right.className = 'ghabi-float ghabi-right';
-  right.innerText = 'غبي 🤣';
+/* ===== NEW FEATURE: FLOATING MISTAKE VISUAL WIDGETS ===== */
+function triggerMistakeVisuals() {
+  const faces = ['🤪', '🤡', '🤬', '🧠❌', '💩'];
+  const pickedFace = faces[Math.floor(Math.random() * faces.length)];
 
-  document.body.appendChild(left);
-  document.body.appendChild(right);
+  const leftBox = document.createElement('div');
+  leftBox.className = 'insult-overlay insult-left';
+  leftBox.textContent = `غبي ${pickedFace}`;
+
+  const rightBox = document.createElement('div');
+  rightBox.className = 'insult-overlay insult-right';
+  rightBox.textContent = `غبي ${pickedFace}`;
+
+  document.body.appendChild(leftBox);
+  document.body.appendChild(rightBox);
 
   setTimeout(() => {
-    left.remove();
-    right.remove();
-  }, 1200);
+    leftBox.remove();
+    rightBox.remove();
+  }, 1300);
 }
 
+// Voice & Forced Locking logic on mistakes
 function handleWrongAnswerVoiceAndLocking() {
-  totalMistakesInMode++; 
+  consecutiveMistakesInRound++;
+  triggerMistakeVisuals();
   
-  if (totalMistakesInMode === 1) {
+  if (consecutiveMistakesInRound === 1) {
     speakArabic("يا غبي");
-    showGhabiText();
-  } else if (totalMistakesInMode === 2) {
+  } else if (consecutiveMistakesInRound === 2) {
     speakArabic("تراك أخطيت ثاني مره يا غبي");
-    showGhabiText();
-  } else if (totalMistakesInMode >= 3) {
+  } else if (consecutiveMistakesInRound >= 3) {
     speakArabic("لا أنت أكمخه يا كمخه");
-    showGhabiText();
     
-    if (currentUser && currentUser !== 'HSZO' && currentUser !== 'HSOZ') {
+    // Lock the category for this user
+    if (currentUser && currentUser !== 'HSZO') {
       const data = getUsersData();
       data[currentUser].lockedModes = data[currentUser].lockedModes || {};
       data[currentUser].lockedModes[mode] = true;
       saveUsersData(data);
     }
     
+    // Force Exit after verbal warning
+    clearInterval(timerInterval);
     setTimeout(() => {
-      alert("🔒 تم طردك وقفل القائمة عليك لأنك أكمخه و أخطأت 3 مرات إجمالية! حقق ستريك 10 في أي قائمة أخرى لفتحها ثاني مرة.");
+      alert("🔒 تم طردك وقفل القائمة عليك لأنك أكمخه! حقق ستريك 10 في أي قائمة أخرى لفتحها ثاني مرة.");
       goHome();
     }, 1500);
   }
 }
 
-/* ================= LOG & NAVIGATION ================= */
-function getLogs() { try { return JSON.parse(localStorage.getItem('husseinEngLogs')) || []; } catch(e) { return []; } }
-function logAction(actionText) {
-  if (!currentUser) return;
-  const logs = getLogs();
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' @ ' + now.toLocaleDateString('ar-SA');
-  logs.unshift({ user: currentUser, action: actionText, time: timeStr });
-  if (logs.length > 800) logs.pop();
-  localStorage.setItem('husseinEngLogs', JSON.stringify(logs));
+/* ================= TIMER CONTROLLER (30 Seconds) ================= */
+function startQuestionTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 30;
+  
+  const timerNum = document.getElementById('timerNum');
+  timerNum.textContent = timeLeft;
+  timerNum.style.color = 'var(--orange)';
+  
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerNum.textContent = timeLeft;
+    
+    if (timeLeft <= 7) {
+      timerNum.style.color = 'var(--red)';
+    }
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeOut();
+    }
+  }, 1000);
 }
 
-function viewLogs() {
-  document.getElementById('homeScreen').classList.add('hidden');
-  document.getElementById('logSection').classList.remove('hidden');
-  const logList = document.getElementById('logList');
-  const logs = getLogs();
-  if (logs.length === 0) {
-    logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">لا توجد تفاعلات مسجلة بعد.</div>`;
-    return;
+function handleTimeOut() {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  if (mode !== 'order') {
+    const allBtns = document.querySelectorAll('.choice-btn');
+    allBtns.forEach(b => {
+      b.disabled = true;
+      if (b.textContent === current_q.correct) b.classList.add('reveal');
+    });
+  } else {
+    document.getElementById('checkBtn').disabled = true;
+    document.querySelectorAll('#orderPool .word-chip').forEach(c => c.style.pointerEvents = 'none');
   }
-  logList.innerHTML = logs.map(l => `
-    <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${l.user === 'HSZO' ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px; color:var(--muted);">
-        <span>👤 يوزر: <b style="color:#fff; font-size:12px;">${l.user}</b></span>
-        <span>🕒 ${l.time}</span>
-      </div>
-      <div style="color:var(--text); font-size:13px; line-height:1.5;">${l.action}</div>
-    </div>
-  `).join('');
-}
-function clearAllLogs() { if(confirm("هل أنت متأكد من حذف جميع السجلات؟")) { localStorage.setItem('husseinEngLogs', JSON.stringify([])); viewLogs(); } }
 
+  registerAnswer(mode, false);
+  commitXP(-500); // -500 XP لانتهاء الوقت (تُعامل كإجابة خاطئة)
+  
+  const currentQuestionText = current_q.word || current_q.sentence || current_q.definition || current_q.scenario || "ترتيب جملة";
+  logAction(`⏱️ انتهى وقت الإجابة (30 ثانية) على السؤال: (${currentQuestionText})`);
+
+  const rightSol = current_q.correct || (current_q.words ? current_q.words.join(' ') : '');
+  document.getElementById('feedback').textContent = '❌ انتهى الوقت! الحل الصحيح: ' + rightSol + ' (-500 XP)';
+  document.getElementById('feedback').className = 'feedback wrong-msg';
+
+  roundMistakes.push({
+    prompt: currentQuestionText,
+    yourAnswer: "انتهى الوقت ⏱️",
+    correct: rightSol
+  });
+
+  handleWrongAnswerVoiceAndLocking();
+  finishAnswer();
+}
+
+/* ================= NAVIGATION ================= */
 function goHome() {
+  clearInterval(timerInterval);
   document.getElementById('homeScreen').classList.remove('hidden');
   document.getElementById('quizSection').classList.add('hidden');
   document.getElementById('resultSection').classList.add('hidden');
@@ -1097,35 +1372,60 @@ function goHome() {
   applyCategoryVisibility();
 }
 
+function handleExitQuiz() {
+  if (confirm("هل أنت متأكد من مغادرة التحدي الحالي؟ تفاعلاتك الحالية ستضيع.")) {
+    goHome();
+  }
+}
+
 function startMode(m) {
-  if (currentUser !== 'HSZO' && currentUser !== 'HSOZ') {
+  // Check if locked or hidden for user
+  if (currentUser !== 'HSZO') {
     const data = getUsersData();
     if (data[currentUser] && data[currentUser].lockedModes && data[currentUser].lockedModes[m]) {
       alert("❌ هذه القائمة مقفلة عليك لأنك أكمخه! لازم تسوي ستريك كامل 10 أجوبة صح في قائمة ثانية وتفتح لك.");
+      return;
+    }
+    let hiddenCats = JSON.parse(localStorage.getItem('husseinEngHiddenCats')) || {};
+    if (hiddenCats[m]) {
+      alert("🔒 هذه القائمة مخفية حالياً من قبل الأدمن.");
       return;
     }
   }
 
   mode = m;
   current = 0; score = 0; correctCount = 0;
-  totalMistakesInMode = 0; 
+  consecutiveMistakesInRound = 0; 
   roundMistakes = [];
 
   document.getElementById('homeScreen').classList.add('hidden');
   document.getElementById('resultSection').classList.add('hidden');
   document.getElementById('quizSection').classList.remove('hidden');
 
-  const titles = { vocab: '📖 كلمات ومعاني', order: '🧩 ترتيب الجملة', sentence: '💬 معنى الجملة', tech: '💻 مفردات تقنية', techdef: '🔬 جملة تقنية', scenario: '🧠 سيناريو تقني' };
+  const titles = {
+    vocab: '📖 كلمات ومعاني',
+    order: '🧩 ترتيب الجملة',
+    sentence: '💬 معنى الجملة',
+    tech: '💻 مفردات تقنية',
+    techdef: '🔬 جملة تقنية',
+    scenario: '🧠 سيناريو تقني'
+  };
   document.getElementById('modeTitle').textContent = titles[m];
+  
   logAction(`بدأ تحدي جديد في طور: [${titles[m]}]`);
+
   loadQuestion();
 }
 
-function totalQuestions() { return modeTotals[mode] || 10; }
+function totalQuestions() {
+  return modeTotals[mode];
+}
 
+/* ================= LOAD QUESTION ================= */
 function loadQuestion() {
   answered = false;
   const total = totalQuestions();
+
   document.getElementById('qNum').textContent = current + 1;
   document.getElementById('scoreNum').textContent = score;
   document.getElementById('correctNum').textContent = correctCount;
@@ -1150,71 +1450,123 @@ function loadQuestion() {
   else if (mode === 'tech') loadTechQuestion();
   else if (mode === 'techdef') loadTechDefQuestion();
   else if (mode === 'scenario') loadScenarioQuestion();
+
+  startQuestionTimer();
 }
 
 function loadVocabQuestion() {
   document.getElementById('mcCard').classList.remove('hidden');
   document.getElementById('choices').classList.remove('hidden');
   document.getElementById('ttsBtn').classList.remove('hidden');
-  const q = pickForMode('vocab'); current_q = q;
-  document.getElementById('badgeRow').innerHTML = diffBadgeHtml(diffFromStreak(streak.vocab)) + `<span class="q-badge">🇬🇧 ما معنى هذه الكلمة بالعربي؟</span>`;
-  document.getElementById('qWord').textContent = q.word; document.getElementById('qWord').classList.remove('hidden');
+
+  const q = pickForMode('vocab');
+  current_q = q;
+
+  document.getElementById('badgeRow').innerHTML =
+    diffBadgeHtml(diffFromStreak(streak.vocab)) +
+    `<span class="q-badge">🇬🇧 ما معنى هذه الكلمة بالعربي؟</span>`;
+
+  document.getElementById('qWord').textContent = q.word;
+  document.getElementById('qWord').classList.remove('hidden');
+
   renderChoices(q.correct, q.choices, (chosen) => registerAnswer('vocab', chosen === q.correct));
 }
+
 function loadSentenceQuestion() {
   document.getElementById('mcCard').classList.remove('hidden');
   document.getElementById('choices').classList.remove('hidden');
   document.getElementById('ttsBtn').classList.remove('hidden');
-  const q = pickForMode('sentence'); current_q = q;
-  document.getElementById('badgeRow').innerHTML = diffBadgeHtml(diffFromStreak(streak.sentence)) + `<span class="q-badge">💬 ماذا تعني هذه الجملة بالعربي؟</span>`;
-  document.getElementById('qSentence').textContent = q.sentence; document.getElementById('qSentence').classList.remove('hidden');
+  
+  const q = pickForMode('sentence');
+  current_q = q;
+
+  document.getElementById('badgeRow').innerHTML =
+    diffBadgeHtml(diffFromStreak(streak.sentence)) +
+    `<span class="q-badge">💬 ماذا تعني هذه الجملة بالعربي؟</span>`;
+  document.getElementById('qSentence').textContent = q.sentence;
+  document.getElementById('qSentence').classList.remove('hidden');
+
   renderChoices(q.correct, q.choices, (chosen) => registerAnswer('sentence', chosen === q.correct));
 }
+
 function loadTechQuestion() {
   document.getElementById('mcCard').classList.remove('hidden');
   document.getElementById('choices').classList.remove('hidden');
   document.getElementById('ttsBtn').classList.remove('hidden');
-  const q = pickForMode('tech'); current_q = q;
-  document.getElementById('badgeRow').innerHTML = diffBadgeHtml(diffFromStreak(streak.tech)) + `<span class="q-badge">💻 ما معنى هذا المصطلح التقني؟</span>`;
-  document.getElementById('qWord').textContent = q.word; document.getElementById('qWord').classList.remove('hidden');
+  
+  const q = pickForMode('tech');
+  current_q = q;
+
+  document.getElementById('badgeRow').innerHTML =
+    diffBadgeHtml(diffFromStreak(streak.tech)) +
+    `<span class="q-badge">💻 ما معنى هذا المصطلح التقني؟</span>`;
+  document.getElementById('qWord').textContent = q.word;
+  document.getElementById('qWord').classList.remove('hidden');
+
   renderChoices(q.correct, q.choices, (chosen) => registerAnswer('tech', chosen === q.correct));
 }
+
 function loadTechDefQuestion() {
   document.getElementById('mcCard').classList.remove('hidden');
   document.getElementById('choices').classList.remove('hidden');
   document.getElementById('ttsBtn').classList.remove('hidden');
-  const q = pickForMode('techdef'); current_q = q;
-  document.getElementById('badgeRow').innerHTML = diffBadgeHtml(diffFromStreak(streak.techdef)) + `<span class="q-badge">🔬 اقرأ التعريف — اختر المصطلح الصحيح</span>`;
-  const sentEl = document.getElementById('qSentence'); sentEl.textContent = q.definition; sentEl.classList.remove('hidden'); sentEl.classList.add('definition-mode');
+  
+  const q = pickForMode('techdef');
+  current_q = q;
+
+  document.getElementById('badgeRow').innerHTML =
+    diffBadgeHtml(diffFromStreak(streak.techdef)) +
+    `<span class="q-badge">🔬 اقرأ التعريف — اختر المصطلح الصحيح</span>`;
+  const sentEl = document.getElementById('qSentence');
+  sentEl.textContent = q.definition;
+  sentEl.classList.remove('hidden');
+  sentEl.classList.add('definition-mode');
+
   renderChoices(q.correct, q.choices, (chosen) => registerAnswer('techdef', chosen === q.correct));
 }
+
 function loadScenarioQuestion() {
   document.getElementById('mcCard').classList.remove('hidden');
   document.getElementById('choices').classList.remove('hidden');
   document.getElementById('ttsBtn').classList.remove('hidden');
-  const q = pickForMode('scenario'); current_q = q;
-  document.getElementById('badgeRow').innerHTML = diffBadgeHtml(diffFromStreak(streak.scenario)) + `<span class="q-badge">🧠 اقرأ الموقف — اختر المصطلح التقني المناسب</span>`;
-  const sentEl = document.getElementById('qSentence'); sentEl.textContent = q.scenario; sentEl.classList.remove('hidden'); sentEl.classList.add('definition-mode', 'scenario-style');
+  
+  const q = pickForMode('scenario');
+  current_q = q;
+
+  document.getElementById('badgeRow').innerHTML =
+    diffBadgeHtml(diffFromStreak(streak.scenario)) +
+    `<span class="q-badge">🧠 اقرأ الموقف — اختر المصطلح التقني المناسب</span>`;
+  const sentEl = document.getElementById('qSentence');
+  sentEl.textContent = q.scenario;
+  sentEl.classList.remove('hidden');
+  sentEl.classList.add('definition-mode', 'scenario-style');
+
   renderChoices(q.correct, q.choices, (chosen) => registerAnswer('scenario', chosen === q.correct));
 }
 
 function renderChoices(correctAnswer, choicesArr, onAnswered) {
-  const choicesEl = document.getElementById('choices'); choicesEl.innerHTML = '';
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
   const allShort = choicesArr.every(c => c.length <= 22);
   choicesEl.className = 'choices' + (allShort ? '' : ' single-col');
 
   shuffle(choicesArr).forEach(c => {
     const btn = document.createElement('button');
-    btn.className = 'choice-btn'; btn.textContent = c;
+    btn.className = 'choice-btn';
+    btn.textContent = c;
     btn.onclick = () => selectAnswer(btn, c, correctAnswer, onAnswered);
     choicesEl.appendChild(btn);
   });
-  const card = document.getElementById('mcCard'); card.style.animation = 'none'; setTimeout(() => card.style.animation = 'cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both', 10);
+
+  const card = document.getElementById('mcCard');
+  card.style.animation = 'none';
+  setTimeout(() => card.style.animation = 'cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both', 10);
 }
 
 function selectAnswer(btn, chosen, correctAnswer, onAnswered) {
   if (answered) return;
   answered = true;
+  clearInterval(timerInterval);
 
   const allBtns = document.querySelectorAll('.choice-btn');
   allBtns.forEach(b => {
@@ -1223,150 +1575,455 @@ function selectAnswer(btn, chosen, correctAnswer, onAnswered) {
   });
 
   const isCorrect = chosen === correctAnswer;
-  onAnswered(chosen); 
+  onAnswered(chosen);
 
   const currentQuestionText = current_q.word || current_q.sentence || current_q.definition || current_q.scenario;
   logAction(`أجاب بـ [${isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة'}] على السؤال: (${currentQuestionText}) — الاختيار المختار: [${chosen}]`);
 
   if (isCorrect) {
     btn.classList.add('correct');
+    commitXP(1000); // +1000 XP للإجابة الصحيحة (يُحفظ فوراً)
     correctCount++;
     const s = streak[mode];
     const streakFlair = (s >= 3) ? ' 🔥 x' + s : '';
-    document.getElementById('feedback').textContent = '✅ ممتاز! إجابة صحيحة' + streakFlair;
+    document.getElementById('feedback').textContent = '✅ ممتاز! إجابة صحيحة (+1000 XP)' + streakFlair;
     document.getElementById('feedback').className = 'feedback correct-msg';
   } else {
     btn.classList.add('wrong');
-    document.getElementById('feedback').textContent = '❌ خطأ! الإجابة الصحيحة: ' + correctAnswer;
+    commitXP(-500); // -500 XP للإجابة الخاطئة (يُحفظ فوراً)
+    document.getElementById('feedback').textContent = '❌ خطأ! الإجابة الصحيحة: ' + correctAnswer + ' (-500 XP)';
     document.getElementById('feedback').className = 'feedback wrong-msg';
-    roundMistakes.push({ prompt: currentQuestionText, yourAnswer: chosen, correct: correctAnswer });
+    
+    roundMistakes.push({
+      prompt: currentQuestionText,
+      yourAnswer: chosen,
+      correct: correctAnswer
+    });
+
     handleWrongAnswerVoiceAndLocking();
   }
+
   finishAnswer();
 }
 
 /* ================= SENTENCE ORDERING ================= */
 function loadOrderQuestion() {
   document.getElementById('orderCard').classList.remove('hidden');
-  const q = pickForMode('order'); current_q = q;
-  document.getElementById('orderBadgeRow').innerHTML = diffBadgeHtml(diffFromStreak(streak.order)) + `<span class="q-badge">🧩 رتب الكلمات لتكوين جملة صحيحة</span>`;
+  const q = pickForMode('order');
+  current_q = q;
+
+  document.getElementById('orderBadgeRow').innerHTML =
+    diffBadgeHtml(diffFromStreak(streak.order)) +
+    `<span class="q-badge">🧩 رتب الكلمات لتكوين جملة صحيحة</span>`;
   document.getElementById('orderHint').textContent = '💡 :المعنى ' + q.meaning;
-  orderTargetWords = q.words; orderPlaced = new Array(orderTargetWords.length).fill(null);
-  const target = document.getElementById('orderTarget'); const pool = document.getElementById('orderPool');
-  target.innerHTML = ''; target.classList.remove('filled'); pool.innerHTML = '';
+
+  orderTargetWords = q.words;
+  orderPlaced = new Array(orderTargetWords.length).fill(null);
+
+  const target = document.getElementById('orderTarget');
+  const pool = document.getElementById('orderPool');
+  target.innerHTML = '';
+  target.classList.remove('filled');
+  pool.innerHTML = '';
+
   const shuffled = orderTargetWords.map((w, i) => ({ w, i })).sort(() => Math.random() - 0.5);
+
   shuffled.forEach(({ w, i }) => {
-    const chip = document.createElement('div'); chip.className = 'word-chip'; chip.textContent = w; chip.dataset.origIndex = i;
-    chip.onclick = () => placeWord(chip); pool.appendChild(chip);
+    const chip = document.createElement('div');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.dataset.origIndex = i;
+    chip.onclick = () => placeWord(chip);
+    pool.appendChild(chip);
   });
-  document.getElementById('checkBtn').disabled = false; document.getElementById('checkBtn').textContent = 'تحقق ✓';
-  const card = document.getElementById('orderCard'); card.style.animation = 'none'; setTimeout(() => card.style.animation = 'cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both', 10);
+
+  document.getElementById('checkBtn').disabled = false;
+  document.getElementById('checkBtn').textContent = 'تحقق ✓';
+
+  const card = document.getElementById('orderCard');
+  card.style.animation = 'none';
+  setTimeout(() => card.style.animation = 'cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both', 10);
 }
 
 function placeWord(chip) {
   if (answered || chip.classList.contains('placed')) return;
   const target = document.getElementById('orderTarget');
-  const placedChip = document.createElement('div'); placedChip.className = 'word-chip target-chip'; placedChip.textContent = chip.textContent;
-  placedChip.dataset.origIndex = chip.dataset.origIndex; placedChip.onclick = () => removeWord(placedChip, chip);
-  target.appendChild(placedChip); target.classList.add('filled');
+
+  const placedChip = document.createElement('div');
+  placedChip.className = 'word-chip target-chip';
+  placedChip.textContent = chip.textContent;
+  placedChip.dataset.origIndex = chip.dataset.origIndex;
+  placedChip.onclick = () => removeWord(placedChip, chip);
+  target.appendChild(placedChip);
+  target.classList.add('filled');
+
   chip.classList.add('placed');
 }
+
 function removeWord(placedChip, originalChip) {
   if (answered) return;
-  placedChip.remove(); originalChip.classList.remove('placed');
-  if (document.getElementById('orderTarget').children.length === 0) document.getElementById('orderTarget').classList.remove('filled');
+  placedChip.remove();
+  originalChip.classList.remove('placed');
+  if (document.getElementById('orderTarget').children.length === 0) {
+    document.getElementById('orderTarget').classList.remove('filled');
+  }
 }
 
 function checkOrder() {
   if (answered) return;
   const target = document.getElementById('orderTarget');
   const placedChips = [...target.children];
-  if (placedChips.length !== orderTargetWords.length) { document.getElementById('feedback').textContent = '⚠️ رتب كل الكلمات أولاً'; document.getElementById('feedback').className = 'feedback wrong-msg'; return; }
-  answered = true; document.getElementById('checkBtn').disabled = true;
+
+  if (placedChips.length !== orderTargetWords.length) {
+    document.getElementById('feedback').textContent = '⚠️ رتب كل الكلمات أولاً';
+    document.getElementById('feedback').className = 'feedback wrong-msg';
+    return;
+  }
+
+  answered = true;
+  clearInterval(timerInterval);
+  document.getElementById('checkBtn').disabled = true;
+
   const userOrder = placedChips.map(c => c.textContent);
   const isCorrect = userOrder.every((w, idx) => w === orderTargetWords[idx]);
-  
   registerAnswer('order', isCorrect);
+
   logAction(`أجاب بـ [${isCorrect ? '✅ ترتيب صحيح' : '❌ ترتيب خاطئ'}] على سؤال ترتيب الجملة: (${orderTargetWords.join(' ')}) — الترتيب المختار: [${userOrder.join(' ')}]`);
-  placedChips.forEach((c, idx) => { c.classList.add(c.textContent === orderTargetWords[idx] ? 'correct-chip' : 'wrong-chip'); });
+
+  placedChips.forEach((c, idx) => {
+    c.classList.add(c.textContent === orderTargetWords[idx] ? 'correct-chip' : 'wrong-chip');
+  });
 
   if (isCorrect) {
+    commitXP(1000); // +1000 XP للإجابة الصحيحة (يُحفظ فوراً)
     correctCount++;
     const s = streak.order;
     const streakFlair = (s >= 3) ? ' 🔥 x' + s : '';
-    document.getElementById('feedback').textContent = '✅ ممتاز! الترتيب صحيح' + streakFlair;
+    document.getElementById('feedback').textContent = '✅ ممتاز! الترتيب صحيح (+1000 XP)' + streakFlair;
     document.getElementById('feedback').className = 'feedback correct-msg';
   } else {
+    commitXP(-500); // -500 XP للإجابة الخاطئة (يُحفظ فوراً)
     const correctString = orderTargetWords.join(' ');
-    document.getElementById('feedback').textContent = '❌ الترتيب الصحيح: ' + correctString;
+    document.getElementById('feedback').textContent = '❌ الترتيب الصحيح: ' + correctString + ' (-500 XP)';
     document.getElementById('feedback').className = 'feedback wrong-msg';
-    roundMistakes.push({ prompt: "ترتيب جملة: " + current_q.meaning, yourAnswer: userOrder.join(' '), correct: correctString });
+    
+    roundMistakes.push({
+      prompt: "ترتيب جملة: " + current_q.meaning,
+      yourAnswer: userOrder.join(' '),
+      correct: correctString
+    });
+
     handleWrongAnswerVoiceAndLocking();
   }
+
   document.querySelectorAll('#orderPool .word-chip').forEach(c => c.style.pointerEvents = 'none');
+
   finishAnswer();
 }
 
-/* ================= COMMON & RESULTS ================= */
+/* ================= COMMON ================= */
 function finishAnswer() {
   document.getElementById('scoreNum').textContent = score;
   document.getElementById('correctNum').textContent = correctCount;
-  document.getElementById('streakNum').textContent = streak[mode];
   document.getElementById('nextBtn').classList.add('show');
-
-  const total = totalQuestions();
-  if (current === total - 1) {
-    document.getElementById('nextBtn').textContent = '🏁 عرض النتيجة';
-  } else {
-    document.getElementById('nextBtn').textContent = 'السؤال التالي (أو Enter) ←';
-  }
 }
 
 function nextQuestion() {
   current++;
-  const total = totalQuestions();
-  if (current >= total) {
-    showResult();
-  } else {
+  if (current < totalQuestions()) {
     loadQuestion();
+  } else {
+    showResults();
   }
 }
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        const nextBtn = document.getElementById('nextBtn');
-        if (nextBtn && nextBtn.classList.contains('show')) {
-            nextQuestion();
-        }
-    }
-});
-
-function showResult() {
+function showResults() {
+  clearInterval(timerInterval);
   document.getElementById('quizSection').classList.add('hidden');
-  const rs = document.getElementById('resultSection');
-  rs.classList.remove('hidden');
+  document.getElementById('resultSection').classList.remove('hidden');
 
   const total = totalQuestions();
-  document.getElementById('finalScore').textContent = correctCount + '/' + total;
-  document.getElementById('resultMsg').textContent = 'كسبت في هذه الجولة: ' + score + ' XP 🌟 — ستريكك الحالي: ' + streak[mode] + ' 🔥';
+  document.getElementById('finalScore').textContent = `${correctCount}/${total}`;
 
-  const reviewEl = document.getElementById('mistakesReview');
+  // ملاحظة: الـ XP يُحفظ فوراً بعد كل سؤال (commitXP) وليس هنا،
+  // حتى لو طُرد المستخدم بسبب 3 أخطاء لا يخسر الـ XP اللي كسبه فعلاً
+  logAction(`🎉 أكمل جولة كاملة بنجاح بنتيجة [${correctCount}/${total}] وصافي [${score >= 0 ? '+' : ''}${score} XP]`);
+
+  let icon = '🏆';
+  let msg = '';
+  const percent = correctCount / total;
+
+  if (percent === 1) { icon = '👑'; msg = 'أنت أسطورة! نتيجة كاملة بدون أي خطأ 🎯'; }
+  else if (percent >= 0.7) { icon = '⭐'; msg = 'مستوى ممتاز جداً! واصل الإبداع ✨'; }
+  else if (percent >= 0.4) { icon = '👍'; msg = 'جيد، لكن تقدر تسوي أفضل المرة الجاية 🧠'; }
+  else { icon = '🤡'; msg = 'مستوى كمخه! ركز وراجع كلماتك زين يا بطل 👀'; }
+
+  document.getElementById('resultIcon').textContent = icon;
+  document.getElementById('resultMsg').textContent = msg + ` (${score >= 0 ? '+' : ''}${score} XP)`;
+  
+  // Show mistake summaries if exist
+  const rev = document.getElementById('mistakesReview');
   if (roundMistakes.length > 0) {
-    reviewEl.classList.remove('hidden');
-    reviewEl.innerHTML = `<h4 style="color: var(--pink); font-size:14px; font-weight:800; margin-bottom:10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom:6px;">❌ مراجعة وتصحيح الأخطاء بهذه الجولة:</h4>` + 
-      roundMistakes.map(m => `
-        <div style="background: rgba(255,255,255,0.02); border-right: 3px solid var(--red); padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.04);">
-          <div style="font-size: 13px; font-weight: bold; color: #fff; font-family:'Poppins', sans-serif;">${m.prompt}</div>
-          <div style="font-size: 11.5px; color: var(--red); margin-top: 4px;">إجابتك: ${m.yourAnswer}</div>
-          <div style="font-size: 11.5px; color: var(--green); font-weight: 500;">الإصلاح الصحيح: ${m.correct}</div>
-        </div>
-      `).join('');
+     rev.classList.remove('hidden');
+     rev.innerHTML = `<h4 style="color:var(--red); margin-bottom:10px; font-size:14px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">⚠️ مراجعة الأخطاء اللي طحت فيها بهذه الجولة:</h4>` + 
+       roundMistakes.map((m, i) => `
+         <div style="background:rgba(255,255,255,0.02); padding:10px; border-radius:10px; margin-bottom:8px; font-size:13px; border:1px solid rgba(255,255,255,0.04)">
+            <div style="color:var(--text); font-weight:bold; margin-bottom:3px;">${i+1}. السؤال/الكلمة: <span style="font-family:Poppins; color:var(--accent);">${m.prompt}</span></div>
+            <div style="color:var(--red);">إجابتك: ${m.yourAnswer}</div>
+            <div style="color:var(--green);">الصح: ${m.correct}</div>
+         </div>
+       `).join('');
   } else {
-    reviewEl.classList.add('hidden');
+     rev.classList.add('hidden');
+     rev.innerHTML = '';
   }
 }
 
-function restartQuiz() { startMode(mode); }
+function restartQuiz() {
+  startMode(mode);
+}
+
+/* ================= STORAGE MANAGEMENT & MULTIUSER MULTIPASS SYSTEM ================= */
+let currentUser = null;
+
+function getUsersData() {
+  try { return JSON.parse(localStorage.getItem('husseinEngUsers')) || {}; }
+  catch(e) { return {}; }
+}
+function saveUsersData(data) {
+  localStorage.setItem('husseinEngUsers', JSON.stringify(data));
+}
+
+function loginUser() {
+  const userIn = document.getElementById('usernameInput').value.trim();
+  const passIn = document.getElementById('passwordInput').value.trim();
+  const errEl = document.getElementById('loginError');
+
+  if (!userIn || !passIn) {
+    errEl.textContent = '❌ أرجوك اكتب اليوزر والباسورد أولاً!';
+    return;
+  }
+
+  const data = getUsersData();
+
+  // If user already exists, verify pass
+  if (data[userIn]) {
+    if (data[userIn].password !== passIn) {
+      errEl.textContent = '❌ الرمز السري خطأ للمستخدم هذا!';
+      return;
+    }
+  } else {
+    // Create custom new user instantly
+    data[userIn] = {
+      password: passIn,
+      score: 0,
+      streak: { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 },
+      bestStreak: { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 },
+      lockedModes: {}
+    };
+    saveUsersData(data);
+  }
+
+  currentUser = userIn;
+  localStorage.setItem('husseinEngActiveUser', currentUser);
+
+  // Sync Streaks
+  streak = data[currentUser].streak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
+  bestStreak = data[currentUser].bestStreak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
+  loadUsedIdsForUser(); // تحميل الأسئلة المستخدمة سابقاً لهذا اليوزر (منع التكرار)
+
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('userBar').classList.remove('hidden');
+  document.getElementById('userGreeting').textContent = `👤 اليوزر الحالي: ${currentUser}`;
+  
+  logAction(`📥 سجل دخوله إلى التطبيق بنجاح`);
+
+  goHome();
+}
+
+function logoutUser() {
+  logAction(`📤 سجل خروجه من التطبيق`);
+  currentUser = null;
+  usedIds = freshUsedIds();
+  localStorage.removeItem('husseinEngActiveUser');
+  document.getElementById('userBar').classList.add('hidden');
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('quizSection').classList.add('hidden');
+  document.getElementById('resultSection').classList.add('hidden');
+  document.getElementById('logSection').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('usernameInput').value = '';
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('loginError').textContent = '';
+}
+
+function saveStreakForUser() {
+  if (!currentUser) return;
+  const data = getUsersData();
+  if (data[currentUser]) {
+    data[currentUser].streak = streak;
+    data[currentUser].bestStreak = bestStreak;
+    saveUsersData(data);
+  }
+}
+
+function renderStreakBoard() {
+  const container = document.getElementById('streakList');
+  const titles = { vocab: 'كلمات', order: 'ترتيب', sentence: 'جمل', tech: 'تقني', techdef: 'جملة تقنية', scenario: 'سيناريو' };
+  
+  container.innerHTML = Object.keys(streak).map(k => {
+    return `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:10px; padding:6px 10px; display:flex; justify-content:space-between; align-items:center;">
+        <span style="color:var(--muted); font-weight:bold;">${titles[k]}:</span>
+        <span style="font-family:Poppins; font-weight:bold; color:var(--orange);">🔥 ${streak[k]} <span style="font-size:10px; color:var(--muted); font-weight:normal;">(أعلى ${bestStreak[k]})</span></span>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ================= LEADERBOARD WITH ADMIN INTERFACES ================= */
+function renderLeaderboard() {
+  const container = document.getElementById('leaderboardList');
+  const data = getUsersData();
+  
+  // كل مستخدم يجاوب على أي سؤال يُضاف/يتحدث تلقائياً هنا لأن الـ XP يُحفظ فوراً (commitXP)
+  // القائمة تعرض كل المستخدمين المسجلين مرتبين حسب الـ XP، وليس فقط أفضل 5
+  const sorted = Object.keys(data).map(uname => ({
+    username: uname,
+    score: data[uname].score || 0
+  })).sort((a, b) => b.score - a.score);
+
+  const allUsers = sorted;
+
+  const isPrimaryAdmin = (currentUser === 'HSZO');
+  document.getElementById('adminEditHint').style.display = isPrimaryAdmin ? 'block' : 'none';
+  document.getElementById('adminLogCard').style.display = isPrimaryAdmin ? 'flex' : 'none';
+
+  if (allUsers.length === 0) {
+    container.innerHTML = `<div style="color:var(--muted); text-align:center; padding:4px 0;">لا يوجد منافسين حالياً. كن الأول!</div>`;
+    return;
+  }
+
+  container.style.maxHeight = '320px';
+  container.style.overflowY = 'auto';
+
+  const medals = ['🥇', '🥈', '🥉'];
+
+  container.innerHTML = allUsers.map((u, index) => {
+    const isSelf = (u.username === currentUser);
+    const bg = isSelf ? 'rgba(45,212,191,0.08)' : 'rgba(255,255,255,0.02)';
+    const border = isSelf ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.04)';
+    const clickHandler = isPrimaryAdmin ? `onclick="triggerAdminUserEdit('${u.username}', ${u.score})"` : '';
+    const cursorStyle = isPrimaryAdmin ? 'cursor:pointer;' : '';
+
+    return `
+      <div ${clickHandler} style="${cursorStyle} background:${bg}; border:${border}; border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; transition:0.2s;" class="leaderboard-item-row">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:14px;">${medals[index] || ('#' + (index + 1))}</span>
+          <span style="font-weight:700; color:${isSelf ? 'var(--primary)' : '#fff'}">${u.username} ${isSelf ? '<span style="font-size:10px; color:var(--muted); font-weight:normal;">(أنت)</span>' : ''}</span>
+        </div>
+        <span style="font-family:Poppins; font-weight:800; color:var(--orange); font-size:14px;">${u.score} <span style="font-size:10px; color:var(--muted); font-weight:normal;">XP</span></span>
+      </div>
+    `;
+  }).join('');
+}
+
+function triggerAdminUserEdit(targetUser, currentScore) {
+  const opt = prompt(`🔒 تحكم الأدمن لليوزر [ ${targetUser} ]:\n\nاكتب 1: لتعديل الـ XP الخاص به.\nاكتب 2: لحذف هذا المستخدم نهائياً من النظام.`);
+  if (opt === '1') {
+     const newScore = prompt(`اكتب الـ XP الجديد لـ ${targetUser}:`, currentScore);
+     if (newScore !== null) {
+        const data = getUsersData();
+        if (data[targetUser]) {
+           const oldScore = data[targetUser].score;
+           data[targetUser].score = parseInt(newScore) || 0;
+           saveUsersData(data);
+           logAction(`🔧 [الأدمن] قام بتعديل الـ XP لليوزر [${targetUser}] من (${oldScore}) إلى (${data[targetUser].score})`);
+           renderLeaderboard();
+        }
+     }
+  } else if (opt === '2') {
+     if (confirm(`هل أنت متأكد تماماً من حذف يوزر [ ${targetUser} ] وكل بياناته المخزنة؟`)) {
+        const data = getUsersData();
+        delete data[targetUser];
+        saveUsersData(data);
+        logAction(`🗑️ [الأدمن] قام بحذف اليوزر [${targetUser}] نهائياً من النظام`);
+        renderLeaderboard();
+     }
+  }
+}
+
+/* ================= CATEGORY VISIBILITY CONTROLS FOR ADMIN ================= */
+function applyCategoryVisibility() {
+  let hiddenCats = JSON.parse(localStorage.getItem('husseinEngHiddenCats')) || {};
+  const isPrimaryAdmin = (currentUser === 'HSZO');
+  const categories = ['vocab', 'order', 'sentence', 'tech', 'techdef', 'scenario'];
+
+  categories.forEach(cat => {
+    const card = document.getElementById(`card_${cat}`);
+    if (!card) return;
+
+    // Remove old state custom btn if exists
+    const oldBtn = card.querySelector('.admin-hide-btn');
+    if (oldBtn) oldBtn.remove();
+
+    if (isPrimaryAdmin) {
+      // Admin sees everything, with a toggle hide button helper inside card
+      card.classList.remove('hidden');
+      const hideBtn = document.createElement('button');
+      hideBtn.className = 'admin-hide-btn' + (hiddenCats[cat] ? ' hidden-state' : '');
+      hideBtn.textContent = hiddenCats[cat] ? '👁️ إظهار للكل' : '🔒 إخفاء عن الكل';
+      hideBtn.onclick = (e) => {
+         e.stopPropagation(); // Avoid triggering quiz start
+         toggleCategoryVisibility(cat);
+      };
+      card.appendChild(hideBtn);
+      card.style.opacity = hiddenCats[cat] ? '0.55' : '1';
+    } else {
+      // Normal user logic
+      card.style.opacity = '1';
+      if (hiddenCats[cat]) {
+        card.classList.add('hidden');
+      } else {
+        card.classList.remove('hidden');
+      }
+    }
+  });
+}
+
+function toggleCategoryVisibility(cat) {
+  let hiddenCats = JSON.parse(localStorage.getItem('husseinEngHiddenCats')) || {};
+  if (hiddenCats[cat]) {
+     delete hiddenCats[cat];
+     logAction(`👁️ [الأدمن] قام بإظهار قائمة [${cat}] لجميع المستخدمين`);
+  } else {
+     hiddenCats[cat] = true;
+     logAction(`🔒 [الأدمن] قام بإخفاء قائمة [${cat}] عن جميع المستخدمين`);
+  }
+  localStorage.setItem('husseinEngHiddenCats', JSON.stringify(hiddenCats));
+  applyCategoryVisibility();
+}
+
+/* ================= APP INITIALIZATION ================= */
+window.addEventListener('DOMContentLoaded', () => {
+  const active = localStorage.getItem('husseinEngActiveUser');
+  if (active) {
+    currentUser = active;
+    const data = getUsersData();
+    if (data[currentUser]) {
+      streak = data[currentUser].streak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
+      bestStreak = data[currentUser].bestStreak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
+      loadUsedIdsForUser(); // تحميل الأسئلة المستخدمة سابقاً لهذا اليوزر (منع التكرار)
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('userBar').classList.remove('hidden');
+      document.getElementById('userGreeting').textContent = `👤 اليوزر الحالي: ${currentUser}`;
+      goHome();
+      return;
+    }
+  }
+  // Otherwise, fallback show login screen view
+  document.getElementById('loginScreen').classList.remove('hidden');
+});
 </script>
 </body>
 </html>
