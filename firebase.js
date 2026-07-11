@@ -1,8 +1,11 @@
 // 1. استيراد مكتبات فايربيس مباشرة عبر الإنترنت (CDN)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getFirestore, collection, doc, setDoc, getDoc, getDocs,
+  addDoc, deleteDoc, query, orderBy, limit
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// 2. إعدادات مشروعك الخاصة (hussain-eng-app) جاهزة تماماً
+// 2. إعدادات مشروعك الخاصة (hussain-eng-app)
 const firebaseConfig = {
   apiKey: "AIzaSyBfofXIVOb1_t_YH69ccYLnG4nfN3o4LMw",
   authDomain: "hussain-eng-app.firebaseapp.com",
@@ -14,22 +17,24 @@ const firebaseConfig = {
   measurementId: "G-WFRV3TXS86"
 };
 
-// 3. تهيئة فايربيس وقاعدة البيانات
+// 3. تهيئة فايربيس وقاعدة بيانات Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 4. دالة تجريبية ترسل بيانات أول ما تفتح الصفحة للتأكد أن الربط شغال 100%
-async function testFirebaseConnection() {
-  try {
-    const docRef = await addDoc(collection(db, "test_connection"), {
-      status: "تم الربط بنجاح من موقع حسين المهندس!",
-      date: new Date().toLocaleString()
-    });
-    console.log("🚀 ممتاز! تم إرسال البيانات بنجاح لقاعدة البيانات، المعرف هو:", docRef.id);
-  } catch (error) {
-    console.error("❌ عذراً، هناك خطأ في الاتصال بقاعدة البيانات:", error);
-  }
-}
+// 4. نخلي أدوات فايربيس متاحة لباقي كود الصفحة
+//    (السكربت الرئيسي بالصفحة سكربت عادي مو module، فما يقدر يستورد مباشرة)
+window.firebaseDB = {
+  db,
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  query,
+  orderBy,
+  limit
+};
 
-// تشغيل الدالة التجريبية تلقائياً عند تحميل الصفحة
-testFirebaseConnection(); 
+console.log("✅ فايربيس جاهز ومتاح على window.firebaseDB");
