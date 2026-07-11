@@ -421,6 +421,20 @@
   }
 
   .hidden { display: none !important; }
+  .menu-card.card-locked { opacity: 0.5 !important; filter: grayscale(0.7); cursor: not-allowed; }
+  .menu-card.card-locked:hover { transform: none; box-shadow: none; }
+  .user-lock-badge {
+    position: relative;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--red);
+    background: rgba(251,113,133,0.12);
+    border: 1px solid rgba(251,113,133,0.35);
+    border-radius: 8px;
+    padding: 6px 8px;
+    text-align: center;
+  }
 
   .login-input {
     width: 100%;
@@ -516,7 +530,7 @@
 
     <!-- LOCAL LEADERBOARD CARD -->
     <div class="card" style="margin-bottom:14px; padding:16px 18px;">
-      <div class="q-badge" style="margin-bottom:10px; background: rgba(52,211,153,0.15); color: var(--green);">🏆 لوحة الصدارة والتنافس</div>
+      <div class="q-badge" style="margin-bottom:10px; background: rgba(52,211,153,0.15); color: var(--green);">🏆 لوحة الصدارة والتنافس (Top 5)</div>
       <div id="adminEditHint" style="font-size:11px; color:var(--accent); text-align:center; margin-bottom:6px; display:none;">🔐 نمط الأدمن مفعل: اضغط على أي مستخدم لتعديل الـ XP الخاص به أو حذفه</div>
       <div id="leaderboardList" style="display:flex; flex-direction:column; gap:6px; font-size:13px;"></div>
     </div>
@@ -663,6 +677,7 @@
   </div>
 </div>
 
+<script type="module" src="firebase.js"></script>
 <script>
 /* ================= DATA ================= */
 
@@ -1049,6 +1064,13 @@ let timeLeft = 30;
 
 let streak = { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
 let bestStreak = { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
+// Tracks whether the "streak achieved" message was already shown for the CURRENT streak run,
+// so it only fires once when the streak is first reached, not on every correct answer after.
+let streakAnnounced = { vocab: false, order: false, sentence: false, tech: false, techdef: false, scenario: false };
+
+function syncStreakAnnouncedFromStreak() {
+  Object.keys(streak).forEach(k => { streakAnnounced[k] = streak[k] >= 3; });
+}
 
 let roundMistakes = [];
 
@@ -1061,51 +1083,18 @@ function diffFromStreak(s) {
 let orderTargetWords = [];
 let orderPlaced = [];
 
-const usedIdKeys = [
-  'vocab1', 'vocab2', 'vocab3',
-  'order1', 'order2', 'order3',
-  'sentence1', 'sentence2', 'sentence3',
-  'tech1', 'tech2', 'tech3',
-  'techdef1', 'techdef2', 'techdef3',
-  'scenario1', 'scenario2', 'scenario3'
-];
-
-function freshUsedIds() {
-  const obj = {};
-  usedIdKeys.forEach(k => obj[k] = new Set());
-  return obj;
-}
-
-// usedIds يبدأ فارغ، ويتم تحميله من بيانات المستخدم الحالي عند تسجيل الدخول (loadUsedIdsForUser)
-let usedIds = freshUsedIds();
-
-// تحميل قائمة الأسئلة المستخدمة سابقاً لهذا المستخدم تحديداً (خاص بكل يوزر، محفوظ بشكل دائم)
-function loadUsedIdsForUser() {
-  usedIds = freshUsedIds();
-  if (!currentUser) return;
-  const data = getUsersData();
-  const saved = data[currentUser] && data[currentUser].usedIds;
-  if (saved) {
-    usedIdKeys.forEach(k => {
-      if (Array.isArray(saved[k])) usedIds[k] = new Set(saved[k]);
-    });
-  }
-}
-
-// حفظ قائمة الأسئلة المستخدمة لهذا اليوزر بشكل دائم في التخزين
-function saveUsedIdsForUser() {
-  if (!currentUser) return;
-  const data = getUsersData();
-  if (!data[currentUser]) return;
-  const plain = {};
-  usedIdKeys.forEach(k => plain[k] = Array.from(usedIds[k]));
-  data[currentUser].usedIds = plain;
-  saveUsersData(data);
-}
+const usedIds = {
+  vocab1: new Set(), vocab2: new Set(), vocab3: new Set(),
+  order1: new Set(), order2: new Set(), order3: new Set(),
+  sentence1: new Set(), sentence2: new Set(), sentence3: new Set(),
+  tech1: new Set(), tech2: new Set(), tech3: new Set(),
+  techdef1: new Set(), techdef2: new Set(), techdef3: new Set(),
+  scenario1: new Set(), scenario2: new Set(), scenario3: new Set()
+};
 
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
-// Anti-Duplication Picker Logic — لا يكرر نفس السؤال لنفس المستخدم حتى تنتهي كل الأسئلة بذاك المستوى
+// Anti-Duplication Picker Logic
 function pickUnused(bank, usedSet) {
   let available = bank.map((_, i) => i).filter(i => !usedSet.has(i));
   if (available.length === 0) {
@@ -1114,7 +1103,6 @@ function pickUnused(bank, usedSet) {
   }
   const idx = available[Math.floor(Math.random() * available.length)];
   usedSet.add(idx);
-  saveUsedIdsForUser();
   return bank[idx];
 }
 
@@ -1132,10 +1120,18 @@ function diffBadgeHtml(level) {
 }
 
 function registerAnswer(m, wasCorrect) {
+  let announceStreak = false;
   if (wasCorrect) {
     streak[m]++;
     consecutiveMistakesInRound = 0; 
     if (streak[m] > bestStreak[m]) bestStreak[m] = streak[m];
+
+    // Only announce the streak message once when it's freshly achieved (reaches 3),
+    // not again on every correct answer while the streak continues.
+    if (streak[m] >= 3 && !streakAnnounced[m]) {
+      streakAnnounced[m] = true;
+      announceStreak = true;
+    }
     
     // Check if the user achieved 10 streak to completely open all locked categories
     if (streak[m] >= 10 && currentUser) {
@@ -1151,53 +1147,73 @@ function registerAnswer(m, wasCorrect) {
     }
   } else {
     streak[m] = 0;
+    streakAnnounced[m] = false; // reset so the message can fire again once a new streak is achieved
   }
   document.getElementById('streakNum').textContent = streak[m];
   saveStreakForUser();
+  return announceStreak;
 }
 
-/* ================= XP SYSTEM (LIVE COMMIT: +1000 صح / -500 خطأ) ================= */
-function commitXP(delta) {
-  score += delta;
-  if (currentUser) {
-    const data = getUsersData();
-    if (data[currentUser]) {
-      data[currentUser].score = (data[currentUser].score || 0) + delta;
-      saveUsersData(data);
-    }
-  }
-  const scoreEl = document.getElementById('scoreNum');
-  if (scoreEl) scoreEl.textContent = score;
+/* ================= LOG EXTRA FEATURE FUNCTIONS (Firebase Firestore) ================= */
+// السجلات الآن تُحفظ في Firestore بدل localStorage، عشان تكون مشتركة بين كل الأجهزة والمستخدمين.
+
+function logsCollectionRef() {
+  const fb = window.firebaseDB;
+  if (!fb) return null;
+  return fb.collection(fb.db, 'logs');
 }
 
-/* ================= LOG EXTRA FEATURE FUNCTIONS ================= */
-function getLogs() {
-  try { return JSON.parse(localStorage.getItem('husseinEngLogs')) || []; }
-  catch(e) { return []; }
-}
-
-function logAction(actionText) {
+async function logAction(actionText) {
   if (!currentUser) return;
-  const logs = getLogs();
+  const fb = window.firebaseDB;
+  const ref = logsCollectionRef();
+  if (!fb || !ref) { console.warn('⚠️ فايربيس غير جاهز بعد، تم تجاهل تسجيل الحدث.'); return; }
+
   const now = new Date();
   const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' @ ' + now.toLocaleDateString('ar-SA');
-  logs.unshift({ user: currentUser, action: actionText, time: timeStr });
-  if (logs.length > 800) logs.pop();
-  localStorage.setItem('husseinEngLogs', JSON.stringify(logs));
+
+  try {
+    await fb.addDoc(ref, {
+      user: currentUser,
+      action: actionText,
+      time: timeStr,
+      createdAt: Date.now() // نستخدمه للترتيب لاحقاً
+    });
+  } catch (e) {
+    console.error('❌ فشل حفظ السجل في فايربيس:', e);
+  }
 }
 
-function viewLogs() {
+async function viewLogs() {
   document.getElementById('homeScreen').classList.add('hidden');
   document.getElementById('logSection').classList.remove('hidden');
-  
+
   const logList = document.getElementById('logList');
-  const logs = getLogs();
-  
+  logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">⏳ جاري تحميل السجلات...</div>`;
+
+  const fb = window.firebaseDB;
+  const ref = logsCollectionRef();
+  if (!fb || !ref) {
+    logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">⚠️ تعذّر الاتصال بقاعدة البيانات.</div>`;
+    return;
+  }
+
+  let logs = [];
+  try {
+    const q = fb.query(ref, fb.orderBy('createdAt', 'desc'), fb.limit(300));
+    const snap = await fb.getDocs(q);
+    snap.forEach(docSnap => logs.push(docSnap.data()));
+  } catch (e) {
+    console.error('❌ فشل تحميل السجلات من فايربيس:', e);
+    logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">⚠️ حدث خطأ أثناء تحميل السجلات.</div>`;
+    return;
+  }
+
   if (logs.length === 0) {
     logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">لا توجد تفاعلات مسجلة بعد.</div>`;
     return;
   }
-  
+
   logList.innerHTML = logs.map(l => `
     <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${l.user === 'HSZO' ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
       <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px; color:var(--muted);">
@@ -1209,11 +1225,26 @@ function viewLogs() {
   `).join('');
 }
 
-function clearAllLogs() {
-  if(confirm("هل أنت متأكد من حذف جميع السجلات؟")) {
-    localStorage.setItem('husseinEngLogs', JSON.stringify([]));
-    viewLogs();
+async function clearAllLogs() {
+  if(!confirm("هل أنت متأكد من حذف جميع السجلات؟")) return;
+
+  const fb = window.firebaseDB;
+  const ref = logsCollectionRef();
+  if (!fb || !ref) { alert('⚠️ تعذّر الاتصال بقاعدة البيانات.'); return; }
+
+  try {
+    const snap = await fb.getDocs(ref);
+    const deletions = [];
+    snap.forEach(docSnap => {
+      deletions.push(fb.deleteDoc(fb.doc(fb.db, 'logs', docSnap.id)));
+    });
+    await Promise.all(deletions);
+  } catch (e) {
+    console.error('❌ فشل حذف السجلات من فايربيس:', e);
+    alert('حدث خطأ أثناء حذف السجلات.');
   }
+
+  viewLogs();
 }
 
 /* ================= NEW FEATURE: TEXT-TO-SPEECH (TTS) ================= */
@@ -1341,13 +1372,12 @@ function handleTimeOut() {
   }
 
   registerAnswer(mode, false);
-  commitXP(-500); // -500 XP لانتهاء الوقت (تُعامل كإجابة خاطئة)
   
   const currentQuestionText = current_q.word || current_q.sentence || current_q.definition || current_q.scenario || "ترتيب جملة";
   logAction(`⏱️ انتهى وقت الإجابة (30 ثانية) على السؤال: (${currentQuestionText})`);
 
   const rightSol = current_q.correct || (current_q.words ? current_q.words.join(' ') : '');
-  document.getElementById('feedback').textContent = '❌ انتهى الوقت! الحل الصحيح: ' + rightSol + ' (-500 XP)';
+  document.getElementById('feedback').textContent = '❌ انتهى الوقت! الحل الصحيح: ' + rightSol;
   document.getElementById('feedback').className = 'feedback wrong-msg';
 
   roundMistakes.push({
@@ -1575,23 +1605,21 @@ function selectAnswer(btn, chosen, correctAnswer, onAnswered) {
   });
 
   const isCorrect = chosen === correctAnswer;
-  onAnswered(chosen);
+  const announceStreak = onAnswered(chosen);
 
   const currentQuestionText = current_q.word || current_q.sentence || current_q.definition || current_q.scenario;
   logAction(`أجاب بـ [${isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة'}] على السؤال: (${currentQuestionText}) — الاختيار المختار: [${chosen}]`);
 
   if (isCorrect) {
     btn.classList.add('correct');
-    commitXP(1000); // +1000 XP للإجابة الصحيحة (يُحفظ فوراً)
+    score += 1000; // Updated to 1000 XP system
     correctCount++;
-    const s = streak[mode];
-    const streakFlair = (s >= 3) ? ' 🔥 x' + s : '';
-    document.getElementById('feedback').textContent = '✅ ممتاز! إجابة صحيحة (+1000 XP)' + streakFlair;
+    const streakFlair = announceStreak ? ' 🔥 حققت ستريك ' + streak[mode] + '!' : '';
+    document.getElementById('feedback').textContent = '✅ ممتاز! إجابة صحيحة' + streakFlair;
     document.getElementById('feedback').className = 'feedback correct-msg';
   } else {
     btn.classList.add('wrong');
-    commitXP(-500); // -500 XP للإجابة الخاطئة (يُحفظ فوراً)
-    document.getElementById('feedback').textContent = '❌ خطأ! الإجابة الصحيحة: ' + correctAnswer + ' (-500 XP)';
+    document.getElementById('feedback').textContent = '❌ خطأ! الإجابة الصحيحة: ' + correctAnswer;
     document.getElementById('feedback').className = 'feedback wrong-msg';
     
     roundMistakes.push({
@@ -1686,7 +1714,7 @@ function checkOrder() {
 
   const userOrder = placedChips.map(c => c.textContent);
   const isCorrect = userOrder.every((w, idx) => w === orderTargetWords[idx]);
-  registerAnswer('order', isCorrect);
+  const announceStreak = registerAnswer('order', isCorrect);
 
   logAction(`أجاب بـ [${isCorrect ? '✅ ترتيب صحيح' : '❌ ترتيب خاطئ'}] على سؤال ترتيب الجملة: (${orderTargetWords.join(' ')}) — الترتيب المختار: [${userOrder.join(' ')}]`);
 
@@ -1695,16 +1723,14 @@ function checkOrder() {
   });
 
   if (isCorrect) {
-    commitXP(1000); // +1000 XP للإجابة الصحيحة (يُحفظ فوراً)
+    score += 1000; // Updated to 1000 XP system
     correctCount++;
-    const s = streak.order;
-    const streakFlair = (s >= 3) ? ' 🔥 x' + s : '';
-    document.getElementById('feedback').textContent = '✅ ممتاز! الترتيب صحيح (+1000 XP)' + streakFlair;
+    const streakFlair = announceStreak ? ' 🔥 حققت ستريك ' + streak.order + '!' : '';
+    document.getElementById('feedback').textContent = '✅ ممتاز! الترتيب صحيح' + streakFlair;
     document.getElementById('feedback').className = 'feedback correct-msg';
   } else {
-    commitXP(-500); // -500 XP للإجابة الخاطئة (يُحفظ فوراً)
     const correctString = orderTargetWords.join(' ');
-    document.getElementById('feedback').textContent = '❌ الترتيب الصحيح: ' + correctString + ' (-500 XP)';
+    document.getElementById('feedback').textContent = '❌ الترتيب الصحيح: ' + correctString;
     document.getElementById('feedback').className = 'feedback wrong-msg';
     
     roundMistakes.push({
@@ -1745,9 +1771,14 @@ function showResults() {
   const total = totalQuestions();
   document.getElementById('finalScore').textContent = `${correctCount}/${total}`;
 
-  // ملاحظة: الـ XP يُحفظ فوراً بعد كل سؤال (commitXP) وليس هنا،
-  // حتى لو طُرد المستخدم بسبب 3 أخطاء لا يخسر الـ XP اللي كسبه فعلاً
-  logAction(`🎉 أكمل جولة كاملة بنجاح بنتيجة [${correctCount}/${total}] وصافي [${score >= 0 ? '+' : ''}${score} XP]`);
+  // Update permanent user storage XP inside round
+  if (currentUser) {
+    const data = getUsersData();
+    data[currentUser].score = (data[currentUser].score || 0) + score;
+    saveUsersData(data);
+  }
+
+  logAction(`🎉 أكمل جولة كاملة بنجاح بنتيجة [${correctCount}/${total}] وحصل على [+${score} XP]`);
 
   let icon = '🏆';
   let msg = '';
@@ -1759,7 +1790,7 @@ function showResults() {
   else { icon = '🤡'; msg = 'مستوى كمخه! ركز وراجع كلماتك زين يا بطل 👀'; }
 
   document.getElementById('resultIcon').textContent = icon;
-  document.getElementById('resultMsg').textContent = msg + ` (${score >= 0 ? '+' : ''}${score} XP)`;
+  document.getElementById('resultMsg').textContent = msg + ` (+${score} XP)`;
   
   // Show mistake summaries if exist
   const rev = document.getElementById('mistakesReview');
@@ -1830,7 +1861,7 @@ function loginUser() {
   // Sync Streaks
   streak = data[currentUser].streak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
   bestStreak = data[currentUser].bestStreak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
-  loadUsedIdsForUser(); // تحميل الأسئلة المستخدمة سابقاً لهذا اليوزر (منع التكرار)
+  syncStreakAnnouncedFromStreak();
 
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('userBar').classList.remove('hidden');
@@ -1844,7 +1875,6 @@ function loginUser() {
 function logoutUser() {
   logAction(`📤 سجل خروجه من التطبيق`);
   currentUser = null;
-  usedIds = freshUsedIds();
   localStorage.removeItem('husseinEngActiveUser');
   document.getElementById('userBar').classList.add('hidden');
   document.getElementById('homeScreen').classList.add('hidden');
@@ -1886,30 +1916,27 @@ function renderLeaderboard() {
   const container = document.getElementById('leaderboardList');
   const data = getUsersData();
   
-  // كل مستخدم يجاوب على أي سؤال يُضاف/يتحدث تلقائياً هنا لأن الـ XP يُحفظ فوراً (commitXP)
-  // القائمة تعرض كل المستخدمين المسجلين مرتبين حسب الـ XP، وليس فقط أفضل 5
+  // Sort user maps by high score values
   const sorted = Object.keys(data).map(uname => ({
     username: uname,
     score: data[uname].score || 0
   })).sort((a, b) => b.score - a.score);
 
-  const allUsers = sorted;
+  // Take top 5
+  const top5 = sorted.slice(0, 5);
 
   const isPrimaryAdmin = (currentUser === 'HSZO');
   document.getElementById('adminEditHint').style.display = isPrimaryAdmin ? 'block' : 'none';
   document.getElementById('adminLogCard').style.display = isPrimaryAdmin ? 'flex' : 'none';
 
-  if (allUsers.length === 0) {
+  if (top5.length === 0) {
     container.innerHTML = `<div style="color:var(--muted); text-align:center; padding:4px 0;">لا يوجد منافسين حالياً. كن الأول!</div>`;
     return;
   }
 
-  container.style.maxHeight = '320px';
-  container.style.overflowY = 'auto';
+  const medals = ['🥇', '🥈', '🥉', '✨', '✨'];
 
-  const medals = ['🥇', '🥈', '🥉'];
-
-  container.innerHTML = allUsers.map((u, index) => {
+  container.innerHTML = top5.map((u, index) => {
     const isSelf = (u.username === currentUser);
     const bg = isSelf ? 'rgba(45,212,191,0.08)' : 'rgba(255,255,255,0.02)';
     const border = isSelf ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.04)';
@@ -1919,7 +1946,7 @@ function renderLeaderboard() {
     return `
       <div ${clickHandler} style="${cursorStyle} background:${bg}; border:${border}; border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; transition:0.2s;" class="leaderboard-item-row">
         <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:14px;">${medals[index] || ('#' + (index + 1))}</span>
+          <span style="font-size:14px;">${medals[index]}</span>
           <span style="font-weight:700; color:${isSelf ? 'var(--primary)' : '#fff'}">${u.username} ${isSelf ? '<span style="font-size:10px; color:var(--muted); font-weight:normal;">(أنت)</span>' : ''}</span>
         </div>
         <span style="font-family:Poppins; font-weight:800; color:var(--orange); font-size:14px;">${u.score} <span style="font-size:10px; color:var(--muted); font-weight:normal;">XP</span></span>
@@ -1959,13 +1986,25 @@ function applyCategoryVisibility() {
   const isPrimaryAdmin = (currentUser === 'HSZO');
   const categories = ['vocab', 'order', 'sentence', 'tech', 'techdef', 'scenario'];
 
+  // This user's personal lockouts (from the 3-mistakes penalty), if any.
+  let userLocked = {};
+  if (currentUser && !isPrimaryAdmin) {
+    const data = getUsersData();
+    if (data[currentUser] && data[currentUser].lockedModes) {
+      userLocked = data[currentUser].lockedModes;
+    }
+  }
+
   categories.forEach(cat => {
     const card = document.getElementById(`card_${cat}`);
     if (!card) return;
 
-    // Remove old state custom btn if exists
+    // Remove old state custom btn/badge if exists
     const oldBtn = card.querySelector('.admin-hide-btn');
     if (oldBtn) oldBtn.remove();
+    const oldLockBadge = card.querySelector('.user-lock-badge');
+    if (oldLockBadge) oldLockBadge.remove();
+    card.classList.remove('card-locked');
 
     if (isPrimaryAdmin) {
       // Admin sees everything, with a toggle hide button helper inside card
@@ -1986,6 +2025,16 @@ function applyCategoryVisibility() {
         card.classList.add('hidden');
       } else {
         card.classList.remove('hidden');
+        // BUG FIX: previously a category locked for this user (after 3 mistakes) stayed
+        // looking totally normal on the home screen — nothing showed it was locked until
+        // you clicked it. Now it's visibly marked locked right away.
+        if (userLocked[cat]) {
+          card.classList.add('card-locked');
+          const lockBadge = document.createElement('div');
+          lockBadge.className = 'user-lock-badge';
+          lockBadge.textContent = '🔒 مقفولة عليك — حقق ستريك 10 في قائمة ثانية لفتحها';
+          card.appendChild(lockBadge);
+        }
       }
     }
   });
@@ -2013,7 +2062,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (data[currentUser]) {
       streak = data[currentUser].streak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
       bestStreak = data[currentUser].bestStreak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
-      loadUsedIdsForUser(); // تحميل الأسئلة المستخدمة سابقاً لهذا اليوزر (منع التكرار)
+      syncStreakAnnouncedFromStreak();
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('userBar').classList.remove('hidden');
       document.getElementById('userGreeting').textContent = `👤 اليوزر الحالي: ${currentUser}`;
@@ -2025,8 +2074,5 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginScreen').classList.remove('hidden');
 });
 </script>
-
-<!-- السطر السحري للربط (انسخه وضعه هنا بالتمام) -->
-<script type="module" src="firebase.js"></script>
 </body>
 </html>
