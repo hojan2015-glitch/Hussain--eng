@@ -2003,6 +2003,7 @@ function renderLeaderboard() {
 
   const isPrimaryAdmin = (currentUser === 'HSZO');
   document.getElementById('adminEditHint').style.display = isPrimaryAdmin ? 'block' : 'none';
+  document.getElementById('adminLogCard').classList.toggle('hidden', !isPrimaryAdmin);
   document.getElementById('adminLogCard').style.display = isPrimaryAdmin ? 'flex' : 'none';
 
   if (top5.length === 0) {
