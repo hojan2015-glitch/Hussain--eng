@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore, collection, doc, setDoc, getDoc, getDocs,
-  addDoc, deleteDoc, query, orderBy, limit
+  addDoc, deleteDoc, query, orderBy, limit, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // 2. إعدادات مشروعك الخاصة (hussain-eng-app)
@@ -34,7 +34,8 @@ window.firebaseDB = {
   deleteDoc,
   query,
   orderBy,
-  limit
+  limit,
+  onSnapshot
 };
 
 console.log("✅ فايربيس جاهز ومتاح على window.firebaseDB");
