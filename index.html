@@ -890,6 +890,103 @@ const sentenceBank = [
   { sentence: "He apologized for being late.", correct: 'اعتذر عن تأخره.', choices: ['اعتذر عن تأخره.','شكره على الحضور بالوقت.','رفض الاعتذار.','أخبره أنه سيتأخر غداً أيضاً.'] },
   { sentence: "She is fluent in three languages.", correct: 'هي تتحدث ثلاث لغات بطلاقة.', choices: ['هي تتعلم لغة واحدة فقط.','هي تتحدث ثلاث لغات بطلاقة.','هي تترجم الكتب فقط.','هي تدرس اللغة الإنجليزية حالياً.'] },
   { sentence: "Don't worry, everything will be fine.", correct: 'لا تقلق، كل شيء سيكون على ما يرام.', choices: ['لا تقلق، كل شيء سيكون على ما يرام.','قلق دائماً مفيد.','كل شيء سيصبح أسوأ.','لا داعي للمحاولة.'] },
+  { sentence: "Can you give me a hand with this?", correct: 'هل تقدر تساعدني بهذا؟', choices: ['هل تقدر تساعدني بهذا؟','هل تقدر تعطيني يدك؟','هل رأيت يدي؟','هل تريد مصافحتي؟'] },
+  { sentence: "I couldn't agree more.", correct: 'أوافقك الرأي تماماً.', choices: ['لا أوافقك إطلاقاً.','أوافقك الرأي تماماً.','لم أفهم رأيك.','أحتاج وقتاً للتفكير.'] },
+  { sentence: "Let's call it a day.", correct: 'خلونا نوقف العمل اليوم.', choices: ['خلونا نبدأ يوماً جديداً.','خلونا نوقف العمل اليوم.','خلونا نسمي هذا اليوم.','خلونا نتصل اليوم.'] },
+  { sentence: "He broke the news to her gently.", correct: 'أخبرها بالخبر برفق.', choices: ['أخبرها بالخبر برفق.','كسر لها هاتفها.','قرأ لها الجريدة.','أخفى عنها الخبر.'] },
+  { sentence: "I'm on the fence about this decision.", correct: 'أنا متردد بشأن هذا القرار.', choices: ['أنا متأكد من هذا القرار.','أنا متردد بشأن هذا القرار.','أنا أرفض هذا القرار.','أنا أتخذ القرار بسرعة.'] },
+  { sentence: "She hit the nail on the head.", correct: 'أصابت كبد الحقيقة تماماً.', choices: ['أخطأت في كلامها تماماً.','أصابت كبد الحقيقة تماماً.','ضربت المسمار بالمطرقة.','لم تفهم الموضوع.'] },
+  { sentence: "It's raining cats and dogs outside.", correct: 'الجو يمطر بغزارة شديدة في الخارج.', choices: ['الجو يمطر بغزارة شديدة في الخارج.','هناك قطط وكلاب في الشارع.','الجو مشمس جداً في الخارج.','الثلج يتساقط في الخارج.'] },
+  { sentence: "I need to think outside the box.", correct: 'أحتاج أن أفكر بطريقة إبداعية غير تقليدية.', choices: ['أحتاج أن أفكر بطريقة إبداعية غير تقليدية.','أحتاج أن أخرج من الغرفة.','أحتاج صندوقاً جديداً.','أحتاج أن أتبع القواعد بدقة.'] },
+  { sentence: "Don't jump to conclusions.", correct: 'لا تتسرع في الحكم على الأمور.', choices: ['لا تتسرع في الحكم على الأمور.','لا تقفز من مكان مرتفع.','لا تنهِ الموضوع بسرعة.','لا تتحدث عن النتائج.'] },
+  { sentence: "We need to touch base next week.", correct: 'نحتاج نتواصل مع بعض الأسبوع الجاي.', choices: ['نحتاج نتواصل مع بعض الأسبوع الجاي.','نحتاج نلمس القاعدة الأسبوع الجاي.','نحتاج ننهي المشروع الأسبوع الجاي.','نحتاج نلتقي شخصياً فقط.'] },
+  { sentence: "I'm swamped with work this week.", correct: 'أنا غارق في العمل هذا الأسبوع.', choices: ['أنا فاضي هذا الأسبوع.','أنا غارق في العمل هذا الأسبوع.','أنا في إجازة هذا الأسبوع.','أنا سأسافر هذا الأسبوع.'] },
+  { sentence: "Let's not beat around the bush.", correct: 'خلنا نتكلم بصراحة ووضوح.', choices: ['خلنا نتكلم بصراحة ووضوح.','خلنا نتمشى حول الحديقة.','خلنا نغير الموضوع.','خلنا نستمر بالمراوغة.'] },
+  { sentence: "I'm feeling a bit under the weather.", correct: 'أشعر أنني لست بحالة جيدة قليلاً.', choices: ['أشعر أنني بحالة ممتازة.','أشعر أنني لست بحالة جيدة قليلاً.','أشعر بالبرد الشديد فقط.','أشعر بالجوع الآن.'] },
+  { sentence: "He always talks behind my back.", correct: 'دائماً يتكلم عني من ورائي.', choices: ['دائماً يتكلم عني من ورائي.','دائماً يقف خلفي.','دائماً يمدحني أمام الناس.','دائماً يتجاهلني تماماً.'] },
+  { sentence: "It's a piece of cake for me.", correct: 'هذا أمر سهل جداً بالنسبة لي.', choices: ['هذا أمر صعب جداً بالنسبة لي.','هذا أمر سهل جداً بالنسبة لي.','هذا يشبه قطعة كيك حقيقية.','هذا لا يعنيني إطلاقاً.'] },
+  { sentence: "She's under a lot of pressure lately.", correct: 'هي تحت ضغط كبير مؤخراً.', choices: ['هي مرتاحة جداً مؤخراً.','هي تحت ضغط كبير مؤخراً.','هي مسافرة مؤخراً.','هي مريضة مؤخراً.'] },
+  { sentence: "Could you keep an eye on my bag?", correct: 'هل يمكنك أن تراقب حقيبتي؟', choices: ['هل يمكنك أن تراقب حقيبتي؟','هل يمكنك أن تفتح حقيبتي؟','هل يمكنك أن تأخذ حقيبتي؟','هل يمكنك أن تشتري لي حقيبة؟'] },
+  { sentence: "He's saving up for a new car.", correct: 'هو يدّخر المال لشراء سيارة جديدة.', choices: ['هو يدّخر المال لشراء سيارة جديدة.','هو يبيع سيارته القديمة الآن.','هو يستأجر سيارة هذا الأسبوع.','هو أصلح سيارته أمس.'] },
+  { sentence: "I ran into an old friend today.", correct: 'صادفت صديقاً قديماً اليوم.', choices: ['صادفت صديقاً قديماً اليوم.','اصطدمت بسيارة صديقي اليوم.','فقدت صديقاً قديماً اليوم.','اتصلت بصديق قديم اليوم.'] },
+  { sentence: "This project is a work in progress.", correct: 'هذا المشروع لا يزال قيد العمل.', choices: ['هذا المشروع انتهى تماماً.','هذا المشروع لا يزال قيد العمل.','هذا المشروع تم إلغاؤه.','هذا المشروع لم يبدأ بعد.'] },
+  { sentence: "I'll get back to you as soon as possible.", correct: 'سأرد عليك في أقرب وقت ممكن.', choices: ['سأرد عليك في أقرب وقت ممكن.','لن أرد عليك أبداً.','سأتأخر جداً في الرد عليك.','سأنسى الرد عليك.'] },
+  { sentence: "She takes after her mother a lot.", correct: 'هي تشبه أمها كثيراً.', choices: ['هي تشبه أمها كثيراً.','هي تتبع أمها في كل مكان.','هي تختلف عن أمها تماماً.','هي تعتني بأمها كثيراً.'] },
+  { sentence: "Let's split the bill evenly.", correct: 'خلونا نقسم الفاتورة بالتساوي.', choices: ['خلونا نقسم الفاتورة بالتساوي.','خلونا ندفع الفاتورة كاملة أنا.','خلونا نمزق الفاتورة.','خلونا لا ندفع الفاتورة.'] },
+  { sentence: "I'm trying to cut back on sugar.", correct: 'أحاول أن أقلل من تناول السكر.', choices: ['أحاول أن أزيد تناول السكر.','أحاول أن أقلل من تناول السكر.','أحاول أن أتوقف عن الأكل تماماً.','أحاول أن أشتري سكراً أكثر.'] },
+  { sentence: "He passed away last year.", correct: 'توفي في العام الماضي.', choices: ['توفي في العام الماضي.','سافر في العام الماضي.','تقاعد في العام الماضي.','تزوج في العام الماضي.'] },
+  { sentence: "I'm not really into sports.", correct: 'أنا لست مهتماً بالرياضة فعلاً.', choices: ['أنا مهتم جداً بالرياضة.','أنا لست مهتماً بالرياضة فعلاً.','أنا لاعب رياضي محترف.','أنا أكره مشاهدة الرياضة فقط.'] },
+  { sentence: "She's always up to date with the news.", correct: 'هي دائماً مطلعة على آخر الأخبار.', choices: ['هي دائماً مطلعة على آخر الأخبار.','هي لا تتابع الأخبار أبداً.','هي تكتب الأخبار بنفسها.','هي تكره قراءة الأخبار.'] },
+  { sentence: "I can't put up with this noise anymore.", correct: 'لا أستطيع تحمل هذا الضجيج بعد الآن.', choices: ['أستطيع تحمل هذا الضجيج بسهولة.','لا أستطيع تحمل هذا الضجيج بعد الآن.','أحب سماع هذا الضجيج.','لا أسمع أي ضجيج الآن.'] },
+  { sentence: "We should look into this matter carefully.", correct: 'يجب أن ندرس هذه المسألة بعناية.', choices: ['يجب أن نتجاهل هذه المسألة تماماً.','يجب أن ندرس هذه المسألة بعناية.','يجب أن ننسى هذه المسألة.','يجب أن نؤجل هذه المسألة للأبد.'] },
+  { sentence: "He gave up smoking two months ago.", correct: 'توقف عن التدخين قبل شهرين.', choices: ['بدأ التدخين قبل شهرين.','توقف عن التدخين قبل شهرين.','زاد من التدخين قبل شهرين.','لم يدخن أبداً في حياته.'] },
+  { sentence: "I'm looking for a way to relax.", correct: 'أبحث عن طريقة للاسترخاء.', choices: ['أبحث عن طريقة للاسترخاء.','أبحث عن وظيفة جديدة.','أبحث عن مكان للسكن.','أبحث عن طريق للمطار.'] },
+  { sentence: "The meeting has been put off until Monday.", correct: 'تم تأجيل الاجتماع إلى يوم الاثنين.', choices: ['تم إلغاء الاجتماع نهائياً.','تم تأجيل الاجتماع إلى يوم الاثنين.','تم تقديم الاجتماع ليوم أقرب.','تم عقد الاجتماع بالفعل.'] },
+  { sentence: "I take full responsibility for the mistake.", correct: 'أتحمل المسؤولية الكاملة عن هذا الخطأ.', choices: ['أتحمل المسؤولية الكاملة عن هذا الخطأ.','لا علاقة لي بهذا الخطأ.','هو من ارتكب هذا الخطأ.','لم يحدث أي خطأ.'] },
+  { sentence: "She's determined to succeed no matter what.", correct: 'هي مصممة على النجاح مهما كلف الأمر.', choices: ['هي مصممة على النجاح مهما كلف الأمر.','هي فقدت الأمل في النجاح.','هي لا تهتم بالنجاح إطلاقاً.','هي غير متأكدة من قدرتها.'] },
+  { sentence: "Please bear with me for a moment.", correct: 'أرجوك تحمّل معي للحظة.', choices: ['أرجوك تحمّل معي للحظة.','أرجوك ابتعد عني الآن.','أرجوك احمل هذا الشيء.','أرجوك اتركني وحدي.'] },
+  { sentence: "He's the one to blame for this.", correct: 'هو الملام على هذا الأمر.', choices: ['هو الملام على هذا الأمر.','هو الذي حل هذا الأمر.','لا أحد ملام على هذا الأمر.','هو الذي استفاد من هذا الأمر.'] },
+  { sentence: "I'm dying to see that new movie.", correct: 'أتحرق شوقاً لمشاهدة ذلك الفيلم الجديد.', choices: ['لا أريد مشاهدة ذلك الفيلم إطلاقاً.','أتحرق شوقاً لمشاهدة ذلك الفيلم الجديد.','شاهدت ذلك الفيلم بالفعل.','أنا خائف من مشاهدة ذلك الفيلم.'] },
+  { sentence: "This restaurant is out of this world.", correct: 'هذا المطعم رائع بشكل لا يوصف.', choices: ['هذا المطعم رائع بشكل لا يوصف.','هذا المطعم سيء جداً.','هذا المطعم بعيد جداً.','هذا المطعم مغلق الآن.'] },
+  { sentence: "I'll never let you down.", correct: 'لن أخيّب ظنك أبداً.', choices: ['لن أخيّب ظنك أبداً.','سأخيّب ظنك حتماً.','لن أتحدث معك مجدداً.','سأترك العمل معك.'] },
+  { sentence: "He's been under a lot of stress.", correct: 'هو يعاني من ضغط كبير مؤخراً.', choices: ['هو يعاني من ضغط كبير مؤخراً.','هو يعيش حياة هادئة مؤخراً.','هو في إجازة مؤخراً.','هو نائم طوال الوقت مؤخراً.'] },
+  { sentence: "Let's wrap up the meeting now.", correct: 'خلونا ننهي الاجتماع الآن.', choices: ['خلونا نبدأ الاجتماع الآن.','خلونا ننهي الاجتماع الآن.','خلونا نلغي الاجتماع الآن.','خلونا نطيل الاجتماع أكثر.'] },
+  { sentence: "I'm counting on your support.", correct: 'أعتمد على دعمك.', choices: ['أعتمد على دعمك.','لا أحتاج دعمك إطلاقاً.','أرفض أي دعم منك.','لا أثق بدعمك.'] },
+  { sentence: "She turned down the job offer.", correct: 'رفضت عرض الوظيفة.', choices: ['قبلت عرض الوظيفة.','رفضت عرض الوظيفة.','تجاهلت عرض الوظيفة تماماً.','طلبت وظيفة أخرى.'] },
+  { sentence: "It slipped my mind completely.", correct: 'نسيت الأمر تماماً.', choices: ['تذكرت الأمر تماماً.','نسيت الأمر تماماً.','كتبت الأمر في مذكرتي.','فكرت في الأمر طويلاً.'] },
+  { sentence: "He's a man of his word.", correct: 'هو رجل يفي بوعوده.', choices: ['هو رجل يفي بوعوده.','هو رجل كثير الكلام.','هو رجل لا يوثق به.','هو رجل صامت دائماً.'] },
+  { sentence: "I need to brush up on my English.", correct: 'أحتاج أن أنعش وأحسّن لغتي الإنجليزية.', choices: ['أحتاج أن أنعش وأحسّن لغتي الإنجليزية.','أحتاج أن أتوقف عن تعلم الإنجليزية.','أحتاج أن أنظف أسناني بالفرشاة.','أحتاج أن أعلّم أحداً الإنجليزية.'] },
+  { sentence: "The traffic was bumper to bumper.", correct: 'كان الازدحام المروري شديداً جداً.', choices: ['كان الازدحام المروري شديداً جداً.','كان الطريق فارغاً تماماً.','كانت السيارات متوقفة عند إشارة واحدة.','لم يكن هناك أي طريق مفتوح.'] },
+  { sentence: "I owe you one for this favor.", correct: 'أنا مدين لك بهذا المعروف.', choices: ['أنا مدين لك بهذا المعروف.','أنت مدين لي بمبلغ من المال.','لا أحتاج معروفك أبداً.','نسيت هذا المعروف تماماً.'] },
+  { sentence: "She's out of town this weekend.", correct: 'هي خارج المدينة هذا الأسبوع.', choices: ['هي خارج المدينة هذا الأسبوع.','هي في المنزل هذا الأسبوع.','هي في العمل هذا الأسبوع.','هي مريضة هذا الأسبوع.'] },
+  { sentence: "Let's play it by ear.", correct: 'خلونا نتصرف حسب الظروف بدون خطة مسبقة.', choices: ['خلونا نتصرف حسب الظروف بدون خطة مسبقة.','خلونا نستمع للموسيقى الآن.','خلونا نضع خطة دقيقة جداً.','خلونا نلغي كل شيء الآن.'] },
+  { sentence: "He's always making excuses.", correct: 'هو دائماً يختلق الأعذار.', choices: ['هو دائماً يختلق الأعذار.','هو دائماً يعتذر بصدق.','هو دائماً يلتزم بمواعيده.','هو دائماً صادق تماماً.'] },
+  { sentence: "I'm running a bit late today.", correct: 'أنا متأخر قليلاً اليوم.', choices: ['أنا متأخر قليلاً اليوم.','أنا مبكر جداً اليوم.','أنا في الموعد بالضبط اليوم.','أنا لن أحضر اليوم.'] },
+  { sentence: "She's the backbone of this company.", correct: 'هي الركيزة الأساسية لهذه الشركة.', choices: ['هي الركيزة الأساسية لهذه الشركة.','هي موظفة جديدة في الشركة.','هي تركت هذه الشركة.','هي لا تعمل في هذه الشركة.'] },
+  { sentence: "I've got a lot on my plate right now.", correct: 'لدي الكثير من المهام حالياً.', choices: ['لدي الكثير من المهام حالياً.','ليس لدي أي مهام حالياً.','لدي طعام كثير أمامي فقط.','أنا في إجازة طويلة حالياً.'] },
+  { sentence: "He's a bit of a perfectionist.", correct: 'هو شخص يميل إلى الكمال في كل شيء.', choices: ['هو شخص يميل إلى الكمال في كل شيء.','هو شخص مهمل في عمله.','هو شخص كسول جداً.','هو شخص لا يهتم بالتفاصيل.'] },
+  { sentence: "I need some fresh air.", correct: 'أحتاج إلى بعض الهواء النقي.', choices: ['أحتاج إلى بعض الهواء النقي.','أحتاج إلى بعض النوم فقط.','أحتاج إلى بعض الماء البارد.','أحتاج إلى بعض المال.'] },
+  { sentence: "She apologized profusely for the delay.", correct: 'اعتذرت بشدة عن التأخير.', choices: ['اعتذرت بشدة عن التأخير.','لم تعتذر إطلاقاً عن التأخير.','برّرت التأخير فقط.','تجاهلت موضوع التأخير.'] },
+  { sentence: "Let's give it a shot.", correct: 'خلونا نجرب الأمر.', choices: ['خلونا نجرب الأمر.','خلونا نتجاهل الأمر تماماً.','خلونا نرفض الأمر.','خلونا ننهي الأمر الآن.'] },
+  { sentence: "He was caught off guard by the question.", correct: 'فوجئ بالسؤال ولم يكن مستعداً له.', choices: ['فوجئ بالسؤال ولم يكن مستعداً له.','توقع السؤال تماماً.','تجاهل السؤال بالكامل.','أجاب على السؤال بثقة تامة.'] },
+  { sentence: "I'm not in the mood for jokes today.", correct: 'لست في مزاج للمزاح اليوم.', choices: ['لست في مزاج للمزاح اليوم.','أنا في مزاج رائع للمزاح اليوم.','أحب المزاح كثيراً اليوم.','لا أفهم المزاح أبداً.'] },
+  { sentence: "The company is going through hard times.", correct: 'الشركة تمر بأوقات صعبة.', choices: ['الشركة تمر بأوقات صعبة.','الشركة تحقق أرباحاً ضخمة.','الشركة توسعت بشكل كبير.','الشركة أغلقت أبوابها نهائياً.'] },
+  { sentence: "I'll keep you posted on any updates.", correct: 'سأبقيك على اطلاع بأي تحديثات.', choices: ['سأبقيك على اطلاع بأي تحديثات.','لن أخبرك بأي شيء.','سأخفي عنك كل التحديثات.','سأنسى إخبارك بالتحديثات.'] },
+  { sentence: "She's fed up with his excuses.", correct: 'سئمت من أعذاره.', choices: ['سئمت من أعذاره.','أعجبت بأعذاره كثيراً.','لم تسمع أعذاره من قبل.','صدقت كل أعذاره.'] },
+  { sentence: "We need to nip this problem in the bud.", correct: 'يجب أن نحل هذه المشكلة من جذورها مبكراً.', choices: ['يجب أن نحل هذه المشكلة من جذورها مبكراً.','يجب أن نتجاهل هذه المشكلة تماماً.','يجب أن ننتظر المشكلة حتى تكبر.','يجب أن نتحدث عن المشكلة فقط.'] },
+  { sentence: "He's known for his generosity.", correct: 'هو معروف بكرمه.', choices: ['هو معروف بكرمه.','هو معروف ببخله.','هو معروف بكسله.','هو غير معروف إطلاقاً.'] },
+  { sentence: "I'm afraid I have some bad news.", correct: 'للأسف لدي بعض الأخبار السيئة.', choices: ['للأسف لدي بعض الأخبار السيئة.','لدي أخبار سعيدة جداً.','ليس لدي أي أخبار.','أخاف من سماع الأخبار.'] },
+  { sentence: "She stood up for her rights.", correct: 'دافعت عن حقوقها.', choices: ['دافعت عن حقوقها.','تخلت عن حقوقها.','باعت حقوقها.','نسيت حقوقها.'] },
+  { sentence: "It took me by surprise.", correct: 'فاجأني هذا الأمر تماماً.', choices: ['فاجأني هذا الأمر تماماً.','توقعت هذا الأمر تماماً.','لم أهتم بهذا الأمر إطلاقاً.','نسيت هذا الأمر بسرعة.'] },
+  { sentence: "I'd rather stay home tonight.", correct: 'أفضل البقاء في المنزل الليلة.', choices: ['أفضل البقاء في المنزل الليلة.','أفضل الخروج الليلة.','لا أستطيع البقاء في المنزل الليلة.','سأسافر الليلة.'] },
+  { sentence: "He tends to overthink things.", correct: 'هو يميل إلى المبالغة في التفكير بالأمور.', choices: ['هو يميل إلى المبالغة في التفكير بالأمور.','هو لا يفكر في أي شيء أبداً.','هو يتخذ قراراته بسرعة دائماً.','هو غير مهتم بالتفكير إطلاقاً.'] },
+  { sentence: "The plan fell through at the last minute.", correct: 'فشلت الخطة في اللحظة الأخيرة.', choices: ['فشلت الخطة في اللحظة الأخيرة.','نجحت الخطة بشكل رائع.','تم تنفيذ الخطة مبكراً.','لم تكن هناك خطة أصلاً.'] },
+  { sentence: "I appreciate your honesty.", correct: 'أقدّر صدقك.', choices: ['أقدّر صدقك.','لا أهتم بصدقك.','أشك في صدقك.','أكره صدقك.'] },
+  { sentence: "She's very picky about food.", correct: 'هي دقيقة الاختيار جداً بخصوص الطعام.', choices: ['هي دقيقة الاختيار جداً بخصوص الطعام.','هي تأكل أي شيء دون تردد.','هي لا تأكل إطلاقاً.','هي تطبخ الطعام لكل الناس.'] },
+  { sentence: "We're all in the same boat here.", correct: 'كلنا في نفس الموقف الصعب هنا.', choices: ['كلنا في نفس الموقف الصعب هنا.','كل واحد فينا في موقف مختلف.','نحن جميعاً على متن قارب حقيقي.','لا أحد منا في أي موقف.'] },
+  { sentence: "I need to double-check the numbers.", correct: 'أحتاج أن أراجع الأرقام مرة أخرى.', choices: ['أحتاج أن أراجع الأرقام مرة أخرى.','لا أحتاج مراجعة الأرقام إطلاقاً.','الأرقام صحيحة مئة بالمئة.','نسيت كل الأرقام تماماً.'] },
+  { sentence: "He's got a knack for fixing things.", correct: 'لديه موهبة في إصلاح الأشياء.', choices: ['لديه موهبة في إصلاح الأشياء.','ليس لديه أي مهارة في الإصلاح.','هو يكسر الأشياء دائماً.','هو يشتري أشياء جديدة فقط.'] },
+  { sentence: "I'm on my way to the airport.", correct: 'أنا في طريقي إلى المطار.', choices: ['أنا في طريقي إلى المطار.','أنا وصلت إلى المطار بالفعل.','أنا في المنزل الآن.','ألغيت رحلتي إلى المطار.'] },
+  { sentence: "She burst into tears suddenly.", correct: 'انفجرت بالبكاء فجأة.', choices: ['انفجرت بالبكاء فجأة.','ضحكت بصوت عالٍ فجأة.','غضبت بشدة فجأة.','نامت فجأة.'] },
+  { sentence: "This offer is too good to be true.", correct: 'هذا العرض جيد جداً لدرجة يصعب تصديقها.', choices: ['هذا العرض جيد جداً لدرجة يصعب تصديقها.','هذا العرض سيء جداً وغير منطقي.','هذا العرض عادي جداً ولا يستحق الاهتمام.','هذا العرض غير متوفر إطلاقاً.'] },
+  { sentence: "I'm trying to make ends meet.", correct: 'أحاول تدبير أموري المالية بصعوبة.', choices: ['أحاول تدبير أموري المالية بصعوبة.','لدي فائض كبير من المال.','لا أهتم بالمال إطلاقاً.','أحاول توفير أموال لرحلة.'] },
+  { sentence: "He never backs down from a challenge.", correct: 'هو لا يتراجع أبداً عن أي تحدٍ.', choices: ['هو لا يتراجع أبداً عن أي تحدٍ.','هو يتراجع بسرعة عن كل تحدٍ.','هو يتجنب أي تحدٍ إطلاقاً.','هو لا يحب التحديات مطلقاً.'] },
+  { sentence: "I'll take your word for it.", correct: 'سأصدق كلامك.', choices: ['سأصدق كلامك.','لن أصدق كلامك أبداً.','سأتجاهل كلامك تماماً.','سأنسى كلامك بسرعة.'] },
+  { sentence: "She's always on top of things.", correct: 'هي دائماً مسيطرة على الأمور ومنظمة.', choices: ['هي دائماً مسيطرة على الأمور ومنظمة.','هي دائماً فوضوية وغير منظمة.','هي دائماً متأخرة عن كل شيء.','هي لا تهتم بأي شيء إطلاقاً.'] },
+  { sentence: "It's just a matter of time.", correct: 'إنها مسألة وقت فقط.', choices: ['إنها مسألة وقت فقط.','لن يحدث هذا أبداً.','حدث هذا بالفعل من مدة طويلة.','لا علاقة للوقت بالموضوع.'] },
+  { sentence: "I need to catch up on some sleep.", correct: 'أحتاج أن أعوّض النوم الذي فاتني.', choices: ['أحتاج أن أعوّض النوم الذي فاتني.','لا أحتاج للنوم إطلاقاً.','نمت أكثر من اللازم فعلاً.','أحتاج أن أستيقظ باكراً فقط.'] },
+  { sentence: "He's always the first one to arrive.", correct: 'هو دائماً أول من يصل.', choices: ['هو دائماً أول من يصل.','هو دائماً آخر من يصل.','هو لا يحضر أبداً.','هو يصل في منتصف الوقت دائماً.'] },
+  { sentence: "I can't help but worry about it.", correct: 'لا أستطيع إلا أن أقلق بشأن هذا الأمر.', choices: ['لا أستطيع إلا أن أقلق بشأن هذا الأمر.','لا أقلق بشأن هذا الأمر إطلاقاً.','أنا سعيد جداً بهذا الأمر.','لم أسمع عن هذا الأمر من قبل.'] },
+  { sentence: "The store is closed for renovation.", correct: 'المتجر مغلق بسبب أعمال التجديد.', choices: ['المتجر مغلق بسبب أعمال التجديد.','المتجر مفتوح على مدار الساعة.','المتجر أُغلق نهائياً.','المتجر انتقل إلى مكان آخر.'] },
+  { sentence: "I'm proud of how far you've come.", correct: 'أنا فخور بالتقدم الذي حققته.', choices: ['أنا فخور بالتقدم الذي حققته.','أنا محبط من أدائك.','لم ألاحظ أي تقدم لديك.','أنا غير مهتم بتقدمك.'] },
+  { sentence: "She knows the city like the back of her hand.", correct: 'هي تعرف المدينة معرفة تامة ودقيقة.', choices: ['هي تعرف المدينة معرفة تامة ودقيقة.','هي لا تعرف المدينة إطلاقاً.','هي زارت المدينة مرة واحدة فقط.','هي تعيش خارج المدينة تماماً.'] },
+  { sentence: "Let's face it, we made a mistake.", correct: 'لنعترف بالحقيقة، لقد ارتكبنا خطأ.', choices: ['لنعترف بالحقيقة، لقد ارتكبنا خطأ.','لم نرتكب أي خطأ إطلاقاً.','دعنا ننكر ما حدث تماماً.','لم يحدث شيء على الإطلاق.'] },
+  { sentence: "He's saving face in front of his boss.", correct: 'هو يحافظ على ماء وجهه أمام رئيسه.', choices: ['هو يحافظ على ماء وجهه أمام رئيسه.','هو يهين نفسه أمام رئيسه.','هو يتجاهل رئيسه تماماً.','هو يغسل وجهه أمام رئيسه.'] },
+  { sentence: "I'm just killing time until my flight.", correct: 'أنا فقط أقضي الوقت حتى موعد رحلتي.', choices: ['أنا فقط أقضي الوقت حتى موعد رحلتي.','ألغيت رحلتي تماماً.','رحلتي انطلقت بالفعل.','لا أملك أي رحلة اليوم.'] },
+  { sentence: "She's a fast learner.", correct: 'هي تتعلم بسرعة.', choices: ['هي تتعلم بسرعة.','هي بطيئة في التعلم.','هي لا تحب التعلم.','هي توقفت عن التعلم.'] },
+  { sentence: "I'm afraid it's out of stock.", correct: 'للأسف هذا المنتج غير متوفر حالياً.', choices: ['للأسف هذا المنتج غير متوفر حالياً.','هذا المنتج متوفر بكثرة.','هذا المنتج تم إيقاف إنتاجه نهائياً.','هذا المنتج مجاني الآن.'] },
+  { sentence: "He apologized and made amends.", correct: 'اعتذر وعوّض عن خطئه.', choices: ['اعتذر وعوّض عن خطئه.','رفض الاعتذار نهائياً.','تجاهل الموضوع كلياً.','لام الآخرين على خطئه.'] },
+  { sentence: "I'm all ears, go ahead.", correct: 'أنا أستمع باهتمام، تفضل بالحديث.', choices: ['أنا أستمع باهتمام، تفضل بالحديث.','لا أريد سماع أي شيء الآن.','لست مستعداً للاستماع الآن.','أنا مشغول جداً الآن.'] },
 ];
 
 const techBank = [
@@ -1897,18 +1994,73 @@ function restartQuiz() {
   startMode(mode);
 }
 
-/* ================= STORAGE MANAGEMENT & MULTIUSER MULTIPASS SYSTEM ================= */
+/* ================= STORAGE MANAGEMENT & MULTIUSER MULTIPASS SYSTEM (Firebase Firestore) ================= */
+// بيانات المستخدمين (XP / الستريك) صارت تتخزّن أيضاً في Firestore، بنفس فكرة
+// نظام السجلات (logs) اللي فوق، عشان تكون لوحة المنافسة (Leaderboard) مشتركة
+// فعلياً بين كل المستخدمين وكل الأجهزة وليس محصورة بمتصفح كل شخص لحاله.
+// نحتفظ بنسخة محلية (localStorage) كـ cache سريع يشتغل حتى لو تأخر الاتصال بالنت.
 let currentUser = null;
+let usersCache = {};
+
+function usersCollectionRef() {
+  const fb = window.firebaseDB;
+  if (!fb) return null;
+  return fb.collection(fb.db, 'users');
+}
+
+// يجلب كل المستخدمين من Firestore ويحدّث النسخة المحلية المؤقتة
+// (يُستخدم قبل تسجيل الدخول وقبل عرض لوحة المنافسة عشان نشوف آخر نقاط الجميع)
+async function refreshUsersCacheFromFirestore() {
+  const fb = window.firebaseDB;
+  const ref = usersCollectionRef();
+  if (!fb || !ref) return usersCache; // إن لم يجهز فايربيس بعد، نكتفي بالنسخة المحلية
+
+  try {
+    const snap = await fb.getDocs(ref);
+    const fresh = {};
+    snap.forEach(docSnap => { fresh[docSnap.id] = docSnap.data(); });
+    usersCache = fresh;
+    try { localStorage.setItem('husseinEngUsers', JSON.stringify(usersCache)); } catch(e) {}
+  } catch (e) {
+    console.error('❌ فشل تحميل بيانات المستخدمين من فايربيس:', e);
+  }
+  return usersCache;
+}
+
+// يرفع بيانات مستخدم واحد إلى Firestore بدون ما يعطّل الواجهة (fire-and-forget)
+function pushUserToFirestore(username, userData) {
+  const fb = window.firebaseDB;
+  if (!fb || !fb.setDoc || !fb.doc) {
+    console.warn('⚠️ فايربيس غير جاهز أو setDoc غير متوفر، تم الاكتفاء بالحفظ المحلي فقط.');
+    return;
+  }
+  fb.setDoc(fb.doc(fb.db, 'users', username), userData, { merge: true })
+    .catch(e => console.error('❌ فشل حفظ بيانات المستخدم في فايربيس:', e));
+}
+
+function deleteUserFromFirestore(username) {
+  const fb = window.firebaseDB;
+  if (!fb || !fb.deleteDoc || !fb.doc) return;
+  fb.deleteDoc(fb.doc(fb.db, 'users', username))
+    .catch(e => console.error('❌ فشل حذف المستخدم من فايربيس:', e));
+}
 
 function getUsersData() {
-  try { return JSON.parse(localStorage.getItem('husseinEngUsers')) || {}; }
-  catch(e) { return {}; }
-}
-function saveUsersData(data) {
-  localStorage.setItem('husseinEngUsers', JSON.stringify(data));
+  // نرجّع النسخة المحلية المؤقتة أولاً (سريعة)، وتُحدَّث فعلياً عبر refreshUsersCacheFromFirestore()
+  if (Object.keys(usersCache).length > 0) return usersCache;
+  try { usersCache = JSON.parse(localStorage.getItem('husseinEngUsers')) || {}; }
+  catch(e) { usersCache = {}; }
+  return usersCache;
 }
 
-function loginUser() {
+function saveUsersData(data) {
+  usersCache = data;
+  try { localStorage.setItem('husseinEngUsers', JSON.stringify(data)); } catch(e) {}
+  // نرفع كل مستخدم إلى Firestore عشان تكون النقاط مشتركة فعلياً بين كل الأجهزة والمستخدمين
+  Object.keys(data).forEach(uname => pushUserToFirestore(uname, data[uname]));
+}
+
+async function loginUser() {
   const userIn = document.getElementById('usernameInput').value.trim();
   const passIn = document.getElementById('passwordInput').value.trim();
   const errEl = document.getElementById('loginError');
@@ -1918,6 +2070,8 @@ function loginUser() {
     return;
   }
 
+  errEl.textContent = '⏳ جاري التحقق من بيانات الدخول...';
+  await refreshUsersCacheFromFirestore(); // نتأكد إننا شايفين آخر بيانات مشتركة قبل الدخول
   const data = getUsersData();
 
   // If user already exists, verify pass
@@ -1938,6 +2092,7 @@ function loginUser() {
     saveUsersData(data);
   }
 
+  errEl.textContent = '';
   currentUser = userIn;
   localStorage.setItem('husseinEngActiveUser', currentUser);
 
@@ -1995,8 +2150,11 @@ function renderStreakBoard() {
 }
 
 /* ================= LEADERBOARD WITH ADMIN INTERFACES ================= */
-function renderLeaderboard() {
+async function renderLeaderboard() {
   const container = document.getElementById('leaderboardList');
+  // نعرض حالة تحميل مؤقتة، ثم نجيب آخر بيانات الجميع من Firestore عشان اللوحة تكون مشتركة فعلياً
+  container.innerHTML = `<div style="color:var(--muted); text-align:center; padding:4px 0;">⏳ جاري تحميل لوحة المنافسة...</div>`;
+  await refreshUsersCacheFromFirestore();
   const data = getUsersData();
   
   // Sort user maps by high score values
@@ -2048,7 +2206,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
         if (data[targetUser]) {
            const oldScore = data[targetUser].score;
            data[targetUser].score = parseInt(newScore) || 0;
-           saveUsersData(data);
+           saveUsersData(data); // يرفع القيمة الجديدة لكل المستخدمين في Firestore بما فيهم هذا اليوزر
            logAction(`🔧 [الأدمن] قام بتعديل الـ XP لليوزر [${targetUser}] من (${oldScore}) إلى (${data[targetUser].score})`);
            renderLeaderboard();
         }
@@ -2058,6 +2216,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
         const data = getUsersData();
         delete data[targetUser];
         saveUsersData(data);
+        deleteUserFromFirestore(targetUser); // نحذفه من Firestore أيضاً عشان ما يرجع يظهر بعد التحديث القادم
         logAction(`🗑️ [الأدمن] قام بحذف اليوزر [${targetUser}] نهائياً من النظام`);
         renderLeaderboard();
      }
@@ -2138,11 +2297,12 @@ function toggleCategoryVisibility(cat) {
 }
 
 /* ================= APP INITIALIZATION ================= */
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   const active = localStorage.getItem('husseinEngActiveUser');
   if (active) {
     currentUser = active;
-    const data = getUsersData();
+    // نحمّل النسخة المحلية فوراً (سريعة) عشان الواجهة ما تنتظر، ثم نحدّثها من Firestore بالخلفية
+    let data = getUsersData();
     if (data[currentUser]) {
       streak = data[currentUser].streak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
       bestStreak = data[currentUser].bestStreak || { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 };
@@ -2151,6 +2311,16 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('userBar').classList.remove('hidden');
       document.getElementById('userGreeting').textContent = `👤 اليوزر الحالي: ${currentUser}`;
       goHome();
+
+      // نحدّث بيانات هذا اليوزر من Firestore (النقاط/الستريك الفعلية المشتركة) بعد ظهور الواجهة
+      await refreshUsersCacheFromFirestore();
+      data = getUsersData();
+      if (data[currentUser]) {
+        streak = data[currentUser].streak || streak;
+        bestStreak = data[currentUser].bestStreak || bestStreak;
+        syncStreakAnnouncedFromStreak();
+        renderStreakBoard();
+      }
       return;
     }
   }
