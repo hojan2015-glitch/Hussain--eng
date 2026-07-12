@@ -1306,7 +1306,7 @@ function registerAnswer(m, wasCorrect) {
       const data = getUsersData();
       if (data[currentUser] && data[currentUser].lockedModes && Object.keys(data[currentUser].lockedModes).length > 0) {
         data[currentUser].lockedModes = {}; // Unlock all
-        saveUsersData(data);
+        saveUsersData(data, currentUser);
         setTimeout(() => {
           alert("🎉 كفو! حققت ستريك 10 أجوبة صحيحة وتم إلغاء قفل جميع القوائم المغلقة لك!");
           applyCategoryVisibility();
@@ -1488,7 +1488,7 @@ function handleWrongAnswerVoiceAndLocking() {
       const data = getUsersData();
       data[currentUser].lockedModes = data[currentUser].lockedModes || {};
       data[currentUser].lockedModes[mode] = true;
-      saveUsersData(data);
+      saveUsersData(data, currentUser);
     }
     
     // Force Exit after verbal warning
@@ -1578,7 +1578,7 @@ function handleExitQuiz() {
       const data = getUsersData();
       if (data[currentUser]) {
         data[currentUser].score = (data[currentUser].score || 0) + score;
-        saveUsersData(data);
+        saveUsersData(data, currentUser);
       }
     }
     if (currentUser) {
@@ -1955,7 +1955,7 @@ function showResults() {
   if (currentUser) {
     const data = getUsersData();
     data[currentUser].score = (data[currentUser].score || 0) + score;
-    saveUsersData(data);
+    saveUsersData(data, currentUser);
   }
 
   logAction(`🎉 أكمل جولة كاملة بنجاح بنتيجة [${correctCount}/${total}] وحصل على [+${score} XP]`);
@@ -2053,11 +2053,49 @@ function getUsersData() {
   return usersCache;
 }
 
-function saveUsersData(data) {
+// ============ تحديث لحظي حقيقي (Real-time) للوحة المنافسة ============
+// نفتح استماعاً حياً (onSnapshot) على مجموعة المستخدمين في Firestore. أي مستخدم
+// يجاوب ويأخذ XP في أي جهاز، تنعكس نقاطه فوراً عند كل المستخدمين المتصلين
+// بدون ما يحتاجون يعملوا Refresh أو يرجعون للصفحة الرئيسية يدوياً.
+let leaderboardLiveSyncStarted = false;
+function startLeaderboardLiveSync() {
+  if (leaderboardLiveSyncStarted) return; // نفتح الاستماع مرة وحدة بس طول عمر الصفحة
+  const fb = window.firebaseDB;
+  const ref = usersCollectionRef();
+  if (!fb || !ref || !fb.onSnapshot) return;
+
+  leaderboardLiveSyncStarted = true;
+  fb.onSnapshot(ref, (snap) => {
+    const fresh = {};
+    snap.forEach(docSnap => { fresh[docSnap.id] = docSnap.data(); });
+    usersCache = fresh;
+    try { localStorage.setItem('husseinEngUsers', JSON.stringify(usersCache)); } catch(e) {}
+
+    // نحدّث اللوحة مباشرة بدون شاشة تحميل فقط إذا الصفحة الرئيسية ظاهرة حالياً
+    const homeScreen = document.getElementById('homeScreen');
+    if (homeScreen && !homeScreen.classList.contains('hidden')) {
+      renderLeaderboardUI();
+    }
+  }, (err) => {
+    console.error('❌ انقطع الاستماع الحي لبيانات المستخدمين:', err);
+    leaderboardLiveSyncStarted = false; // نسمح بمحاولة إعادة الاتصال لاحقاً
+  });
+}
+
+function saveUsersData(data, changedUsername) {
   usersCache = data;
   try { localStorage.setItem('husseinEngUsers', JSON.stringify(data)); } catch(e) {}
-  // نرفع كل مستخدم إلى Firestore عشان تكون النقاط مشتركة فعلياً بين كل الأجهزة والمستخدمين
-  Object.keys(data).forEach(uname => pushUserToFirestore(uname, data[uname]));
+  // مهم: نرفع فقط اليوزر اللي فعلاً تغيّر، مو كل الكاش المحلي.
+  // (سابقاً كانت الدالة ترفع كل المستخدمين المخزّنين محلياً، وهذا خطر: لو عندك
+  // نسخة قديمة بذاكرتك المحلية من نقاط لاعب ثاني، كانت تدوس على نقاطه الجديدة
+  // في Firestore بنسخة قديمة كل ما يحفظ أي مستخدم آخر بياناته.)
+  if (changedUsername && data[changedUsername]) {
+    pushUserToFirestore(changedUsername, data[changedUsername]);
+  } else if (!changedUsername) {
+    // احتياط فقط لأي استدعاء قديم ما مرّر اسم اليوزر - يرفع الكل كحل بديل آمن
+    console.warn('⚠️ saveUsersData استُدعيت بدون تحديد اليوزر المتغيّر - سيتم رفع الكل احتياطاً.');
+    Object.keys(data).forEach(uname => pushUserToFirestore(uname, data[uname]));
+  }
 }
 
 async function loginUser() {
@@ -2089,7 +2127,7 @@ async function loginUser() {
       bestStreak: { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 },
       lockedModes: {}
     };
-    saveUsersData(data);
+    saveUsersData(data, userIn);
   }
 
   errEl.textContent = '';
@@ -2131,7 +2169,7 @@ function saveStreakForUser() {
   if (data[currentUser]) {
     data[currentUser].streak = streak;
     data[currentUser].bestStreak = bestStreak;
-    saveUsersData(data);
+    saveUsersData(data, currentUser);
   }
 }
 
@@ -2155,8 +2193,20 @@ async function renderLeaderboard() {
   // نعرض حالة تحميل مؤقتة، ثم نجيب آخر بيانات الجميع من Firestore عشان اللوحة تكون مشتركة فعلياً
   container.innerHTML = `<div style="color:var(--muted); text-align:center; padding:4px 0;">⏳ جاري تحميل لوحة المنافسة...</div>`;
   await refreshUsersCacheFromFirestore();
+  renderLeaderboardUI();
+  // بعد أول تحميل، نفتح الاستماع الحي عشان أي XP يتغيّر عند أي مستخدم (بأي جهاز)
+  // ينعكس فوراً على لوحة الجميع بدون ما يحتاجون يرجعون للصفحة الرئيسية يدوياً
+  startLeaderboardLiveSync();
+}
+
+// يرسم لوحة المنافسة من الكاش المحلي الحالي (usersCache) بدون أي طلب شبكة جديد.
+// تُستخدم من renderLeaderboard() بعد الجلب الأولي، ومن الاستماع الحي (onSnapshot)
+// في كل مرة تتغيّر فيها بيانات أي مستخدم عند أي شخص متصل.
+function renderLeaderboardUI() {
+  const container = document.getElementById('leaderboardList');
+  if (!container) return;
   const data = getUsersData();
-  
+
   // Sort user maps by high score values
   const sorted = Object.keys(data).map(uname => ({
     username: uname,
@@ -2206,7 +2256,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
         if (data[targetUser]) {
            const oldScore = data[targetUser].score;
            data[targetUser].score = parseInt(newScore) || 0;
-           saveUsersData(data); // يرفع القيمة الجديدة لكل المستخدمين في Firestore بما فيهم هذا اليوزر
+           saveUsersData(data, targetUser); // يرفع فقط هذا اليوزر إلى Firestore
            logAction(`🔧 [الأدمن] قام بتعديل الـ XP لليوزر [${targetUser}] من (${oldScore}) إلى (${data[targetUser].score})`);
            renderLeaderboard();
         }
@@ -2215,7 +2265,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
      if (confirm(`هل أنت متأكد تماماً من حذف يوزر [ ${targetUser} ] وكل بياناته المخزنة؟`)) {
         const data = getUsersData();
         delete data[targetUser];
-        saveUsersData(data);
+        saveUsersData(data, targetUser);
         deleteUserFromFirestore(targetUser); // نحذفه من Firestore أيضاً عشان ما يرجع يظهر بعد التحديث القادم
         logAction(`🗑️ [الأدمن] قام بحذف اليوزر [${targetUser}] نهائياً من النظام`);
         renderLeaderboard();
