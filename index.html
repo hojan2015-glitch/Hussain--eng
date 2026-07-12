@@ -1132,9 +1132,13 @@ let bestStreak = { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenari
 // Tracks whether the "streak achieved" message was already shown for the CURRENT streak run,
 // so it only fires once when the streak is first reached, not on every correct answer after.
 let streakAnnounced = { vocab: false, order: false, sentence: false, tech: false, techdef: false, scenario: false };
+// Tracks whether the "unlock all locked lists" message/action was already done for the CURRENT streak run,
+// so it only fires once when streak 10 is first reached, not on every correct answer after.
+let unlockAllAnnounced = { vocab: false, order: false, sentence: false, tech: false, techdef: false, scenario: false };
 
 function syncStreakAnnouncedFromStreak() {
   Object.keys(streak).forEach(k => { streakAnnounced[k] = streak[k] >= 3; });
+  Object.keys(unlockAllAnnounced).forEach(k => { unlockAllAnnounced[k] = streak[k] >= 10; });
 }
 
 let roundMistakes = [];
@@ -1199,9 +1203,11 @@ function registerAnswer(m, wasCorrect) {
     }
     
     // Check if the user achieved 10 streak to completely open all locked categories
-    if (streak[m] >= 10 && currentUser) {
+    // Only do this once per streak run (not on every correct answer after reaching 10)
+    if (streak[m] >= 10 && !unlockAllAnnounced[m] && currentUser) {
+      unlockAllAnnounced[m] = true;
       const data = getUsersData();
-      if (data[currentUser] && data[currentUser].lockedModes) {
+      if (data[currentUser] && data[currentUser].lockedModes && Object.keys(data[currentUser].lockedModes).length > 0) {
         data[currentUser].lockedModes = {}; // Unlock all
         saveUsersData(data);
         setTimeout(() => {
@@ -1213,6 +1219,7 @@ function registerAnswer(m, wasCorrect) {
   } else {
     streak[m] = 0;
     streakAnnounced[m] = false; // reset so the message can fire again once a new streak is achieved
+    unlockAllAnnounced[m] = false; // reset so unlock-all can fire again once a new streak of 10 is achieved
   }
   document.getElementById('streakNum').textContent = streak[m];
   saveStreakForUser();
