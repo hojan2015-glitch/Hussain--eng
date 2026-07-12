@@ -1500,23 +1500,41 @@ function handleWrongAnswerVoiceAndLocking() {
   }
 }
 
-/* ================= TIMER CONTROLLER (30 Seconds) ================= */
+/* ================= TIMER CONTROLLER (Per-Category Duration) ================= */
+// مدة العداد تختلف حسب نوع القائمة:
+// 30 ثانية: كلمات ومعاني (vocab) / معنى الجملة (sentence) / مفردات تقنية (tech)
+// 50 ثانية: ترتيب الجملة (order) / جملة تقنية (techdef) / سيناريو تقني (scenario)
+const TIMER_DURATIONS = {
+  vocab: 30,
+  sentence: 30,
+  tech: 30,
+  order: 50,
+  techdef: 50,
+  scenario: 50
+};
+
+function getTimerDurationForMode(m) {
+  return TIMER_DURATIONS[m] || 30; // احتياط: 30 ثانية لأي قائمة غير معرّفة
+}
+
 function startQuestionTimer() {
   clearInterval(timerInterval);
-  timeLeft = 30;
-  
+  const duration = getTimerDurationForMode(mode);
+  timeLeft = duration;
+  const redThreshold = Math.max(7, Math.round(duration * 0.2)); // آخر ~20% من الوقت (7 ثواني على الأقل) يتلون أحمر
+
   const timerNum = document.getElementById('timerNum');
   timerNum.textContent = timeLeft;
   timerNum.style.color = 'var(--orange)';
-  
+
   timerInterval = setInterval(() => {
     timeLeft--;
     timerNum.textContent = timeLeft;
-    
-    if (timeLeft <= 7) {
+
+    if (timeLeft <= redThreshold) {
       timerNum.style.color = 'var(--red)';
     }
-    
+
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       handleTimeOut();
