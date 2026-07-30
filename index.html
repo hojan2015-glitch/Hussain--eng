@@ -191,6 +191,13 @@
   }
   .back-btn:hover { background: var(--card2); }
 
+  .log-tab-btn:hover { background: var(--card2); }
+  .log-tab-btn.active {
+    background: rgba(167,139,250,0.18);
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+  }
+
   .mode-title {
     font-size: 15px; font-weight: 800; color: var(--orange);
   }
@@ -602,6 +609,14 @@
         <div class="q-badge" style="margin-bottom:0; background:rgba(167,139,250,0.15); color:var(--accent);">System Log</div>
         <button class="logout-btn" onclick="clearAllLogs()" style="background:var(--red); color:#fff; border:none; padding: 5px 14px;">مسح السجل</button>
       </div>
+
+      <!-- LOG VIEW MODE TABS -->
+      <div id="logTabs" style="display:flex; gap:8px; margin-bottom:14px;">
+        <button class="log-tab-btn" data-mode="answers" onclick="setLogViewMode('answers')" style="flex:1; padding:9px 6px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); background:var(--card); color:var(--text); font-family:'Tajawal',sans-serif; font-size:12.5px; font-weight:700; cursor:pointer; transition:0.2s;">📝 الإجابات</button>
+        <button class="log-tab-btn" data-mode="lastseen" onclick="setLogViewMode('lastseen')" style="flex:1; padding:9px 6px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); background:var(--card); color:var(--text); font-family:'Tajawal',sans-serif; font-size:12.5px; font-weight:700; cursor:pointer; transition:0.2s;">🕒 آخر ظهور</button>
+        <button class="log-tab-btn" data-mode="both" onclick="setLogViewMode('both')" style="flex:1; padding:9px 6px; border-radius:10px; border:1px solid rgba(255,255,255,0.08); background:var(--card); color:var(--text); font-family:'Tajawal',sans-serif; font-size:12.5px; font-weight:700; cursor:pointer; transition:0.2s;">🔗 الاثنين معاً</button>
+      </div>
+
       <div id="logList" style="max-height: 420px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-left: 4px;">
       </div>
     </div>
@@ -1688,6 +1703,9 @@ async function logAction(actionText) {
   }
 }
 
+let logsCache = [];               // آخر دفعة سجلات تم تحميلها من Firestore (مشتركة بين كل أوضاع العرض)
+let currentLogViewMode = 'both';  // الوضع الافتراضي عند فتح شاشة السجلات: عرض يجمع الإجابات وآخر ظهور معاً
+
 async function viewLogs() {
   document.getElementById('homeScreen').classList.add('hidden');
   document.getElementById('logSection').classList.remove('hidden');
@@ -1713,20 +1731,98 @@ async function viewLogs() {
     return;
   }
 
-  if (logs.length === 0) {
+  logsCache = logs;
+  setLogViewMode(currentLogViewMode);
+}
+
+/* ================= LOG VIEW MODES: الإجابات / آخر ظهور / الاثنين معاً ================= */
+function setLogViewMode(mode) {
+  currentLogViewMode = mode;
+
+  // تحديث شكل الأزرار (تفعيل الزر المختار فقط)
+  document.querySelectorAll('.log-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+
+  const logList = document.getElementById('logList');
+  const logs = logsCache;
+
+  if (!logs || logs.length === 0) {
     logList.innerHTML = `<div style="color:var(--muted); text-align:center; padding: 24px; font-size:14px;">لا توجد تفاعلات مسجلة بعد.</div>`;
     return;
   }
 
-  logList.innerHTML = logs.map(l => `
-    <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${l.user === 'HSZO' ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px; color:var(--muted);">
-        <span>👤 يوزر: <b style="color:#fff; font-size:12px;">${l.user}</b></span>
-        <span>🕒 ${l.time}</span>
-      </div>
-      <div style="color:var(--text); font-size:13px; line-height:1.5;">${l.action}</div>
-    </div>
-  `).join('');
+  // تجميع السجلات حسب كل مستخدم (logs مرتبة من الأحدث للأقدم أصلاً)
+  const byUser = {};
+  const userOrder = []; // للحفاظ على ترتيب ظهور أول مرة = يعكس الأحدث ظهوراً أولاً
+  logs.forEach(l => {
+    if (!byUser[l.user]) {
+      byUser[l.user] = [];
+      userOrder.push(l.user);
+    }
+    byUser[l.user].push(l);
+  });
+
+  if (mode === 'lastseen') {
+    // خيار: آخر ظهور لكل مستخدم فقط
+    logList.innerHTML = userOrder.map(uname => {
+      const lastLog = byUser[uname][0]; // أول عنصر = الأحدث لأن logs مرتبة تنازلياً
+      const isAdmin = uname === 'HSZO';
+      return `
+        <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${isAdmin ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:800; color:#fff; font-size:13px;">👤 ${uname}</span>
+            <span style="font-size:11px; color:var(--muted);">🕒 آخر ظهور: ${lastLog.time}</span>
+          </div>
+          <div style="color:var(--muted); font-size:12px; margin-top:6px; line-height:1.5;">آخر نشاط: ${lastLog.action}</div>
+        </div>
+      `;
+    }).join('');
+
+  } else if (mode === 'answers') {
+    // خيار: الإجابات/التفاعلات مجمّعة لكل مستخدم (كل مستخدم له كرت خاص فيه كل حركاته)
+    logList.innerHTML = userOrder.map(uname => {
+      const isAdmin = uname === 'HSZO';
+      const userLogs = byUser[uname];
+      return `
+        <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${isAdmin ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
+          <div style="font-weight:800; color:#fff; font-size:13px; margin-bottom:8px;">👤 ${uname} <span style="font-weight:normal; color:var(--muted); font-size:11px;">(${userLogs.length} حركة)</span></div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            ${userLogs.map(l => `
+              <div style="background:rgba(255,255,255,0.02); border-radius:8px; padding:8px 10px;">
+                <div style="font-size:10.5px; color:var(--muted); margin-bottom:4px;">🕒 ${l.time}</div>
+                <div style="color:var(--text); font-size:12.5px; line-height:1.5;">${l.action}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  } else {
+    // mode === 'both': خيار يجمع الاثنين — آخر ظهور بارز بالأعلى + كل الإجابات تحته لكل مستخدم
+    logList.innerHTML = userOrder.map(uname => {
+      const isAdmin = uname === 'HSZO';
+      const userLogs = byUser[uname];
+      const lastLog = userLogs[0];
+      return `
+        <div style="background: rgba(255,255,255,0.03); border-right: 4px solid ${isAdmin ? 'var(--accent)' : 'var(--primary)'}; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); text-align: right;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.08);">
+            <span style="font-weight:800; color:#fff; font-size:13px;">👤 ${uname} <span style="font-weight:normal; color:var(--muted); font-size:11px;">(${userLogs.length} حركة)</span></span>
+            <span style="font-size:11px; color:var(--orange); font-weight:700;">🕒 آخر ظهور: ${lastLog.time}</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            ${userLogs.map(l => `
+              <div style="background:rgba(255,255,255,0.02); border-radius:8px; padding:8px 10px;">
+                <div style="font-size:10.5px; color:var(--muted); margin-bottom:4px;">🕒 ${l.time}</div>
+                <div style="color:var(--text); font-size:12.5px; line-height:1.5;">${l.action}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 }
 
 async function clearAllLogs() {
