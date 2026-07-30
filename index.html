@@ -719,6 +719,226 @@ const vocabBank = {
     { word: 'Night', correct: 'ليل', choices: ['ليل','نهار','صباح','مساء'] },
     { word: 'Morning', correct: 'صباح', choices: ['صباح','مساء','ليل','ظهر'] },
     { word: 'Blue', correct: 'أزرق', choices: ['أزرق','أحمر','أخضر','أصفر'] },
+    { word: 'Hello', correct: 'مرحبا', choices: ['يستطيع','مرحبا','فاكهة','لا'] },
+    { word: 'Hi', correct: 'هاي', choices: ['هاي','محطة قطار','يجب / مثل','طفل'] },
+    { word: 'Goodbye', correct: 'مع السلامة', choices: ['مع السلامة','يأتي','أنت','أنا'] },
+    { word: 'Bye', correct: 'باي', choices: ['بنك','كيف','قليل','باي'] },
+    { word: 'Please', correct: 'من فضلك', choices: ['كراج','ذاك','من فضلك','عصير'] },
+    { word: 'Thank you', correct: 'شكرا', choices: ['أخت','يفتح','شكرا','ذاك'] },
+    { word: 'Yes', correct: 'نعم', choices: ['يأتي','نعم','متجر','يرى'] },
+    { word: 'No', correct: 'لا', choices: ['هو/هي (شيء)','مصنع','مركز إطفاء','لا'] },
+    { word: 'I', correct: 'أنا', choices: ['مدرسة','يملك','أنا','أقل'] },
+    { word: 'You', correct: 'أنت', choices: ['ماذا','مستشفى','أنت','أخضر'] },
+    { word: 'He', correct: 'هو', choices: ['يملك','هو','مكتبة','ناس'] },
+    { word: 'She', correct: 'هي', choices: ['هي','سماء','ذاك','سلطة'] },
+    { word: 'It', correct: 'هو/هي (شيء)', choices: ['لماذا','ينتهي','هو/هي (شيء)','جزر'] },
+    { word: 'We', correct: 'نحن', choices: ['ثلاثة','نحن','دجاج','سلطة'] },
+    { word: 'They', correct: 'هم', choices: ['متجر','هم','فاكهة','كثير'] },
+    { word: 'My', correct: 'خاصتي', choices: ['متجر','جامعة','خاصتي','مصعد'] },
+    { word: 'Your', correct: 'خاصتك', choices: ['يقرأ','خاصتك','مصنع','بلد'] },
+    { word: 'His', correct: 'خاصته', choices: ['مشكلة','خاصته','يقرأ','بنك'] },
+    { word: 'Her', correct: 'خاصتها', choices: ['ريح','مدينة','خاصتها','موز'] },
+    { word: 'Our', correct: 'خاصتنا', choices: ['و','فندق','خاصتنا','قليل'] },
+    { word: 'Their', correct: 'خاصتهم', choices: ['يعمل','خاصتهم','مشروب','بلد'] },
+    { word: 'Have', correct: 'يملك', choices: ['مخبز','هو/هي (شيء)','يملك','يأتي'] },
+    { word: 'Do', correct: 'يفعل', choices: ['يفعل','كمبيوتر','جائع','نادي رياضي'] },
+    { word: 'Go', correct: 'يذهب', choices: ['جبل','قهوة','يذهب','بعد'] },
+    { word: 'Come', correct: 'يأتي', choices: ['جائع','مكتب بريد','يأتي','يصنع'] },
+    { word: 'See', correct: 'يرى', choices: ['حذاء','يستطيع','يرى','رقم'] },
+    { word: 'Look', correct: 'ينظر', choices: ['ينظر','مكتب بريد','رخيص','كل'] },
+    { word: 'Like', correct: 'يجب / مثل', choices: ['مصعد','يجب / مثل','زيت','سنة'] },
+    { word: 'Want', correct: 'يريد', choices: ['يريد','واحد','فقط','سوق'] },
+    { word: 'Can', correct: 'يستطيع', choices: ['يستطيع','خروف','من فضلك','يريد'] },
+    { word: 'Make', correct: 'يصنع', choices: ['مشكلة','إلى','يصنع','هم'] },
+    { word: 'Get', correct: 'يحصل', choices: ['سوبرماركت','يحصل','موقف سيارات','خاصته'] },
+    { word: 'Give', correct: 'يعطي', choices: ['اثنان','كل','أكثر','يعطي'] },
+    { word: 'Take', correct: 'يأخذ', choices: ['صيدلية','يأخذ','ينام','بلد'] },
+    { word: 'Man', correct: 'رجل', choices: ['من','رجل','و','يصنع'] },
+    { word: 'Woman', correct: 'امرأة', choices: ['امرأة','في','عصير','أقل'] },
+    { word: 'Child', correct: 'طفل', choices: ['طفل','خاصتي','عيادة','شوربة'] },
+    { word: 'Mother', correct: 'أم', choices: ['يشاهد','أبداً','أم','خاصتها'] },
+    { word: 'Father', correct: 'أب', choices: ['يأخذ','فقط','من','أب'] },
+    { word: 'Brother', correct: 'أخ', choices: ['وقت','حمام','أخ','مصنع'] },
+    { word: 'Sister', correct: 'أخت', choices: ['كمبيوتر','ينتهي','سرير','أخت'] },
+    { word: 'Family', correct: 'عائلة', choices: ['برتقال','فراولة','عائلة','قائمة طعام'] },
+    { word: 'One', correct: 'واحد', choices: ['يبيع','كنيسة','واحد','مركز إطفاء'] },
+    { word: 'Two', correct: 'اثنان', choices: ['قبعة','وقت','اثنان','لذا'] },
+    { word: 'Three', correct: 'ثلاثة', choices: ['و','ثلاثة','نهر','ذاك'] },
+    { word: 'Good', correct: 'جيد', choices: ['عنب','فقط','جيد','هو/هي (شيء)'] },
+    { word: 'Bad', correct: 'سيء', choices: ['بقرة','حمام','واحد','سيء'] },
+    { word: 'Now', correct: 'الآن', choices: ['الآن','متجر','واحد','خاصتي'] },
+    { word: 'Day', correct: 'يوم', choices: ['ملعب أطفال','سماء','هناك','يوم'] },
+    { word: 'Time', correct: 'وقت', choices: ['وقت','رقم','أخ','يوم'] },
+    { word: 'What', correct: 'ماذا', choices: ['ماذا','يقرأ','هم','مطعم'] },
+    { word: 'How', correct: 'كيف', choices: ['كيف','بعد','رخيص','مخرج'] },
+    { word: 'Where', correct: 'أين', choices: ['الآن','أين','خاصته','مدخل'] },
+    { word: 'When', correct: 'متى', choices: ['متى','مطبخ','مشكلة','يصنع'] },
+    { word: 'Why', correct: 'لماذا', choices: ['لماذا','ملح','خاصتهم','هاتف'] },
+    { word: 'Who', correct: 'من', choices: ['قائمة طعام','يكتب','من','مكتب بريد'] },
+    { word: 'Because', correct: 'لأن', choices: ['يأخذ','لأن','جزر','برتقال'] },
+    { word: 'With', correct: 'مع', choices: ['خاصتها','مقهى','مع السلامة','مع'] },
+    { word: 'From', correct: 'من', choices: ['من','فقط','خاصتها','لماذا'] },
+    { word: 'In', correct: 'في', choices: ['في','و','خاصته','يمشي'] },
+    { word: 'On', correct: 'على', choices: ['أيضاً','ساحة','على','مستشفى'] },
+    { word: 'At', correct: 'في', choices: ['طريق','جزر','في','كثير'] },
+    { word: 'To', correct: 'إلى', choices: ['كل','إلى','يستطيع','رجل'] },
+    { word: 'For', correct: 'لـ', choices: ['كثير','لـ','لحم','هنا'] },
+    { word: 'And', correct: 'و', choices: ['أين','عطشان','و','سلطة'] },
+    { word: 'Or', correct: 'أو', choices: ['أو','سلالم','نحن','و'] },
+    { word: 'Not', correct: 'ليس', choices: ['هي','ليس','هذا','نفق'] },
+    { word: 'Very', correct: 'جداً', choices: ['فاكهة','كل','عائلة','جداً'] },
+    { word: 'All', correct: 'كل', choices: ['مع السلامة','كل','يريد','قليل'] },
+    { word: 'Some', correct: 'بعض', choices: ['أنت','أيضاً','بعض','ساحة'] },
+    { word: 'Many', correct: 'كثير', choices: ['كثير','حقيبة','يعطي','هو'] },
+    { word: 'This', correct: 'هذا', choices: ['هذا','يتعلم','جائع','متى'] },
+    { word: 'That', correct: 'ذاك', choices: ['حديقة','ينتهي','قليل','ذاك'] },
+    { word: 'Here', correct: 'هنا', choices: ['كنيسة','على','هنا','عائلة'] },
+    { word: 'There', correct: 'هناك', choices: ['محطة قطار','جيد','يشتري','هناك'] },
+    { word: 'People', correct: 'ناس', choices: ['ملعب رياضي','ناس','أخت','كل'] },
+    { word: 'Number', correct: 'رقم', choices: ['بحر','كيف','لأن','رقم'] },
+    { word: 'Year', correct: 'سنة', choices: ['سنة','من','طريق','مسجد'] },
+    { word: 'Okay', correct: 'حسنا / أوكي', choices: ['حسنا / أوكي','هذا','يشاهد','بلد'] },
+    { word: 'Drink', correct: 'يشرب', choices: ['دائماً','يشرب','موز','بلد'] },
+    { word: 'Sleep', correct: 'ينام', choices: ['جيد','ينام','ليس','طعام'] },
+    { word: 'Read', correct: 'يقرأ', choices: ['يقرأ','قهوة','حذاء','يغلق'] },
+    { word: 'Write', correct: 'يكتب', choices: ['يكتب','أخضر','سيارة','يوم'] },
+    { word: 'Speak', correct: 'يتكلم', choices: ['مرحبا','مصنع','يتكلم','مرة أخرى'] },
+    { word: 'Hear', correct: 'يسمع', choices: ['بطاطس','خاصته','يسمع','يشاهد'] },
+    { word: 'Watch', correct: 'يشاهد', choices: ['مكتب بريد','رقم','يشاهد','غالي'] },
+    { word: 'Buy', correct: 'يشتري', choices: ['مطبخ','يتكلم','يشتري','عشاء'] },
+    { word: 'Sell', correct: 'يبيع', choices: ['هاتف','وقت','بطاطس','يبيع'] },
+    { word: 'Open', correct: 'يفتح', choices: ['مشكلة','زبدة','سنة','يفتح'] },
+    { word: 'Close', correct: 'يغلق', choices: ['سنة','هنا','متى','يغلق'] },
+    { word: 'Start', correct: 'يبدأ', choices: ['جبل','يبدأ','قائمة طعام','بنطال'] },
+    { word: 'Finish', correct: 'ينتهي', choices: ['ينتهي','اثنان','محطة قطار','مسجد'] },
+    { word: 'Learn', correct: 'يتعلم', choices: ['يذهب','يتعلم','مقهى','شارع'] },
+    { word: 'Work', correct: 'يعمل', choices: ['يعمل','ماذا','مع','مصنع'] },
+    { word: 'Play', correct: 'يلعب', choices: ['يلعب','جبن','شاطئ','إلى'] },
+    { word: 'Run', correct: 'يجري', choices: ['شوربة','وقت','أخضر','يجري'] },
+    { word: 'Walk', correct: 'يمشي', choices: ['فراولة','أم','يمشي','إلى'] },
+    { word: 'School', correct: 'مدرسة', choices: ['جيد','مكتب','لأن','مدرسة'] },
+    { word: 'Shop', correct: 'متجر', choices: ['مخرج','سماء','متجر','يحصل'] },
+    { word: 'Car', correct: 'سيارة', choices: ['مخبز','بنطال','جبن','سيارة'] },
+    { word: 'Bus', correct: 'حافلة', choices: ['شاطئ','أخت','فندق','حافلة'] },
+    { word: 'Train', correct: 'قطار', choices: ['فاكهة','مصعد','كثير','قطار'] },
+    { word: 'City', correct: 'مدينة', choices: ['مدينة','قميص','كثير','خاصتنا'] },
+    { word: 'Country', correct: 'بلد', choices: ['يقرأ','فقط','بلد','يشاهد'] },
+    { word: 'Kitchen', correct: 'مطبخ', choices: ['مطبخ','في','غداء','متجر'] },
+    { word: 'Bathroom', correct: 'حمام', choices: ['خاصتك','نافذة','حمام','مطبخ'] },
+    { word: 'Bed', correct: 'سرير', choices: ['أين','نافذة','خاصتي','سرير'] },
+    { word: 'Window', correct: 'نافذة', choices: ['مدرسة','أخضر','سوق','نافذة'] },
+    { word: 'Phone', correct: 'هاتف', choices: ['مقهى','رقم','سيارة','هاتف'] },
+    { word: 'Computer', correct: 'كمبيوتر', choices: ['بعض','بقرة','لأن','كمبيوتر'] },
+    { word: 'Money', correct: 'فلوس', choices: ['يشتري','سيارة','جزر','فلوس'] },
+    { word: 'Bag', correct: 'حقيبة', choices: ['يعطي','حقيبة','جبل','مصعد'] },
+    { word: 'Shoe', correct: 'حذاء', choices: ['كمبيوتر','يملك','حذاء','موز'] },
+    { word: 'Shirt', correct: 'قميص', choices: ['قميص','ليس','هو/هي (شيء)','مدرسة'] },
+    { word: 'Pants', correct: 'بنطال', choices: ['يتكلم','سوبرماركت','يشتري','بنطال'] },
+    { word: 'Hat', correct: 'قبعة', choices: ['ساحة','خاصتهم','و','قبعة'] },
+    { word: 'Moon', correct: 'قمر', choices: ['مع','قمر','عنب','يغلق'] },
+    { word: 'Sky', correct: 'سماء', choices: ['سماء','لـ','مخبز','لا'] },
+    { word: 'Wind', correct: 'ريح', choices: ['يعطي','ريح','شاطئ','في'] },
+    { word: 'River', correct: 'نهر', choices: ['يطبخ','نهر','جبل','أو'] },
+    { word: 'Mountain', correct: 'جبل', choices: ['شارع','جبل','حديقة','عائلة'] },
+    { word: 'Sea', correct: 'بحر', choices: ['طلب','يشرب','أخضر','بحر'] },
+    { word: 'Beach', correct: 'شاطئ', choices: ['إفطار','شاطئ','خاصتنا','شاي'] },
+    { word: 'Animal', correct: 'حيوان', choices: ['عطشان','حيوان','أرز','مدخل'] },
+    { word: 'Horse', correct: 'حصان', choices: ['حصان','إذا','يفتح','كمبيوتر'] },
+    { word: 'Cow', correct: 'بقرة', choices: ['نافذة','مدخل','باي','بقرة'] },
+    { word: 'Sheep', correct: 'خروف', choices: ['سلطة','يتعلم','نفق','خروف'] },
+    { word: 'Cloudy', correct: 'غائم', choices: ['حقيبة','جيد','غائم','مطار'] },
+    { word: 'Sunny', correct: 'مشمس', choices: ['مشمس','نهر','حقيبة','جسر'] },
+    { word: 'Cheap', correct: 'رخيص', choices: ['هذا','يفعل','نفق','رخيص'] },
+    { word: 'Expensive', correct: 'غالي', choices: ['جزر','مشكلة','جبن','غالي'] },
+    { word: 'Always', correct: 'دائماً', choices: ['يتكلم','خروف','دائماً','مدخل'] },
+    { word: 'Never', correct: 'أبداً', choices: ['يبدأ','أبداً','كنيسة','ليس'] },
+    { word: 'Sometimes', correct: 'أحياناً', choices: ['أحياناً','أبداً','كثير','مع السلامة'] },
+    { word: 'Again', correct: 'مرة أخرى', choices: ['مكتب بريد','مرة أخرى','بقرة','مطبخ'] },
+    { word: 'Before', correct: 'قبل', choices: ['صيدلية','بقرة','برتقال','قبل'] },
+    { word: 'After', correct: 'بعد', choices: ['ناس','بلد','بعد','لأن'] },
+    { word: 'If', correct: 'إذا', choices: ['بحر','إذا','أقل','قبل'] },
+    { word: 'So', correct: 'لذا', choices: ['يبدأ','لذا','يطبخ','قمر'] },
+    { word: 'Only', correct: 'فقط', choices: ['مكتب بريد','في','فقط','يصنع'] },
+    { word: 'Too', correct: 'أيضاً', choices: ['أيضاً','سوق','فندق','إذا'] },
+    { word: 'More', correct: 'أكثر', choices: ['حيوان','أكثر','محطة حافلات','كثير'] },
+    { word: 'Less', correct: 'أقل', choices: ['يتعلم','ناس','أقل','من'] },
+    { word: 'Much', correct: 'كثير', choices: ['إذا','كثير','صيدلية','يعطي'] },
+    { word: 'Little', correct: 'قليل', choices: ['أكثر','قليل','عشاء','هناك'] },
+    { word: 'Question', correct: 'سؤال', choices: ['ينظر','سؤال','باي','جميل'] },
+    { word: 'Problem', correct: 'مشكلة', choices: ['مشكلة','الآن','يبيع','حذاء'] },
+    { word: 'Beautiful', correct: 'جميل', choices: ['خاصتك','يستطيع','طريق','جميل'] },
+    { word: 'Green', correct: 'أخضر', choices: ['شوربة','عطشان','أخضر','جميل'] },
+    { word: 'Food', correct: 'طعام', choices: ['قليل','سنة','طعام','كراج'] },
+    { word: 'Drink', correct: 'مشروب', choices: ['أقل','مشروب','سرير','سوق'] },
+    { word: 'Juice', correct: 'عصير', choices: ['رقم','قبعة','قميص','عصير'] },
+    { word: 'Tea', correct: 'شاي', choices: ['شاي','جبن','يرى','محطة حافلات'] },
+    { word: 'Coffee', correct: 'قهوة', choices: ['قهوة','خاصتهم','جداً','طماطم'] },
+    { word: 'Rice', correct: 'أرز', choices: ['أرز','أخت','خاصتنا','أكثر'] },
+    { word: 'Meat', correct: 'لحم', choices: ['شاي','لحم','إفطار','جبل'] },
+    { word: 'Chicken', correct: 'دجاج', choices: ['مستشفى','ذاك','هنا','دجاج'] },
+    { word: 'Cheese', correct: 'جبن', choices: ['نادي رياضي','جداً','جبن','ملعب رياضي'] },
+    { word: 'Butter', correct: 'زبدة', choices: ['برتقال','فقط','زبدة','مع'] },
+    { word: 'Salt', correct: 'ملح', choices: ['خاصتها','خاصتي','ملح','واحد'] },
+    { word: 'Sugar', correct: 'سكر', choices: ['حذاء','يحصل','سكر','نهر'] },
+    { word: 'Oil', correct: 'زيت', choices: ['لذا','بعض','مشمس','زيت'] },
+    { word: 'Soup', correct: 'شوربة', choices: ['قهوة','هو','شوربة','فلوس'] },
+    { word: 'Salad', correct: 'سلطة', choices: ['سلطة','يذهب','من','نعم'] },
+    { word: 'Fruit', correct: 'فاكهة', choices: ['جميل','سوق','فاكهة','هو'] },
+    { word: 'Banana', correct: 'موز', choices: ['هذا','سيء','طعام','موز'] },
+    { word: 'Orange', correct: 'برتقال', choices: ['يذهب','يغلق','جبل','برتقال'] },
+    { word: 'Grapes', correct: 'عنب', choices: ['جزر','عنب','ينظر','عائلة'] },
+    { word: 'Strawberry', correct: 'فراولة', choices: ['مدينة','فراولة','طماطم','هنا'] },
+    { word: 'Vegetable', correct: 'خضار', choices: ['يكتب','خضار','و','ينام'] },
+    { word: 'Tomato', correct: 'طماطم', choices: ['لذا','ريح','فراولة','طماطم'] },
+    { word: 'Potato', correct: 'بطاطس', choices: ['أبداً','يتعلم','ملح','بطاطس'] },
+    { word: 'Carrot', correct: 'جزر', choices: ['نحن','سوبرماركت','جزر','أين'] },
+    { word: 'Menu', correct: 'قائمة طعام', choices: ['حذاء','عشاء','هنا','قائمة طعام'] },
+    { word: 'Order', correct: 'طلب', choices: ['طلب','زيت','كنيسة','لحم'] },
+    { word: 'Hungry', correct: 'جائع', choices: ['أكثر','باي','يشرب','جائع'] },
+    { word: 'Thirsty', correct: 'عطشان', choices: ['يستطيع','عطشان','ريح','مصعد'] },
+    { word: 'Breakfast', correct: 'إفطار', choices: ['غائم','إفطار','بنك','هناك'] },
+    { word: 'Lunch', correct: 'غداء', choices: ['قمر','جبل','غداء','إلى'] },
+    { word: 'Dinner', correct: 'عشاء', choices: ['مطعم','عشاء','قهوة','غالي'] },
+    { word: 'Cook', correct: 'يطبخ', choices: ['مكتبة','مخرج','نادي رياضي','يطبخ'] },
+    { word: 'Hospital', correct: 'مستشفى', choices: ['طريق','مرحبا','مستشفى','ذاك'] },
+    { word: 'Clinic', correct: 'عيادة', choices: ['أب','إذا','بنطال','عيادة'] },
+    { word: 'Pharmacy', correct: 'صيدلية', choices: ['أكثر','فقط','سوق','صيدلية'] },
+    { word: 'Bank', correct: 'بنك', choices: ['في','غداء','يوم','بنك'] },
+    { word: 'Post office', correct: 'مكتب بريد', choices: ['هي','يقرأ','فندق','مكتب بريد'] },
+    { word: 'Police station', correct: 'مركز شرطة', choices: ['نادي رياضي','متجر','مركز شرطة','خضار'] },
+    { word: 'Fire station', correct: 'مركز إطفاء', choices: ['مركز إطفاء','مشمس','يعطي','عصير'] },
+    { word: 'Airport', correct: 'مطار', choices: ['مرة أخرى','مطار','قمر','يرى'] },
+    { word: 'Train station', correct: 'محطة قطار', choices: ['محطة قطار','أخ','عنب','مطبخ'] },
+    { word: 'Bus station', correct: 'محطة حافلات', choices: ['ملح','يشتري','إفطار','محطة حافلات'] },
+    { word: 'Hotel', correct: 'فندق', choices: ['مخرج','جزر','يسمع','فندق'] },
+    { word: 'Restaurant', correct: 'مطعم', choices: ['زبدة','أنت','مطعم','لذا'] },
+    { word: 'Cafe', correct: 'مقهى', choices: ['فندق','يذهب','من','مقهى'] },
+    { word: 'Bakery', correct: 'مخبز', choices: ['واحد','مخبز','قميص','إفطار'] },
+    { word: 'Supermarket', correct: 'سوبرماركت', choices: ['يتكلم','سوبرماركت','مسجد','هم'] },
+    { word: 'Market', correct: 'سوق', choices: ['أم','فلوس','إلى','سوق'] },
+    { word: 'Shop', correct: 'متجر', choices: ['ثلاثة','اثنان','خاصتهم','متجر'] },
+    { word: 'Library', correct: 'مكتبة', choices: ['غائم','طفل','مكتبة','طعام'] },
+    { word: 'University', correct: 'جامعة', choices: ['جامعة','طماطم','أو','سماء'] },
+    { word: 'Park', correct: 'حديقة', choices: ['حديقة','أخت','فقط','قائمة طعام'] },
+    { word: 'Playground', correct: 'ملعب أطفال', choices: ['مشروب','رقم','سلطة','ملعب أطفال'] },
+    { word: 'Stadium', correct: 'ملعب رياضي', choices: ['قمر','سنة','ملعب رياضي','سلالم'] },
+    { word: 'Gym', correct: 'نادي رياضي', choices: ['يجب / مثل','على','نادي رياضي','مدرسة'] },
+    { word: 'Mosque', correct: 'مسجد', choices: ['شكرا','عشاء','ناس','مسجد'] },
+    { word: 'Church', correct: 'كنيسة', choices: ['كنيسة','جائع','جامعة','قليل'] },
+    { word: 'Office', correct: 'مكتب', choices: ['ساحة','مكتب','مكتبة','هنا'] },
+    { word: 'Factory', correct: 'مصنع', choices: ['شوربة','لأن','مصنع','يوم'] },
+    { word: 'Garage', correct: 'كراج', choices: ['كراج','موز','يأتي','سكر'] },
+    { word: 'Parking', correct: 'موقف سيارات', choices: ['يعمل','موقف سيارات','أنا','أخضر'] },
+    { word: 'Street', correct: 'شارع', choices: ['شارع','سرير','يتكلم','فندق'] },
+    { word: 'Road', correct: 'طريق', choices: ['طريق','لذا','ملعب أطفال','يعمل'] },
+    { word: 'Bridge', correct: 'جسر', choices: ['طريق','حيوان','جسر','مكتب'] },
+    { word: 'Tunnel', correct: 'نفق', choices: ['يستطيع','نهر','نفق','كنيسة'] },
+    { word: 'Square', correct: 'ساحة', choices: ['قائمة طعام','مكتب بريد','جزر','ساحة'] },
+    { word: 'Mall', correct: 'مول', choices: ['قطار','مول','ملعب رياضي','يذهب'] },
+    { word: 'Elevator', correct: 'مصعد', choices: ['قمر','يلعب','مصعد','جزر'] },
+    { word: 'Stairs', correct: 'سلالم', choices: ['سلطة','سلالم','يجري','شارع'] },
+    { word: 'Entrance', correct: 'مدخل', choices: ['نعم','جبل','مدخل','زبدة'] },
+    { word: 'Exit', correct: 'مخرج', choices: ['موز','خاصتك','شوربة','مخرج'] },
   ],
   2: [
     { word: 'Improve', correct: 'يُحسّن / يطوّر', choices: ['يُحسّن / يطوّر','يدمّر','يتجاهل','يكرر'] },
@@ -757,6 +977,80 @@ const vocabBank = {
     { word: 'Responsible', correct: 'مسؤول', choices: ['مسؤول','لا مبالٍ','مهمل','كسول'] },
     { word: 'Punctual', correct: 'ملتزم بالوقت', choices: ['ملتزم بالوقت','متأخر دائماً','عشوائي','بطيء'] },
     { word: 'Cautious', correct: 'حذر', choices: ['حذر','متهور','لا مبالٍ','متسرع'] },
+    { word: 'Sad', correct: 'حزين', choices: ['آمن','مسترخي','حزين','يصل'] },
+    { word: 'Angry', correct: 'غاضب', choices: ['غاضب','يخسر','مريض','مسترخي'] },
+    { word: 'Afraid', correct: 'خائف', choices: ['يصلح','يلتقي','يري','خائف'] },
+    { word: 'Tired', correct: 'متعب', choices: ['يفوز','يبقى','مريض','متعب'] },
+    { word: 'Excited', correct: 'متحمس', choices: ['يبني','منزعج','يري','متحمس'] },
+    { word: 'Bored', correct: 'يشعر بالملل', choices: ['يشعر بالملل','يري','مريض','يشعر'] },
+    { word: 'Calm', correct: 'هادئ', choices: ['محظوظ','قوي','يجيب','هادئ'] },
+    { word: 'Worried', correct: 'قلق', choices: ['قلق','يتذكر','خائف','هادئ'] },
+    { word: 'Surprised', correct: 'متفاجئ', choices: ['متفائل','متفاجئ','محتار','يحب'] },
+    { word: 'Confused', correct: 'محتار', choices: ['يجيب','محتار','خطير','حزين'] },
+    { word: 'Lonely', correct: 'وحيد', choices: ['متعب','وحيد','متأخر','مسترخي'] },
+    { word: 'Proud', correct: 'فخور', choices: ['خائف','سيء جداً','فخور','يفهم'] },
+    { word: 'Shy', correct: 'خجول', choices: ['يبقى','خجول','يقبل','ضعيف'] },
+    { word: 'Sick', correct: 'مريض', choices: ['يستلم','مريض','يكسر','يقرر'] },
+    { word: 'Healthy', correct: 'بصحة جيدة', choices: ['يبتسم','يشعر بالملل','يقول','بصحة جيدة'] },
+    { word: 'Relaxed', correct: 'مسترخي', choices: ['يحاول','قلق','يغادر','مسترخي'] },
+    { word: 'Strong', correct: 'قوي', choices: ['محتار','قوي','يبني','يفوز'] },
+    { word: 'Weak', correct: 'ضعيف', choices: ['متفاجئ','ضعيف','قوي','يجيب'] },
+    { word: 'Safe', correct: 'آمن', choices: ['يضحك','آمن','يموت','يصلح'] },
+    { word: 'Dangerous', correct: 'خطير', choices: ['يموت','منزعج','يحب','خطير'] },
+    { word: 'Busy', correct: 'مشغول', choices: ['يصلح','ينسى','يغادر','مشغول'] },
+    { word: 'Free', correct: 'فاضي / حر', choices: ['فاضي / حر','يعيش','يعرف','منزعج'] },
+    { word: 'Ready', correct: 'جاهز', choices: ['وحيد','جاهز','فخور','متفاجئ'] },
+    { word: 'Late', correct: 'متأخر', choices: ['متأخر','قوي','يكره','يري'] },
+    { word: 'Early', correct: 'مبكر', choices: ['يصل','مسترخي','يرسل','مبكر'] },
+    { word: 'Lucky', correct: 'محظوظ', choices: ['يفكر','محظوظ','يرسل','يتكلم'] },
+    { word: 'Unlucky', correct: 'غير محظوظ', choices: ['غير محظوظ','بخير','يحاول','خطير'] },
+    { word: 'Hopeful', correct: 'متفائل', choices: ['يجيب','بصحة جيدة','بخير','متفائل'] },
+    { word: 'Upset', correct: 'منزعج', choices: ['يجيب','متعب','منزعج','متأخر'] },
+    { word: 'Fine', correct: 'بخير', choices: ['حزين','بخير','ينسى','يجلب'] },
+    { word: 'Great', correct: 'ممتاز', choices: ['آمن','ممتاز','متعب','متفاجئ'] },
+    { word: 'Terrible', correct: 'سيء جداً', choices: ['سيء جداً','يبقى','يعلم','يصلح'] },
+    { word: 'Interested', correct: 'مهتم', choices: ['يفهم','يحتاج','مهتم','يفكر'] },
+    { word: 'Annoyed', correct: 'منزعج', choices: ['مشغول','منزعج','هادئ','وحيد'] },
+    { word: 'Peaceful', correct: 'مسالم', choices: ['يبني','مسالم','يفوز','يبقى'] },
+    { word: 'Ask', correct: 'يسأل', choices: ['يجلب','يموت','يسأل','بصحة جيدة'] },
+    { word: 'Answer', correct: 'يجيب', choices: ['يشعر بالملل','يقبل','يجيب','يفكر'] },
+    { word: 'Talk', correct: 'يتكلم', choices: ['يقول','يتكلم','حزين','غير محظوظ'] },
+    { word: 'Tell', correct: 'يخبر', choices: ['يخبر','مسترخي','يفهم','يتكلم'] },
+    { word: 'Say', correct: 'يقول', choices: ['جاهز','يقول','يعلم','قوي'] },
+    { word: 'Think', correct: 'يفكر', choices: ['يشعر بالملل','يزور','محتار','يفكر'] },
+    { word: 'Know', correct: 'يعرف', choices: ['محتار','يفكر','يعيش','يعرف'] },
+    { word: 'Understand', correct: 'يفهم', choices: ['يغادر','يفهم','بصحة جيدة','يتكلم'] },
+    { word: 'Remember', correct: 'يتذكر', choices: ['يستلم','فخور','يصلح','يتذكر'] },
+    { word: 'Forget', correct: 'ينسى', choices: ['ينسى','يقبل','يغادر','يموت'] },
+    { word: 'Bring', correct: 'يجلب', choices: ['يجلب','يفهم','يتذكر','منزعج'] },
+    { word: 'Send', correct: 'يرسل', choices: ['يرسل','يقبل','يبكي','مبكر'] },
+    { word: 'Receive', correct: 'يستلم', choices: ['مريض','يستلم','ممتاز','آمن'] },
+    { word: 'Show', correct: 'يري', choices: ['خطير','جاهز','محتار','يري'] },
+    { word: 'Teach', correct: 'يعلم', choices: ['يفكر','يحتاج','يعلم','يعرف'] },
+    { word: 'Meet', correct: 'يلتقي', choices: ['يبني','يقرر','يلتقي','يخبر'] },
+    { word: 'Visit', correct: 'يزور', choices: ['يجلب','يزور','يضحك','محتار'] },
+    { word: 'Leave', correct: 'يغادر', choices: ['قلق','يغادر','متحمس','يستلم'] },
+    { word: 'Arrive', correct: 'يصل', choices: ['يختار','يصل','يعلم','يضحك'] },
+    { word: 'Stay', correct: 'يبقى', choices: ['يضحك','يبقى','يعرف','يقرر'] },
+    { word: 'Live', correct: 'يعيش', choices: ['يعيش','وحيد','مريض','يتذكر'] },
+    { word: 'Die', correct: 'يموت', choices: ['يبني','يبتسم','يموت','يقبل'] },
+    { word: 'Build', correct: 'يبني', choices: ['يعلم','يجيب','يبني','يغادر'] },
+    { word: 'Break', correct: 'يكسر', choices: ['يفهم','خجول','متفاجئ','يكسر'] },
+    { word: 'Fix', correct: 'يصلح', choices: ['خطير','وحيد','يصلح','يفهم'] },
+    { word: 'Choose', correct: 'يختار', choices: ['يلتقي','قوي','يختار','وحيد'] },
+    { word: 'Decide', correct: 'يقرر', choices: ['يقرر','قوي','يقبل','يفهم'] },
+    { word: 'Try', correct: 'يحاول', choices: ['يحاول','يبكي','يرسل','خائف'] },
+    { word: 'Win', correct: 'يفوز', choices: ['يفوز','يحاول','متفائل','يتذكر'] },
+    { word: 'Lose', correct: 'يخسر', choices: ['محتار','يخسر','يتكلم','خطير'] },
+    { word: 'Laugh', correct: 'يضحك', choices: ['يضحك','يري','يتذكر','قوي'] },
+    { word: 'Cry', correct: 'يبكي', choices: ['يشعر بالملل','فاضي / حر','يموت','يبكي'] },
+    { word: 'Smile', correct: 'يبتسم', choices: ['يبتسم','يموت','يبني','يجيب'] },
+    { word: 'Kiss', correct: 'يقبل', choices: ['يقول','يختار','يقبل','مبكر'] },
+    { word: 'Hug', correct: 'يعانق', choices: ['يجيب','يري','يصلح','يعانق'] },
+    { word: 'Feel', correct: 'يشعر', choices: ['هادئ','ضعيف','مهتم','يشعر'] },
+    { word: 'Love', correct: 'يحب', choices: ['يجيب','مسترخي','يحب','يبكي'] },
+    { word: 'Hate', correct: 'يكره', choices: ['يضحك','آمن','يبني','يكره'] },
+    { word: 'Need', correct: 'يحتاج', choices: ['متعب','ينسى','يبني','يحتاج'] },
   ],
   3: [
     { word: 'Inevitable', correct: 'لا مفر منه / محتوم', choices: ['نادر الحدوث','لا مفر منه / محتوم','اختياري','مستحيل'] },
@@ -794,6 +1088,47 @@ const vocabBank = {
     { word: 'Ambivalent', correct: 'متردد / مشاعر متناقضة', choices: ['متردد / مشاعر متناقضة','متأكد تماماً','سعيد جداً','غاضب جداً'] },
     { word: 'Empirical', correct: 'تجريبي / قائم على الملاحظة', choices: ['تجريبي / قائم على الملاحظة','نظري بحت','خيالي','عشوائي'] },
     { word: 'Conducive', correct: 'مساعد / يهيئ الظروف', choices: ['مساعد / يهيئ الظروف','معيق','ضار','محايد'] },
+    { word: 'Benefit', correct: 'فائدة / منفعة', choices: ['يُسلّم','يتردد','نتيجة / عاقبة','فائدة / منفعة'] },
+    { word: 'Challenge', correct: 'تحدي', choices: ['تحدي','جهد','يحافظ على','يكتشف'] },
+    { word: 'Effort', correct: 'جهد', choices: ['جهد','يُقنع','يلاحظ / يراقب','إمكانية / احتمال'] },
+    { word: 'Possibility', correct: 'إمكانية / احتمال', choices: ['مورد','ينجز / يحقق','إمكانية / احتمال','قضية / مشكلة'] },
+    { word: 'Advantage', correct: 'ميزة', choices: ['يُقنع','يضر / يتلف','يُقرض','ميزة'] },
+    { word: 'Disadvantage', correct: 'عيب / سلبية', choices: ['يتجنب','يقدّر','عيب / سلبية','يُسلّم'] },
+    { word: 'Overcome', correct: 'يتغلب على', choices: ['ميزة','يتغلب على','دليل','ينجز / يحقق'] },
+    { word: 'Motivate', correct: 'يحفّز', choices: ['نتيجة / عاقبة','يُسلّم','يحفّز','دقيق'] },
+    { word: 'Avoid', correct: 'يتجنب', choices: ['فائدة / منفعة','يتجنب','يستبدل','ينجز / يحقق'] },
+    { word: 'Observe', correct: 'يلاحظ / يراقب', choices: ['عيب / سلبية','يلاحظ / يراقب','يقبل','مسؤولية'] },
+    { word: 'Persuade', correct: 'يُقنع', choices: ['يتعافى','جهد','قضية / مشكلة','يُقنع'] },
+    { word: 'Refuse', correct: 'يرفض', choices: ['يستبدل','يرفض','تحدي','ميزة'] },
+    { word: 'Accept', correct: 'يقبل', choices: ['يقبل','يتجنب','يوسّع','متميز / بارز'] },
+    { word: 'Repair', correct: 'يُصلح', choices: ['يُصلح','قضية / مشكلة','يرفض','دليل'] },
+    { word: 'Damage', correct: 'يضر / يتلف', choices: ['يضر / يتلف','يعتمد (على)','دليل','جهد'] },
+    { word: 'Discover', correct: 'يكتشف', choices: ['جهد','يحافظ على','يقدّر','يكتشف'] },
+    { word: 'Deliver', correct: 'يُسلّم', choices: ['يُسلّم','يُقرض','جهد','يقبل'] },
+    { word: 'Lend', correct: 'يُقرض', choices: ['يوسّع','يُقرض','يتنافس','يحفّز'] },
+    { word: 'Compete', correct: 'يتنافس', choices: ['مورد','يوسّع','يتنافس','يتعافى'] },
+    { word: 'Depend', correct: 'يعتمد (على)', choices: ['يعتمد (على)','مسؤولية','يُقرض','يتردد'] },
+    { word: 'Appreciate', correct: 'يقدّر', choices: ['عيب / سلبية','يقدّر','يوضّح / يبرهن','يُزوُّد / إمداد'] },
+    { word: 'Maintain', correct: 'يحافظ على', choices: ['يقدّر','يتغلب على','يحافظ على','عيب / سلبية'] },
+    { word: 'Expand', correct: 'يوسّع', choices: ['يوضّح / يبرهن','مورد','يعتمد (على)','يوسّع'] },
+    { word: 'Replace', correct: 'يستبدل', choices: ['يوسّع','مورد','يستبدل','جهد'] },
+    { word: 'Hesitate', correct: 'يتردد', choices: ['ميزة','يُقرض','إمكانية / احتمال','يتردد'] },
+    { word: 'Recover', correct: 'يتعافى', choices: ['يلاحظ / يراقب','يوضّح / يبرهن','تحدي','يتعافى'] },
+    { word: 'Approach', correct: 'يقترب من / نهج', choices: ['يقترب من / نهج','ميزة','يكتشف','يستبدل'] },
+    { word: 'Demand', correct: 'يطالب / طلب', choices: ['يوضّح / يبرهن','يطالب / طلب','يلاحظ / يراقب','مورد'] },
+    { word: 'Supply', correct: 'يُزوُّد / إمداد', choices: ['ميزة','يُزوُّد / إمداد','دقيق','يتجنب'] },
+    { word: 'Resource', correct: 'مورد', choices: ['يكتشف','مورد','يحفّز','يُقرض'] },
+    { word: 'Evidence', correct: 'دليل', choices: ['دليل','يتردد','مسؤولية','حل'] },
+    { word: 'Issue', correct: 'قضية / مشكلة', choices: ['يُزوُّد / إمداد','يُصلح','قضية / مشكلة','ينجز / يحقق'] },
+    { word: 'Solution', correct: 'حل', choices: ['يتجنب','حل','يحفّز','يقبل'] },
+    { word: 'Consequence', correct: 'نتيجة / عاقبة', choices: ['عيب / سلبية','يُزوُّد / إمداد','نتيجة / عاقبة','يقدّر'] },
+    { word: 'Responsibility', correct: 'مسؤولية', choices: ['ظرف','مسؤولية','أساسي / ضروري','يتنافس'] },
+    { word: 'Circumstance', correct: 'ظرف', choices: ['حل','يضر / يتلف','ظرف','يستبدل'] },
+    { word: 'Essential', correct: 'أساسي / ضروري', choices: ['يكتشف','قضية / مشكلة','أساسي / ضروري','تحدي'] },
+    { word: 'Accurate', correct: 'دقيق', choices: ['يتجنب','ظرف','دقيق','مورد'] },
+    { word: 'Outstanding', correct: 'متميز / بارز', choices: ['نتيجة / عاقبة','يتعافى','دليل','متميز / بارز'] },
+    { word: 'Demonstrate', correct: 'يوضّح / يبرهن', choices: ['يتجنب','ميزة','يقدّر','يوضّح / يبرهن'] },
+    { word: 'Accomplish', correct: 'ينجز / يحقق', choices: ['دقيق','ينجز / يحقق','يتجنب','ظرف'] },
   ]
 };
 
@@ -1306,7 +1641,7 @@ function registerAnswer(m, wasCorrect) {
       const data = getUsersData();
       if (data[currentUser] && data[currentUser].lockedModes && Object.keys(data[currentUser].lockedModes).length > 0) {
         data[currentUser].lockedModes = {}; // Unlock all
-        saveUsersData(data, currentUser);
+        saveUsersData(data);
         setTimeout(() => {
           alert("🎉 كفو! حققت ستريك 10 أجوبة صحيحة وتم إلغاء قفل جميع القوائم المغلقة لك!");
           applyCategoryVisibility();
@@ -1488,7 +1823,7 @@ function handleWrongAnswerVoiceAndLocking() {
       const data = getUsersData();
       data[currentUser].lockedModes = data[currentUser].lockedModes || {};
       data[currentUser].lockedModes[mode] = true;
-      saveUsersData(data, currentUser);
+      saveUsersData(data);
     }
     
     // Force Exit after verbal warning
@@ -1500,41 +1835,23 @@ function handleWrongAnswerVoiceAndLocking() {
   }
 }
 
-/* ================= TIMER CONTROLLER (Per-Category Duration) ================= */
-// مدة العداد تختلف حسب نوع القائمة:
-// 30 ثانية: كلمات ومعاني (vocab) / معنى الجملة (sentence) / مفردات تقنية (tech)
-// 50 ثانية: ترتيب الجملة (order) / جملة تقنية (techdef) / سيناريو تقني (scenario)
-const TIMER_DURATIONS = {
-  vocab: 30,
-  sentence: 30,
-  tech: 30,
-  order: 50,
-  techdef: 50,
-  scenario: 50
-};
-
-function getTimerDurationForMode(m) {
-  return TIMER_DURATIONS[m] || 30; // احتياط: 30 ثانية لأي قائمة غير معرّفة
-}
-
+/* ================= TIMER CONTROLLER (30 Seconds) ================= */
 function startQuestionTimer() {
   clearInterval(timerInterval);
-  const duration = getTimerDurationForMode(mode);
-  timeLeft = duration;
-  const redThreshold = Math.max(7, Math.round(duration * 0.2)); // آخر ~20% من الوقت (7 ثواني على الأقل) يتلون أحمر
-
+  timeLeft = 30;
+  
   const timerNum = document.getElementById('timerNum');
   timerNum.textContent = timeLeft;
   timerNum.style.color = 'var(--orange)';
-
+  
   timerInterval = setInterval(() => {
     timeLeft--;
     timerNum.textContent = timeLeft;
-
-    if (timeLeft <= redThreshold) {
+    
+    if (timeLeft <= 7) {
       timerNum.style.color = 'var(--red)';
     }
-
+    
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       handleTimeOut();
@@ -1596,7 +1913,7 @@ function handleExitQuiz() {
       const data = getUsersData();
       if (data[currentUser]) {
         data[currentUser].score = (data[currentUser].score || 0) + score;
-        saveUsersData(data, currentUser);
+        saveUsersData(data);
       }
     }
     if (currentUser) {
@@ -1973,7 +2290,7 @@ function showResults() {
   if (currentUser) {
     const data = getUsersData();
     data[currentUser].score = (data[currentUser].score || 0) + score;
-    saveUsersData(data, currentUser);
+    saveUsersData(data);
   }
 
   logAction(`🎉 أكمل جولة كاملة بنجاح بنتيجة [${correctCount}/${total}] وحصل على [+${score} XP]`);
@@ -2071,49 +2388,11 @@ function getUsersData() {
   return usersCache;
 }
 
-// ============ تحديث لحظي حقيقي (Real-time) للوحة المنافسة ============
-// نفتح استماعاً حياً (onSnapshot) على مجموعة المستخدمين في Firestore. أي مستخدم
-// يجاوب ويأخذ XP في أي جهاز، تنعكس نقاطه فوراً عند كل المستخدمين المتصلين
-// بدون ما يحتاجون يعملوا Refresh أو يرجعون للصفحة الرئيسية يدوياً.
-let leaderboardLiveSyncStarted = false;
-function startLeaderboardLiveSync() {
-  if (leaderboardLiveSyncStarted) return; // نفتح الاستماع مرة وحدة بس طول عمر الصفحة
-  const fb = window.firebaseDB;
-  const ref = usersCollectionRef();
-  if (!fb || !ref || !fb.onSnapshot) return;
-
-  leaderboardLiveSyncStarted = true;
-  fb.onSnapshot(ref, (snap) => {
-    const fresh = {};
-    snap.forEach(docSnap => { fresh[docSnap.id] = docSnap.data(); });
-    usersCache = fresh;
-    try { localStorage.setItem('husseinEngUsers', JSON.stringify(usersCache)); } catch(e) {}
-
-    // نحدّث اللوحة مباشرة بدون شاشة تحميل فقط إذا الصفحة الرئيسية ظاهرة حالياً
-    const homeScreen = document.getElementById('homeScreen');
-    if (homeScreen && !homeScreen.classList.contains('hidden')) {
-      renderLeaderboardUI();
-    }
-  }, (err) => {
-    console.error('❌ انقطع الاستماع الحي لبيانات المستخدمين:', err);
-    leaderboardLiveSyncStarted = false; // نسمح بمحاولة إعادة الاتصال لاحقاً
-  });
-}
-
-function saveUsersData(data, changedUsername) {
+function saveUsersData(data) {
   usersCache = data;
   try { localStorage.setItem('husseinEngUsers', JSON.stringify(data)); } catch(e) {}
-  // مهم: نرفع فقط اليوزر اللي فعلاً تغيّر، مو كل الكاش المحلي.
-  // (سابقاً كانت الدالة ترفع كل المستخدمين المخزّنين محلياً، وهذا خطر: لو عندك
-  // نسخة قديمة بذاكرتك المحلية من نقاط لاعب ثاني، كانت تدوس على نقاطه الجديدة
-  // في Firestore بنسخة قديمة كل ما يحفظ أي مستخدم آخر بياناته.)
-  if (changedUsername && data[changedUsername]) {
-    pushUserToFirestore(changedUsername, data[changedUsername]);
-  } else if (!changedUsername) {
-    // احتياط فقط لأي استدعاء قديم ما مرّر اسم اليوزر - يرفع الكل كحل بديل آمن
-    console.warn('⚠️ saveUsersData استُدعيت بدون تحديد اليوزر المتغيّر - سيتم رفع الكل احتياطاً.');
-    Object.keys(data).forEach(uname => pushUserToFirestore(uname, data[uname]));
-  }
+  // نرفع كل مستخدم إلى Firestore عشان تكون النقاط مشتركة فعلياً بين كل الأجهزة والمستخدمين
+  Object.keys(data).forEach(uname => pushUserToFirestore(uname, data[uname]));
 }
 
 async function loginUser() {
@@ -2145,7 +2424,7 @@ async function loginUser() {
       bestStreak: { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 },
       lockedModes: {}
     };
-    saveUsersData(data, userIn);
+    saveUsersData(data);
   }
 
   errEl.textContent = '';
@@ -2187,7 +2466,7 @@ function saveStreakForUser() {
   if (data[currentUser]) {
     data[currentUser].streak = streak;
     data[currentUser].bestStreak = bestStreak;
-    saveUsersData(data, currentUser);
+    saveUsersData(data);
   }
 }
 
@@ -2211,20 +2490,8 @@ async function renderLeaderboard() {
   // نعرض حالة تحميل مؤقتة، ثم نجيب آخر بيانات الجميع من Firestore عشان اللوحة تكون مشتركة فعلياً
   container.innerHTML = `<div style="color:var(--muted); text-align:center; padding:4px 0;">⏳ جاري تحميل لوحة المنافسة...</div>`;
   await refreshUsersCacheFromFirestore();
-  renderLeaderboardUI();
-  // بعد أول تحميل، نفتح الاستماع الحي عشان أي XP يتغيّر عند أي مستخدم (بأي جهاز)
-  // ينعكس فوراً على لوحة الجميع بدون ما يحتاجون يرجعون للصفحة الرئيسية يدوياً
-  startLeaderboardLiveSync();
-}
-
-// يرسم لوحة المنافسة من الكاش المحلي الحالي (usersCache) بدون أي طلب شبكة جديد.
-// تُستخدم من renderLeaderboard() بعد الجلب الأولي، ومن الاستماع الحي (onSnapshot)
-// في كل مرة تتغيّر فيها بيانات أي مستخدم عند أي شخص متصل.
-function renderLeaderboardUI() {
-  const container = document.getElementById('leaderboardList');
-  if (!container) return;
   const data = getUsersData();
-
+  
   // Sort user maps by high score values
   const sorted = Object.keys(data).map(uname => ({
     username: uname,
@@ -2274,7 +2541,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
         if (data[targetUser]) {
            const oldScore = data[targetUser].score;
            data[targetUser].score = parseInt(newScore) || 0;
-           saveUsersData(data, targetUser); // يرفع فقط هذا اليوزر إلى Firestore
+           saveUsersData(data); // يرفع القيمة الجديدة لكل المستخدمين في Firestore بما فيهم هذا اليوزر
            logAction(`🔧 [الأدمن] قام بتعديل الـ XP لليوزر [${targetUser}] من (${oldScore}) إلى (${data[targetUser].score})`);
            renderLeaderboard();
         }
@@ -2283,7 +2550,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
      if (confirm(`هل أنت متأكد تماماً من حذف يوزر [ ${targetUser} ] وكل بياناته المخزنة؟`)) {
         const data = getUsersData();
         delete data[targetUser];
-        saveUsersData(data, targetUser);
+        saveUsersData(data);
         deleteUserFromFirestore(targetUser); // نحذفه من Firestore أيضاً عشان ما يرجع يظهر بعد التحديث القادم
         logAction(`🗑️ [الأدمن] قام بحذف اليوزر [${targetUser}] نهائياً من النظام`);
         renderLeaderboard();
