@@ -198,6 +198,12 @@
     color: var(--accent) !important;
   }
 
+  /* هذه القائمة تحتاج لوحة مفاتيح فعلية للكتابة، فتظهر فقط على شاشات الحاسوب الكبيرة وتُخفى تماماً على الجوال */
+  .desktop-only-card { display: none !important; }
+  @media (min-width: 900px) {
+    .desktop-only-card { display: flex !important; }
+  }
+
   .mode-title {
     font-size: 15px; font-weight: 800; color: var(--orange);
   }
@@ -588,6 +594,16 @@
       </div>
     </div>
 
+    <!-- 7th card full width — DESKTOP ONLY (typing practice, needs a real keyboard) -->
+    <div class="menu-card c1 desktop-only-card" id="card_typing" onclick="startTyping()" style="margin-top:14px; display:flex; align-items:center; gap:18px; text-align:right; padding: 20px 24px;">
+      <span class="level-tag">💻 حاسوب فقط</span>
+      <div class="icon-box" style="min-width:60px; margin:0;">⌨️</div>
+      <div>
+        <h3 style="margin-bottom:5px;">تدريب الكتابة السريعة 🆕</h3>
+        <p>اكتب الجملة الإنجليزية بسرعة ودقة — تقاس سرعتك (WPM) ودقتك (ACC)</p>
+      </div>
+    </div>
+
     <!-- ADMIN LOG CARD (Visible ONLY for HSZO) -->
     <div id="adminLogCard" class="menu-card c1 hidden" onclick="viewLogs()" style="margin-top:14px; display:flex; align-items:center; gap:18px; text-align:right; padding: 20px 24px; border-color: var(--accent);">
       <div class="icon-box" style="min-width:60px; margin:0; border-color: var(--accent); color: var(--accent);">📋</div>
@@ -688,6 +704,59 @@
     <div id="mistakesReview" class="hidden" style="margin-bottom: 24px; max-height: 280px; overflow-y: auto; padding: 4px; text-align: right;"></div>
 
     <button class="restart-btn" onclick="restartQuiz()">🔄 العب مجدداً</button>
+    <button class="restart-btn secondary" onclick="goHome()">القوائم 🏠</button>
+  </div>
+
+  <!-- TYPING PRACTICE SECTION (Desktop Only) -->
+  <div id="typingSection" class="hidden">
+    <div class="quiz-header">
+      <button class="back-btn" onclick="goHome()">→ القوائم</button>
+      <div class="mode-title">⌨️ تدريب الكتابة السريعة</div>
+    </div>
+
+    <div class="scorebar">
+      <div class="stat">
+        <div class="stat-num" id="typingWpmNum">0</div>
+        <div class="stat-lbl">WPM</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="typingAccNum">100%</div>
+        <div class="stat-lbl">ACC</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="typingQNum">1</div>
+        <div class="stat-lbl">الجملة</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="typingCorrectNum">0</div>
+        <div class="stat-lbl">صحيح ✓</div>
+      </div>
+    </div>
+
+    <div class="progress-wrap"><div class="progress-bar" id="typingProgressBar" style="width:0%"></div></div>
+
+    <div class="card" id="typingCard">
+      <div class="q-badge" style="background:rgba(45,212,191,0.15); color:var(--primary);">اكتب هذه الجملة</div>
+      <div id="typingTargetSentence" style="font-size:22px; font-weight:800; color:#fff; line-height:1.6; margin: 14px 0 8px; text-align:center;"></div>
+      <div id="typingTargetTranslation" style="font-size:14px; color:var(--muted); text-align:center; margin-bottom:20px;"></div>
+
+      <textarea id="typingInput" oninput="handleTypingInput()" placeholder="ابدأ الكتابة هنا..." dir="ltr"
+        style="width:100%; min-height:80px; background:var(--card2); border:1.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px; color:var(--text); font-family:'Poppins',sans-serif; font-size:16px; resize:none; outline:none; transition:0.2s;"
+        onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+    </div>
+
+    <div class="feedback" id="typingFeedback"></div>
+    <button class="check-btn" id="typingCheckBtn" onclick="checkTyping()">تحقق ✓</button>
+    <button class="next-btn hidden" id="typingNextBtn" onclick="nextTyping()">الجملة التالية ←</button>
+  </div>
+
+  <!-- TYPING RESULT SECTION -->
+  <div id="typingResultSection" class="result-screen hidden">
+    <div class="result-icon">⌨️</div>
+    <div class="result-title">انتهى التدريب!</div>
+    <div class="result-score" id="typingFinalScore">0/10</div>
+    <div class="result-sub" id="typingResultMsg"></div>
+    <button class="restart-btn" onclick="startTyping()">🔄 تدريب جديد</button>
     <button class="restart-btn secondary" onclick="goHome()">القوائم 🏠</button>
   </div>
 </div>
@@ -1537,6 +1606,40 @@ const scenarioBank = [
   { scenario: "The development team uses a separate version of the system, identical to the live one, to test new features safely before releasing them to real users.", correct: 'Production', choices: ['Production','Staging','Development','Sandbox'] },
 ];
 
+const typingBank = [
+  { sentence: "I sat beside the window and waited.", translation: "جلست بجانب النافذة وانتظرت." },
+  { sentence: "She always tells the truth.", translation: "هي دائماً تقول الحقيقة." },
+  { sentence: "We need to finish this project by Friday.", translation: "يجب أن ننهي هذا المشروع بحلول الجمعة." },
+  { sentence: "He works very hard every day.", translation: "هو يعمل بجد كل يوم." },
+  { sentence: "Can you help me with this problem?", translation: "هل يمكنك مساعدتي في هذه المشكلة؟" },
+  { sentence: "The weather is really nice today.", translation: "الجو جميل جداً اليوم." },
+  { sentence: "I would like a cup of coffee.", translation: "أرغب بكوب من القهوة." },
+  { sentence: "They live in a big house near the park.", translation: "هم يعيشون في منزل كبير قرب الحديقة." },
+  { sentence: "She has never been to Japan before.", translation: "هي لم تذهب إلى اليابان من قبل." },
+  { sentence: "If it rains, we will stay home.", translation: "إذا أمطرت، سنبقى في المنزل." },
+  { sentence: "He suggested that we take a short break.", translation: "اقترح أن نأخذ استراحة قصيرة." },
+  { sentence: "I have already finished my homework.", translation: "لقد أنهيت واجبي بالفعل." },
+  { sentence: "We should leave before it gets dark.", translation: "يجب أن نغادر قبل أن يحل الظلام." },
+  { sentence: "She was cooking dinner when I arrived.", translation: "كانت تطبخ العشاء عندما وصلت." },
+  { sentence: "This is the best decision I have ever made.", translation: "هذا أفضل قرار اتخذته في حياتي." },
+  { sentence: "He apologized for arriving so late.", translation: "اعتذر عن وصوله متأخراً جداً." },
+  { sentence: "I am looking forward to seeing you soon.", translation: "أتطلع لرؤيتك قريباً." },
+  { sentence: "Practice makes perfect, so keep trying.", translation: "التمرين يؤدي إلى الإتقان، لذا استمر بالمحاولة." },
+  { sentence: "The more you practice, the better you become.", translation: "كلما تدربت أكثر، أصبحت أفضل." },
+  { sentence: "She is known for her honesty and kindness.", translation: "هي معروفة بصدقها ولطفها." },
+  { sentence: "We are all in the same boat here.", translation: "كلنا في نفس الموقف الصعب هنا." },
+  { sentence: "I need to double-check the numbers before sending them.", translation: "أحتاج أن أراجع الأرقام قبل إرسالها." },
+  { sentence: "He never gives up, no matter how hard it gets.", translation: "هو لا يستسلم أبداً مهما ازدادت الصعوبة." },
+  { sentence: "Despite the heavy traffic, we arrived on time.", translation: "رغم الازدحام الشديد، وصلنا في الوقت المحدد." },
+  { sentence: "The company decided to postpone the launch.", translation: "قررت الشركة تأجيل الإطلاق." },
+  { sentence: "Every success starts with a single small step.", translation: "كل نجاح يبدأ بخطوة صغيرة واحدة." },
+  { sentence: "She types quickly and rarely makes mistakes.", translation: "هي تكتب بسرعة ونادراً ما ترتكب أخطاء." },
+  { sentence: "Learning a new language takes time and patience.", translation: "تعلّم لغة جديدة يحتاج وقتاً وصبراً." },
+  { sentence: "He checked his email before starting the meeting.", translation: "تحقق من بريده الإلكتروني قبل بدء الاجتماع." },
+  { sentence: "Our team achieved the goal ahead of schedule.", translation: "فريقنا حقق الهدف قبل الموعد المحدد." },
+];
+
+
 /* ================= DIFFICULTY TIERS ================= */
 function splitTiers(bank) {
   const size = Math.ceil(bank.length / 3);
@@ -1997,6 +2100,8 @@ function goHome() {
   document.getElementById('quizSection').classList.add('hidden');
   document.getElementById('resultSection').classList.add('hidden');
   document.getElementById('logSection').classList.add('hidden');
+  document.getElementById('typingSection').classList.add('hidden');
+  document.getElementById('typingResultSection').classList.add('hidden');
   renderStreakBoard();
   renderLeaderboard();
   applyCategoryVisibility();
@@ -2016,6 +2121,152 @@ function handleExitQuiz() {
       logAction(`🚪 خرج من التحدي مبكراً بعد الإجابة على [${current + 1}] من أصل [${totalQuestions()}] أسئلة — حصل على [+${score} XP] قبل الخروج`);
     }
     goHome();
+  }
+}
+
+/* ================= TYPING PRACTICE MODE (Desktop Only) ================= */
+let typingQueue = [];
+let typingIndex = 0;
+let typingCorrectCount = 0;
+let typingWpmTotal = 0;
+let typingAccTotal = 0;
+let typingStartTime = null;
+let typingRoundDone = false;
+
+function startTyping() {
+  typingQueue = shuffle(typingBank).slice(0, Math.min(10, typingBank.length));
+  typingIndex = 0;
+  typingCorrectCount = 0;
+  typingWpmTotal = 0;
+  typingAccTotal = 0;
+
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('typingResultSection').classList.add('hidden');
+  document.getElementById('typingSection').classList.remove('hidden');
+
+  if (currentUser) logAction(`⌨️ بدأ جولة تدريب الكتابة السريعة`);
+  loadTypingQuestion();
+}
+
+function loadTypingQuestion() {
+  if (typingIndex >= typingQueue.length) { finishTyping(); return; }
+
+  const q = typingQueue[typingIndex];
+  typingStartTime = null;
+  typingRoundDone = false;
+
+  document.getElementById('typingTargetSentence').textContent = q.sentence;
+  document.getElementById('typingTargetTranslation').textContent = q.translation;
+
+  const input = document.getElementById('typingInput');
+  input.value = '';
+  input.disabled = false;
+  input.focus();
+
+  document.getElementById('typingWpmNum').textContent = '0';
+  document.getElementById('typingAccNum').textContent = '100%';
+  document.getElementById('typingQNum').textContent = (typingIndex + 1) + '/' + typingQueue.length;
+  document.getElementById('typingCorrectNum').textContent = typingCorrectCount;
+  document.getElementById('typingProgressBar').style.width = ((typingIndex / typingQueue.length) * 100) + '%';
+
+  document.getElementById('typingFeedback').className = 'feedback';
+  document.getElementById('typingFeedback').textContent = '';
+  document.getElementById('typingCheckBtn').classList.remove('hidden');
+  document.getElementById('typingNextBtn').classList.add('hidden');
+}
+
+function computeAccuracy(typed, target) {
+  if (typed.length === 0) return 100;
+  let matches = 0;
+  const len = Math.max(typed.length, target.length);
+  for (let i = 0; i < Math.min(typed.length, target.length); i++) {
+    if (typed[i] === target[i]) matches++;
+  }
+  return Math.max(0, Math.round((matches / len) * 100));
+}
+
+function computeWpm(typed, elapsedMs) {
+  const words = typed.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = elapsedMs / 60000;
+  if (minutes <= 0) return 0;
+  return Math.round(words / minutes);
+}
+
+function handleTypingInput() {
+  if (typingRoundDone) return;
+  const input = document.getElementById('typingInput');
+  const typed = input.value;
+  const target = typingQueue[typingIndex].sentence;
+
+  if (typed.length > 0 && typingStartTime === null) typingStartTime = Date.now();
+
+  const elapsed = typingStartTime ? (Date.now() - typingStartTime) : 0;
+  const acc = computeAccuracy(typed, target);
+  const wpm = computeWpm(typed, elapsed);
+
+  document.getElementById('typingAccNum').textContent = acc + '%';
+  document.getElementById('typingWpmNum').textContent = wpm;
+
+  // إنهاء تلقائي بمجرد ما يوصل الكتابة لنفس طول الجملة الهدف
+  if (typed.length >= target.length) {
+    checkTyping();
+  }
+}
+
+function checkTyping() {
+  if (typingRoundDone) return;
+  typingRoundDone = true;
+
+  const input = document.getElementById('typingInput');
+  const typed = input.value;
+  const target = typingQueue[typingIndex].sentence;
+  const elapsed = typingStartTime ? (Date.now() - typingStartTime) : 0;
+
+  const acc = computeAccuracy(typed, target);
+  const wpm = computeWpm(typed, elapsed);
+  const isCorrect = typed.trim().toLowerCase() === target.trim().toLowerCase();
+
+  if (isCorrect) typingCorrectCount++;
+  typingWpmTotal += wpm;
+  typingAccTotal += acc;
+
+  document.getElementById('typingAccNum').textContent = acc + '%';
+  document.getElementById('typingWpmNum').textContent = wpm;
+  document.getElementById('typingCorrectNum').textContent = typingCorrectCount;
+
+  const feedback = document.getElementById('typingFeedback');
+  feedback.className = 'feedback ' + (isCorrect ? 'correct-msg' : 'wrong-msg');
+  feedback.textContent = isCorrect
+    ? `✅ ممتاز! ${wpm} WPM بدقة ${acc}%`
+    : `❌ فيه اختلاف عن الجملة الأصلية — الصحيح: "${target}"`;
+
+  input.disabled = true;
+  document.getElementById('typingCheckBtn').classList.add('hidden');
+  document.getElementById('typingNextBtn').classList.remove('hidden');
+
+  if (currentUser) {
+    logAction(`⌨️ كتب الجملة: "${target}" — النتيجة: [${isCorrect ? '✅ صحيحة' : '❌ فيها أخطاء'}] بسرعة [${wpm} WPM] ودقة [${acc}%]`);
+  }
+}
+
+function nextTyping() {
+  typingIndex++;
+  loadTypingQuestion();
+}
+
+function finishTyping() {
+  document.getElementById('typingSection').classList.add('hidden');
+  document.getElementById('typingResultSection').classList.remove('hidden');
+
+  const total = typingQueue.length;
+  const avgWpm = total > 0 ? Math.round(typingWpmTotal / total) : 0;
+  const avgAcc = total > 0 ? Math.round(typingAccTotal / total) : 0;
+
+  document.getElementById('typingFinalScore').textContent = `${typingCorrectCount}/${total}`;
+  document.getElementById('typingResultMsg').textContent = `متوسط سرعتك: ${avgWpm} WPM — متوسط دقتك: ${avgAcc}%`;
+
+  if (currentUser) {
+    logAction(`🏁 أنهى جولة تدريب الكتابة السريعة بنتيجة [${typingCorrectCount}/${total}] — متوسط سرعة [${avgWpm} WPM] ومتوسط دقة [${avgAcc}%]`);
   }
 }
 
