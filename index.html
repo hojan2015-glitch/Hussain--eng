@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حسين Eng - تعلم الإنجليزية</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<title>HS ENG - تعلم الإنجليزية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Poppins:wght@700;800;900&family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
   :root {
-    --primary: #2dd4bf;
-    --primary-dark: #14b8a6;
-    --dark: #000000;
-    --card: #0e0e14;
-    --card2: #161620;
-    --accent: #a78bfa;
-    --pink: #f472b6;
-    --green: #34d399;
-    --red: #fb7185;
-    --orange: #fbbf24;
-    --text: #eef0f7;
-    --muted: #7d87aa;
+    --primary: #e6102c;
+    --primary-dark: #99091f;
+    --dark: #0a0303;
+    --card: #150707;
+    --card2: #200a0a;
+    --accent: #ff6a00;
+    --pink: #ff2e7e;
+    --green: #39ff6a;
+    --red: #ff0844;
+    --orange: #ffb100;
+    --text: #fdece6;
+    --muted: #8f6b6b;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,12 +32,40 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    position: relative;
     background-image:
-      radial-gradient(ellipse at 15% 10%, rgba(167,139,250,0.13) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 90%, rgba(251,191,36,0.10) 0%, transparent 55%);
+      radial-gradient(ellipse at 15% 10%, rgba(230,16,44,0.16) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 90%, rgba(255,106,0,0.10) 0%, transparent 55%);
   }
 
-  .app { width: 100%; max-width: 540px; }
+  /* CRT scanline overlay for the pixel-HUD feel */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .app { width: 100%; max-width: 540px; position: relative; z-index: 1; }
+
+  /* Reusable stepped pixel-corner cut, used sparingly on hero elements only */
+  .pixel-corners {
+    clip-path: polygon(
+      0 8px, 8px 8px, 8px 0,
+      calc(100% - 8px) 0, calc(100% - 8px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+      8px 100%, 8px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+    border-radius: 0 !important;
+  }
 
   /* HEADER */
   .header {
@@ -48,27 +76,54 @@
 
   .logo-ring {
     width: 70px; height: 70px;
-    border-radius: 22px;
     background: #000;
     border: 2px solid var(--primary);
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 12px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 26px; font-weight: 900;
+    margin: 0 auto 10px;
+    font-family: 'VT323', monospace;
+    font-size: 30px; font-weight: 400;
     color: var(--primary);
-    box-shadow: 0 0 30px rgba(45,212,191,0.3), inset 0 0 20px rgba(45,212,191,0.08);
+    box-shadow: 0 0 30px rgba(230,16,44,0.35), inset 0 0 20px rgba(230,16,44,0.1);
     animation: pulse 3s ease-in-out infinite;
   }
   @keyframes pulse {
-    0%,100% { box-shadow: 0 0 30px rgba(45,212,191,0.3), inset 0 0 20px rgba(45,212,191,0.08); }
-    50% { box-shadow: 0 0 48px rgba(45,212,191,0.5), inset 0 0 24px rgba(45,212,191,0.14); }
+    0%,100% { box-shadow: 0 0 30px rgba(230,16,44,0.35), inset 0 0 20px rgba(230,16,44,0.1); }
+    50% { box-shadow: 0 0 48px rgba(230,16,44,0.55), inset 0 0 24px rgba(230,16,44,0.16); }
+  }
+
+  /* HS brand badge — pixel-cut tag under the logo, echoing an arms-dealer / HUD manufacturer stamp */
+  /* Character portrait — HUD-style avatar frame for the pixel mascot */
+  .char-portrait {
+    width: 92px; height: 96px;
+    background: #000;
+    border: 2px solid var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+    padding: 6px;
+    box-shadow: 0 0 30px rgba(230,16,44,0.35), inset 0 0 20px rgba(230,16,44,0.1);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  .char-portrait svg { width: 100%; height: 100%; }
+
+  .hs-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    direction: ltr;
+    margin: 0 auto 10px;
+    padding: 3px 10px;
+    background: #000;
+    border: 1px solid var(--accent);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px; letter-spacing: 1px;
+    color: var(--accent);
+    clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
   }
 
   .header h1 {
-    font-size: 24px; font-weight: 900; letter-spacing: 0.5px;
-    font-family: 'Poppins', sans-serif;
+    font-size: 22px; font-weight: 400; letter-spacing: 2px;
+    font-family: 'Press Start 2P', monospace;
     background: linear-gradient(135deg, var(--primary), var(--accent));
     -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: none;
   }
   .header p { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
@@ -87,7 +142,7 @@
   .menu-card {
     background: #0a0a0f;
     border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 18px;
+    border-radius: 6px;
     padding: 22px 16px;
     text-align: center;
     cursor: pointer;
@@ -115,7 +170,7 @@
 
   .menu-card .icon-box {
     width: 60px; height: 60px;
-    border-radius: 16px;
+    border-radius: 6px;
     background: #000;
     display: flex; align-items: center; justify-content: center;
     font-size: 28px;
@@ -124,19 +179,19 @@
     box-shadow: 0 6px 18px rgba(0,0,0,0.5);
   }
 
-  .menu-card.c1 .icon-box { border-color: #2dd4bf; box-shadow: 0 0 16px rgba(45,212,191,0.25), 0 6px 18px rgba(0,0,0,0.5); }
-  .menu-card.c2 .icon-box { border-color: #34d399; box-shadow: 0 0 16px rgba(52,211,153,0.25), 0 6px 18px rgba(0,0,0,0.5); }
-  .menu-card.c3 .icon-box { border-color: #fbbf24; box-shadow: 0 0 16px rgba(251,191,36,0.25), 0 6px 18px rgba(0,0,0,0.5); }
-  .menu-card.c4 .icon-box { border-color: #a78bfa; box-shadow: 0 0 16px rgba(167,139,250,0.25), 0 6px 18px rgba(0,0,0,0.5); }
-  .menu-card.c5 .icon-box { border-color: #f472b6; box-shadow: 0 0 16px rgba(244,114,182,0.25), 0 6px 18px rgba(0,0,0,0.5); }
-  .menu-card.c6 .icon-box { border-color: #60a5fa; box-shadow: 0 0 16px rgba(96,165,250,0.25), 0 6px 18px rgba(0,0,0,0.5); }
+  .menu-card.c1 .icon-box { border-color: #39ff6a; box-shadow: 0 0 16px rgba(57,255,106,0.25), 0 6px 18px rgba(0,0,0,0.5); }
+  .menu-card.c2 .icon-box { border-color: #ff6a00; box-shadow: 0 0 16px rgba(255,106,0,0.25), 0 6px 18px rgba(0,0,0,0.5); }
+  .menu-card.c3 .icon-box { border-color: #00e5ff; box-shadow: 0 0 16px rgba(0,229,255,0.25), 0 6px 18px rgba(0,0,0,0.5); }
+  .menu-card.c4 .icon-box { border-color: #b026ff; box-shadow: 0 0 16px rgba(176,38,255,0.25), 0 6px 18px rgba(0,0,0,0.5); }
+  .menu-card.c5 .icon-box { border-color: #ff2e7e; box-shadow: 0 0 16px rgba(255,46,126,0.25), 0 6px 18px rgba(0,0,0,0.5); }
+  .menu-card.c6 .icon-box { border-color: #e6102c; box-shadow: 0 0 16px rgba(230,16,44,0.3), 0 6px 18px rgba(0,0,0,0.5); }
 
-  .menu-card.c1:hover { border-color: rgba(45,212,191,0.4); box-shadow: 0 14px 34px rgba(45,212,191,0.12); }
-  .menu-card.c2:hover { border-color: rgba(52,211,153,0.4); box-shadow: 0 14px 34px rgba(52,211,153,0.12); }
-  .menu-card.c3:hover { border-color: rgba(251,191,36,0.4); box-shadow: 0 14px 34px rgba(251,191,36,0.12); }
-  .menu-card.c4:hover { border-color: rgba(167,139,250,0.4); box-shadow: 0 14px 34px rgba(167,139,250,0.12); }
-  .menu-card.c5:hover { border-color: rgba(244,114,182,0.4); box-shadow: 0 14px 34px rgba(244,114,182,0.15); }
-  .menu-card.c6:hover { border-color: rgba(96,165,250,0.4); box-shadow: 0 14px 34px rgba(96,165,250,0.15); }
+  .menu-card.c1:hover { border-color: rgba(57,255,106,0.4); box-shadow: 0 14px 34px rgba(57,255,106,0.12); }
+  .menu-card.c2:hover { border-color: rgba(255,106,0,0.4); box-shadow: 0 14px 34px rgba(255,106,0,0.12); }
+  .menu-card.c3:hover { border-color: rgba(0,229,255,0.4); box-shadow: 0 14px 34px rgba(0,229,255,0.12); }
+  .menu-card.c4:hover { border-color: rgba(176,38,255,0.4); box-shadow: 0 14px 34px rgba(176,38,255,0.12); }
+  .menu-card.c5:hover { border-color: rgba(255,46,126,0.4); box-shadow: 0 14px 34px rgba(255,46,126,0.15); }
+  .menu-card.c6:hover { border-color: rgba(230,16,44,0.4); box-shadow: 0 14px 34px rgba(230,16,44,0.15); }
 
   .menu-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; color: #fff; position: relative; }
   .menu-card p { font-size: 11.5px; color: var(--muted); line-height: 1.5; position: relative; margin-bottom: 8px; }
@@ -199,14 +254,14 @@
     display: flex; justify-content: space-between; align-items: center;
     background: var(--card);
     border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px;
+    border-radius: 6px;
     padding: 12px 14px;
     margin-bottom: 14px;
     animation: fadeDown 0.6s ease both;
     gap: 4px;
   }
   .stat { text-align: center; flex: 1; }
-  .stat-num { font-size: 16px; font-weight: 900; color: var(--orange); font-family: 'Poppins', sans-serif; }
+  .stat-num { font-size: 19px; font-weight: 400; color: var(--orange); font-family: 'VT323', monospace; }
   .stat-lbl { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
   .progress-wrap {
@@ -224,11 +279,48 @@
   .card {
     background: var(--card);
     border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 22px;
+    border-radius: 6px;
     padding: 28px 24px 22px;
     margin-bottom: 16px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     animation: cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+  }
+
+  /* Old CRT monitor treatment — reserved for the login screen only */
+  .crt-screen {
+    position: relative;
+    border: 4px solid #1a1a1a;
+    border-top: 10px solid #1a1a1a;
+    box-shadow:
+      0 0 0 2px #000,
+      0 0 40px rgba(230,16,44,0.25),
+      inset 0 0 60px rgba(0,0,0,0.8),
+      0 25px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+    animation: cardIn 0.5s cubic-bezier(.34,1.56,.64,1) both, crtFlicker 4s ease-in-out infinite;
+  }
+  .crt-screen::before {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0px, rgba(0,0,0,0.25) 1px, transparent 1px, transparent 3px),
+      radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+  }
+  .crt-screen::after {
+    content: '● REC';
+    position: absolute; top: 6px; left: 10px;
+    direction: ltr;
+    font-family: 'VT323', monospace;
+    font-size: 13px;
+    color: var(--primary);
+    opacity: 0.7;
+    letter-spacing: 1px;
+  }
+  @keyframes crtFlicker {
+    0%, 96%, 100% { filter: brightness(1); }
+    97% { filter: brightness(1.06); }
+    98% { filter: brightness(0.96); }
   }
 
   .q-badge {
@@ -271,11 +363,11 @@
     color: var(--text); text-align: right;
     line-height: 1.8;
     background: rgba(255,255,255,0.04);
-    border-radius: 12px; padding: 14px 16px;
+    border-radius: 6px; padding: 14px 16px;
     border-right: 3px solid var(--pink);
   }
   .q-sentence.definition-mode.scenario-style {
-    border-right: 3px solid #60a5fa;
+    border-right: 3px solid #00e5ff;
   }
 
   /* CHOICES */
@@ -287,7 +379,7 @@
   .choice-btn {
     background: rgba(255,255,255,0.04);
     border: 2px solid rgba(255,255,255,0.09);
-    border-radius: 14px;
+    border-radius: 6px;
     padding: 16px 12px;
     color: var(--text);
     font-family: 'Tajawal', sans-serif;
@@ -322,7 +414,7 @@
     min-height: 56px;
     background: rgba(255,255,255,0.03);
     border: 2px dashed rgba(255,255,255,0.12);
-    border-radius: 14px;
+    border-radius: 6px;
     padding: 10px;
     margin-bottom: 14px;
     align-items: center;
@@ -341,7 +433,7 @@
     color: #fff;
     font-family: 'Poppins', sans-serif;
     font-size: 16px; font-weight: 700;
-    padding: 10px 16px; border-radius: 12px;
+    padding: 10px 16px; border-radius: 6px;
     cursor: pointer; transition: all 0.2s ease;
     user-select: none;
   }
@@ -358,8 +450,8 @@
 
   .check-btn {
     width: 100%;
-    background: linear-gradient(135deg, var(--pink), #be185d);
-    border: none; border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none; border-radius: 6px;
     color: #fff;
     font-family: 'Tajawal', sans-serif;
     font-size: 17px; font-weight: 800;
@@ -367,7 +459,7 @@
     margin-top: 14px;
     transition: all 0.3s ease;
   }
-  .check-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(244,114,182,0.35); }
+  .check-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(230,16,44,0.4); }
   .check-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
   /* FEEDBACK */
@@ -383,7 +475,7 @@
   .next-btn {
     width: 100%;
     background: linear-gradient(135deg, var(--accent), var(--primary));
-    border: none; border-radius: 14px;
+    border: none; border-radius: 6px;
     color: #fff;
     font-family: 'Tajawal', sans-serif;
     font-size: 18px; font-weight: 800;
@@ -394,19 +486,19 @@
     display: none;
   }
   .next-btn.show { display: block; animation: fadeUp 0.4s ease; }
-  .next-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(167,139,250,0.35); }
+  .next-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,106,0,0.35); }
 
   /* RESULT SCREEN */
   .result-screen { text-align: center; animation: cardIn 0.6s cubic-bezier(.34,1.56,.64,1) both; }
   .result-icon { font-size: 72px; margin-bottom: 16px; animation: bounceIn 0.6s ease; }
   @keyframes bounceIn { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
   .result-title { font-size: 26px; font-weight: 900; color: var(--orange); margin-bottom: 8px; }
-  .result-score { font-size: 60px; font-weight: 900; color: #fff; font-family: 'Poppins', sans-serif; }
+  .result-score { font-size: 76px; font-weight: 400; color: #fff; font-family: 'VT323', monospace; text-shadow: 0 0 24px rgba(230,16,44,0.5); }
   .result-sub { font-size: 15px; color: var(--muted); margin-top: 6px; margin-bottom: 26px; }
 
   .restart-btn {
     background: linear-gradient(135deg, var(--orange), #f59e0b);
-    border: none; border-radius: 14px;
+    border: none; border-radius: 6px;
     color: var(--dark);
     font-family: 'Tajawal', sans-serif;
     font-size: 17px; font-weight: 900;
@@ -440,7 +532,7 @@
     width: 100%;
     background: rgba(255,255,255,0.04);
     border: 2px solid rgba(255,255,255,0.09);
-    border-radius: 14px;
+    border-radius: 6px;
     padding: 14px 16px;
     color: var(--text);
     font-family: 'Tajawal', sans-serif;
@@ -477,7 +569,7 @@
     background: rgba(0, 0, 0, 0.9);
     padding: 14px 28px;
     border: 3px solid var(--red);
-    border-radius: 24px;
+    border-radius: 8px;
     z-index: 9999;
     pointer-events: none;
     font-family: 'Tajawal', sans-serif;
@@ -499,8 +591,9 @@
 
 <div class="app">
   <div class="header">
-    <div class="logo-ring">Eng</div>
-    <h1>حسين Eng</h1>
+    <div class="char-portrait pixel-corners"><svg viewBox="0 0 192 200" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"><rect x="64" y="0" width="64" height="8" fill="#050101"/><rect x="56" y="8" width="80" height="8" fill="#050101"/><rect x="48" y="16" width="24" height="8" fill="#050101"/><rect x="120" y="16" width="24" height="8" fill="#050101"/><rect x="40" y="24" width="24" height="8" fill="#050101"/><rect x="80" y="24" width="32" height="8" fill="#050101"/><rect x="128" y="24" width="24" height="8" fill="#050101"/><rect x="32" y="32" width="16" height="8" fill="#050101"/><rect x="64" y="32" width="64" height="8" fill="#050101"/><rect x="144" y="32" width="16" height="8" fill="#050101"/><rect x="32" y="40" width="8" height="8" fill="#050101"/><rect x="56" y="40" width="80" height="8" fill="#050101"/><rect x="152" y="40" width="8" height="8" fill="#050101"/><rect x="32" y="48" width="8" height="8" fill="#050101"/><rect x="48" y="48" width="8" height="8" fill="#050101"/><rect x="56" y="48" width="80" height="8" fill="#e6102c"/><rect x="136" y="48" width="8" height="8" fill="#050101"/><rect x="152" y="48" width="8" height="8" fill="#050101"/><rect x="32" y="56" width="8" height="8" fill="#050101"/><rect x="48" y="56" width="8" height="8" fill="#050101"/><rect x="56" y="56" width="16" height="8" fill="#e6102c"/><rect x="72" y="56" width="56" height="8" fill="#ff6a00"/><rect x="128" y="56" width="8" height="8" fill="#e6102c"/><rect x="136" y="56" width="8" height="8" fill="#050101"/><rect x="152" y="56" width="8" height="8" fill="#050101"/><rect x="32" y="64" width="8" height="8" fill="#050101"/><rect x="48" y="64" width="8" height="8" fill="#050101"/><rect x="56" y="64" width="16" height="8" fill="#e6102c"/><rect x="72" y="64" width="56" height="8" fill="#ff6a00"/><rect x="128" y="64" width="8" height="8" fill="#e6102c"/><rect x="136" y="64" width="8" height="8" fill="#050101"/><rect x="152" y="64" width="8" height="8" fill="#050101"/><rect x="32" y="72" width="8" height="8" fill="#050101"/><rect x="48" y="72" width="8" height="8" fill="#050101"/><rect x="56" y="72" width="80" height="8" fill="#e6102c"/><rect x="136" y="72" width="8" height="8" fill="#050101"/><rect x="152" y="72" width="8" height="8" fill="#050101"/><rect x="32" y="80" width="8" height="8" fill="#050101"/><rect x="56" y="80" width="80" height="8" fill="#050101"/><rect x="152" y="80" width="8" height="8" fill="#050101"/><rect x="40" y="88" width="16" height="8" fill="#050101"/><rect x="72" y="88" width="48" height="8" fill="#050101"/><rect x="136" y="88" width="16" height="8" fill="#050101"/><rect x="48" y="96" width="24" height="8" fill="#050101"/><rect x="120" y="96" width="24" height="8" fill="#050101"/><rect x="56" y="104" width="16" height="8" fill="#050101"/><rect x="88" y="104" width="16" height="8" fill="#050101"/><rect x="120" y="104" width="16" height="8" fill="#050101"/><rect x="56" y="112" width="16" height="8" fill="#050101"/><rect x="88" y="112" width="16" height="8" fill="#050101"/><rect x="120" y="112" width="16" height="8" fill="#050101"/><rect x="48" y="120" width="16" height="8" fill="#050101"/><rect x="96" y="120" width="16" height="8" fill="#050101"/><rect x="40" y="128" width="16" height="8" fill="#050101"/><rect x="168" y="128" width="16" height="8" fill="#050101"/><rect x="32" y="136" width="16" height="8" fill="#050101"/><rect x="64" y="136" width="80" height="8" fill="#050101"/><rect x="168" y="136" width="16" height="8" fill="#050101"/><rect x="24" y="144" width="16" height="8" fill="#050101"/><rect x="56" y="144" width="16" height="8" fill="#050101"/><rect x="72" y="144" width="64" height="8" fill="#3a0808"/><rect x="136" y="144" width="16" height="8" fill="#050101"/><rect x="176" y="144" width="16" height="8" fill="#050101"/><rect x="24" y="152" width="8" height="8" fill="#050101"/><rect x="48" y="152" width="16" height="8" fill="#050101"/><rect x="64" y="152" width="24" height="8" fill="#3a0808"/><rect x="88" y="152" width="32" height="8" fill="#e6102c"/><rect x="120" y="152" width="16" height="8" fill="#3a0808"/><rect x="136" y="152" width="16" height="8" fill="#050101"/><rect x="184" y="152" width="8" height="8" fill="#050101"/><rect x="24" y="160" width="8" height="8" fill="#050101"/><rect x="40" y="160" width="16" height="8" fill="#050101"/><rect x="56" y="160" width="32" height="8" fill="#3a0808"/><rect x="88" y="160" width="32" height="8" fill="#e6102c"/><rect x="120" y="160" width="24" height="8" fill="#3a0808"/><rect x="144" y="160" width="16" height="8" fill="#050101"/><rect x="184" y="160" width="8" height="8" fill="#050101"/><rect x="24" y="168" width="8" height="8" fill="#050101"/><rect x="40" y="168" width="8" height="8" fill="#050101"/><rect x="48" y="168" width="104" height="8" fill="#3a0808"/><rect x="152" y="168" width="8" height="8" fill="#050101"/><rect x="184" y="168" width="8" height="8" fill="#050101"/><rect x="24" y="176" width="16" height="8" fill="#050101"/><rect x="48" y="176" width="8" height="8" fill="#050101"/><rect x="56" y="176" width="96" height="8" fill="#3a0808"/><rect x="152" y="176" width="8" height="8" fill="#050101"/><rect x="176" y="176" width="16" height="8" fill="#050101"/><rect x="32" y="184" width="16" height="8" fill="#050101"/><rect x="56" y="184" width="16" height="8" fill="#050101"/><rect x="72" y="184" width="64" height="8" fill="#3a0808"/><rect x="136" y="184" width="16" height="8" fill="#050101"/><rect x="160" y="184" width="16" height="8" fill="#050101"/><rect x="40" y="192" width="24" height="8" fill="#050101"/><rect x="72" y="192" width="64" height="8" fill="#050101"/><rect x="144" y="192" width="24" height="8" fill="#050101"/></svg></div>
+    <div class="hs-badge">⚡ HS ARMS CO.</div>
+    <h1>HS ENG</h1>
     <p>تعلّم الإنجليزية بطريقة ممتعة 🚀</p>
     <div id="userBar" class="user-bar hidden">
       <span id="userGreeting" style="font-size:13px; color:var(--muted);"></span>
@@ -510,7 +603,7 @@
 
   <!-- LOGIN SCREEN -->
   <div id="loginScreen">
-    <div class="card" style="text-align:center;">
+    <div class="card crt-screen" style="text-align:center;">
       <div class="q-badge">👋 مرحباً بك</div>
       <div style="font-size:15px; color:var(--text); margin-bottom:18px; line-height:1.6;">أدخل يوزر ونظام الرمز الخاص بك لحفظ تقدمك بشكل دائم</div>
       <input id="usernameInput" class="login-input" type="text" placeholder="اسم المستخدم (اليوزر)...">
@@ -2099,11 +2192,16 @@ function getUsersData() {
   return usersCache;
 }
 
-function saveUsersData(data) {
+function saveUsersData(data, usernamesToSync) {
   usersCache = data;
   try { localStorage.setItem('husseinEngUsers', JSON.stringify(data)); } catch(e) {}
-  // نرفع كل مستخدم إلى Firestore عشان تكون النقاط مشتركة فعلياً بين كل الأجهزة والمستخدمين
-  Object.keys(data).forEach(uname => pushUserToFirestore(uname, data[uname]));
+  // BUG FIX: هذي الدالة كانت ترفع كل مستخدم مخزّن محلياً إلى Firestore في كل مرة تُستدعى فيها،
+  // حتى لو تغيّرت بيانات يوزر واحد بس. يعني كل إجابة سؤال = عدد كتابات (writes) على Firestore
+  // يساوي عدد كل المستخدمين المسجلين، مو يوزر واحد بس. مع نمو عدد المستخدمين هذا يستهلك
+  // حصة الكتابة اليومية المجانية بسرعة جداً ويسبب توقف قاعدة البيانات عن الاستجابة للجميع.
+  // الحل: نرفع فقط اليوزر (أو اليوزرات) اللي فعلاً تغيّرت بياناتهم.
+  const targets = usernamesToSync && usernamesToSync.length ? usernamesToSync : (currentUser ? [currentUser] : []);
+  targets.forEach(uname => { if (data[uname]) pushUserToFirestore(uname, data[uname]); });
 }
 
 async function loginUser() {
@@ -2135,7 +2233,7 @@ async function loginUser() {
       bestStreak: { vocab: 0, order: 0, sentence: 0, tech: 0, techdef: 0, scenario: 0 },
       lockedModes: {}
     };
-    saveUsersData(data);
+    saveUsersData(data, [userIn]); // currentUser لسه ما تعيّن بهالنقطة، فنحدد اليوزر الجديد صراحة
   }
 
   errEl.textContent = '';
@@ -2252,7 +2350,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
         if (data[targetUser]) {
            const oldScore = data[targetUser].score;
            data[targetUser].score = parseInt(newScore) || 0;
-           saveUsersData(data); // يرفع القيمة الجديدة لكل المستخدمين في Firestore بما فيهم هذا اليوزر
+           saveUsersData(data, [targetUser]); // يرفع فقط اليوزر المستهدف، مو كل المستخدمين
            logAction(`🔧 [الأدمن] قام بتعديل الـ XP لليوزر [${targetUser}] من (${oldScore}) إلى (${data[targetUser].score})`);
            renderLeaderboard();
         }
@@ -2261,7 +2359,7 @@ function triggerAdminUserEdit(targetUser, currentScore) {
      if (confirm(`هل أنت متأكد تماماً من حذف يوزر [ ${targetUser} ] وكل بياناته المخزنة؟`)) {
         const data = getUsersData();
         delete data[targetUser];
-        saveUsersData(data);
+        saveUsersData(data, []); // ما نحتاج نرفع أي يوزر هنا، الحذف يصير عبر deleteUserFromFirestore تحت
         deleteUserFromFirestore(targetUser); // نحذفه من Firestore أيضاً عشان ما يرجع يظهر بعد التحديث القادم
         logAction(`🗑️ [الأدمن] قام بحذف اليوزر [${targetUser}] نهائياً من النظام`);
         renderLeaderboard();
